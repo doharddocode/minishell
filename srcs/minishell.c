@@ -1,22 +1,59 @@
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int ft_arr_size(char **arr)
 {
-	(void)argc;
-	(void)argv;
-	(void)env;
+	int i;
 
-	int res;
+	i = 0;
+	if (!arr)
+		return (i);
+	while (arr[i])
+		i++;
+	return (i);
+}
+
+int ft_cpy_env(t_minishell *mini, char **envp)
+{
+	int	i;
+
+	i = 0;
+	if (!envp)
+		return (ERROR);
+	mini->envp = (char **)malloc(ft_arr_size(envp) * sizeof(char *) + 1);
+	if (mini->envp)
+	{
+		while (envp[i])
+		{
+			mini->envp[i] = ft_strdup(envp[i]);
+			if (!mini->envp[i])
+			{
+				ft_free_arr(mini->envp);
+				return (ERROR);
+			}
+			i++;
+		}
+		mini->envp[i] = NULL;
+	}
+	return (SUCCESS);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_minishell mini;
 	char *line;
 
+	ft_cpy_env(&mini, envp);
+	mini.exit = 0;
+	(void)argc;
+	(void)argv;
 	line = NULL;
-	ft_atoi("1234");
-	while ((res = get_next_line(0, &line)))
+	while (!mini.exit)
 	{
-		printf("[%d]{%s}\n", res, line);
+		ft_putstr_fd("minishell> ", 1);
+		get_next_line(1, &line);
+		parser(&mini, line);
 		free(line);
+		/**исполнение**/
 	}
-	printf("[%d]{%s}\n", res, line);
-	free(line);
 	return (0);
 }

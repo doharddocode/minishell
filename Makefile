@@ -1,6 +1,6 @@
 NAME 			= minishell
 
-FLAGS			= -Wall -Werror -Wextra
+FLAGS			= #-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 
@@ -14,18 +14,28 @@ HEADERS			= $(INCS)minishell.h \
 
 MAIN_DIR 		= srcs/
 
-BUILINTS_DIR	= srcs/builtins/
+PARSER_DIR		= $(MAIN_DIR)parser/
+
+BUILINTS_DIR	= $(MAIN_DIR)builtins/
+
+UTILS_DIR		= $(MAIN_DIR)utils/
 
 GNL_FILES		= get_next_line.c \
 					get_next_line_utils.c \
 
 MAIN_FILES 		= minishell.c
 
+PARSER_FILES	= parser.c
+
 BUILINS_FILES	= echo.c
+
+UTILS_FILES		= free.c
 
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \
 					$(addprefix $(BUILINTS_DIR), $(BUILINS_FILES)) \
+					$(addprefix $(PARSER_DIR), $(PARSER_FILES)) \
+					$(addprefix $(UTILS_DIR), $(UTILS_FILES)) \
 
 OBJS 			= $(SRCS:.c=.o)
 

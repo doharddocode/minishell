@@ -7,6 +7,18 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-void shell_echo();
+#define SUCCESS 1
+#define ERROR -1
+
+typedef struct s_minishell
+{
+	char **envp;
+	int exit;
+} t_minishell;
+
+int parser(t_minishell *mini, char *str);
+
+void ft_free_arr(char **arr);
+void ft_free_str(char *str);
 
 #endif
