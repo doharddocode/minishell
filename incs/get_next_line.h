@@ -27,7 +27,7 @@ typedef struct		s_gnl
 	struct s_gnl	*next;
 }					t_gnl;
 
-t_gnl				*ft_lstnew(int fd);
+t_gnl				*gnl_ft_lstnew(int fd);
 t_gnl				*ft_free_lst(t_gnl *lst, t_gnl *root);
 
 int					get_next_line(int fd, char **line);
