@@ -7,15 +7,6 @@ static int check_option_n(t_list  *args)
 	return (0);
 }
 
-t_list *delete_root(t_list *args_root)
-{
-	t_list *temp;
-	temp = args_root->next;
-	ft_free_str(args_root->content);
-	free(args_root);
-	return (temp);
-}
-
 int ft_echo(t_minishell *mini)
 {
 	t_list *args;

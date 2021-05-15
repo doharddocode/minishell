@@ -24,7 +24,6 @@ int add_arg_to_args(t_minishell *mini, char **arg)
 
 int	add_char_to_arg(char **prev_arg, char symb)
 {
-	size_t new_strlen;
 	char *temp;
 
 	if (!*prev_arg)
@@ -36,14 +35,13 @@ int	add_char_to_arg(char **prev_arg, char symb)
 	}
 	else if (ft_strlen(*prev_arg) > 0)
 	{
-		new_strlen = ft_strlen(*prev_arg) + 1;
-		temp = ft_strnew(new_strlen);
+		temp = ft_strnew(ft_strlen(*prev_arg) + 1);
 		if (!temp)
 			return (ERROR);
 		ft_strcpy(temp, *prev_arg);
 		temp[ft_strlen(*prev_arg)] = symb;
 		ft_free_str(*prev_arg);
-		*prev_arg = ft_strnew(new_strlen);
+		*prev_arg = ft_strnew(ft_strlen(*prev_arg) + 1);
 		if (!*prev_arg)
 			return (ERROR);
 		ft_strcpy(*prev_arg, temp);
@@ -79,6 +77,5 @@ int parser(t_minishell *mini, const char *str)
 		i++;
 	}
 	add_arg_to_args(mini, &arg);
-	builtins(mini);
 	return (SUCCESS);
 }

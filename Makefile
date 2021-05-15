@@ -27,9 +27,9 @@ MAIN_FILES 		= minishell.c
 
 PARSER_FILES	= parser.c
 
-BUILINS_FILES	= builtins.c echo.c
+BUILINS_FILES	= builtins.c echo.c utils.c
 
-UTILS_FILES		= free.c
+UTILS_FILES		= free.c envp_list_utils.c
 
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \
