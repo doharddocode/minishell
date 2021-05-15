@@ -1,5 +1,7 @@
 NAME = libft.a
+
 CFLAGS = -Wall -Wextra -Werror
+
 SRC = ft_memset.c  \
 	  ft_tolower.c \
 	  ft_toupper.c \
@@ -30,6 +32,7 @@ SRC = ft_memset.c  \
 	  ft_strmapi.c \
 	  ft_strtrim.c \
 	  ft_strjoin.c	\
+	  ft_strnew.c	\
 	  ft_substr.c 	\
 	  ft_itoa.c 	\
 	  ft_split.c	\
