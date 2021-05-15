@@ -27,7 +27,7 @@ MAIN_FILES 		= minishell.c
 
 PARSER_FILES	= parser.c
 
-BUILINS_FILES	= echo.c
+BUILINS_FILES	= builtins.c echo.c
 
 UTILS_FILES		= free.c
 
@@ -46,6 +46,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADERS)
 	make -C $(LIBFT_DIR)
+	make bonus -C $(LIBFT_DIR)
 	gcc $(FLAGS) $(LIBFT_DIR)/libft.a $(OBJS) -o $(NAME)
 
 clean:

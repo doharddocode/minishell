@@ -39,8 +39,8 @@ int ft_cpy_env(t_minishell *mini, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell mini;
-	char *line;
+	t_minishell	mini;
+	char		*line;
 
 	ft_cpy_env(&mini, envp);
 	mini.exit = 0;
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	while (!mini.exit)
 	{
 		ft_putstr_fd("minishell> ", 1);
-		get_next_line(1, &line);
+		get_next_line(0, &line);
 		parser(&mini, line);
 		free(line);
 		/**исполнение**/
