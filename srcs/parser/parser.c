@@ -1,81 +1,60 @@
 #include "minishell.h"
 
-char	*ft_strcpy(char *s1, const char *s2)
+int add_arg_to_args(t_minishell *mini, char *arg)
 {
-	size_t	cur;
+	char *env_var;
 
-	cur = 0;
-	while (s2[cur] != '\0')
-	{
-		s1[cur] = s2[cur];
-		cur++;
-	}
-	s1[cur] = '\0';
-	return (s1);
-}
-
-int add_arg_to_args(t_minishell *mini, char **arg)
-{
-	//printf("arg to add = [%s]\n", *arg);
-	ft_lstadd_back(&(mini->args), ft_lstnew(*arg));
-	*arg = NULL;
+	env_var = parse_env_vars(mini, arg);
+	if (env_var)
+		ft_lstadd_back(&(mini->args), ft_lstnew(env_var));
+	else
+		ft_lstadd_back(&(mini->args), ft_lstnew(arg));
 	return (SUCCESS);
 }
 
-int	add_char_to_arg(char **prev_arg, char symb)
-{
-	char *temp;
-
-	if (!*prev_arg)
-	{
-		*prev_arg = ft_strnew(1);
-		if (!*prev_arg)
-			return (ERROR);
-		*prev_arg[0] = symb;
-	}
-	else if (ft_strlen(*prev_arg) > 0)
-	{
-		temp = ft_strnew(ft_strlen(*prev_arg) + 1);
-		if (!temp)
-			return (ERROR);
-		ft_strcpy(temp, *prev_arg);
-		temp[ft_strlen(*prev_arg)] = symb;
-		ft_free_str(*prev_arg);
-		*prev_arg = ft_strnew(ft_strlen(*prev_arg) + 1);
-		if (!*prev_arg)
-			return (ERROR);
-		ft_strcpy(*prev_arg, temp);
-		ft_free_str(temp);
-	}
-	return (SUCCESS);
-}
-
-int skip_spaces(const char *str, int i)
+int skip_spaces(char *str, int i)
 {
 	while (str[i] == ' ')
 		i++;
 	return (--i);
 }
 
-int parser(t_minishell *mini, const char *str)
+int get_arg_len(char *str, int *i)
 {
-	int i;
+	int result;
+
+	result = 0;
+	while (!str[*i] || str[*i] != ' ')
+	{
+		if (!str[*i])
+			break;
+		result++;
+		*i = *i + 1;
+	}
+	return (result);
+}
+
+int parser(t_minishell *mini, char *str)
+{
+
+	int arg_len;
 	char *arg;
+	int i;
 
 	i = 0;
-	arg = NULL;
 	mini->args = NULL;
+	arg = NULL;
 	while (str[i])
 	{
-		if (str[i] != ' ')
-			add_char_to_arg(&arg, str[i]);
-		if (str[i] == ' ')
-		{
-			i = skip_spaces(str, i);
-			add_arg_to_args(mini, &arg);
-		}
+		arg_len = get_arg_len(str, &i);
+		i -= arg_len;
+		arg = ft_substr(str, i, arg_len);
+		if (!arg)
+			return (ERROR);
+		add_arg_to_args(mini, arg);
+		i += arg_len;
+		i = skip_spaces(str, i);
 		i++;
 	}
-	add_arg_to_args(mini, &arg);
 	return (SUCCESS);
 }

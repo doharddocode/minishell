@@ -16,7 +16,7 @@ int ft_echo(t_minishell *mini)
 	n_opt = check_option_n(args);
 	if (n_opt)
 		args = args->next;
-	while (args)
+	while (args && ft_lstsize(mini->args) > 1)
 	{
 		ft_putstr_fd(args->content, 1);
 		if (args->next)

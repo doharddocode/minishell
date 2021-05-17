@@ -1,5 +1,11 @@
 #include "minishell.h"
 
+int minishell(t_minishell *mini)
+{
+	builtins(mini);
+	return (SUCCESS);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	mini;
@@ -16,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 		get_next_line(0, &line);
 		parser(&mini, line);
 		free(line);
-		builtins(&mini);
+		minishell(&mini);
 	}
 	return (0);
 }
