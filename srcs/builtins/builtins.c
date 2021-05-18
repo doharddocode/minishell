@@ -14,7 +14,7 @@ int builtins(t_minishell *mini)
 	args = mini->args;
 	while (args)
 	{
-		if (!ft_strncmp(args->content, "echo", ft_strlen("echo")))
+		if (is_builtin(args->content, "echo"))
 			builtins_func[0](mini);
 		args = args->next;
 	}

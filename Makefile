@@ -1,6 +1,6 @@
 NAME 			= minishell
 
-FLAGS			= #-Wall -Werror -Wextra
+FLAGS			= -fsanitize=address #-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 
@@ -25,11 +25,11 @@ GNL_FILES		= get_next_line.c \
 
 MAIN_FILES 		= minishell.c
 
-PARSER_FILES	= parser.c parse_env_vars.c
+PARSER_FILES	= parser.c parse_env_vars.c parse_double_quotes.c
 
 BUILINS_FILES	= builtins.c echo.c utils.c
 
-UTILS_FILES		= free.c envp_list_utils.c common.c
+UTILS_FILES		= free.c envp_list_utils.c arg_list.c common.c
 
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \
@@ -47,7 +47,7 @@ all: $(NAME)
 $(NAME): $(OBJS) $(HEADERS)
 	make -C $(LIBFT_DIR)
 	make bonus -C $(LIBFT_DIR)
-	gcc $(FLAGS) $(LIBFT_DIR)/libft.a $(OBJS) -o $(NAME)
+	gcc $(FLAGS) $(LIBFT_DIR)libft.a $(OBJS) -o $(NAME)
 
 clean:
 	make clean -C $(LIBFT_DIR)
