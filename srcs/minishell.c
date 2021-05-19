@@ -20,9 +20,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_putstr_fd("minishell> ", 1);
 		get_next_line(0, &line);
-		parser(&mini, line);
-		free(line);
-		minishell(&mini);
+		if (parser(&mini, line) != ERROR)
+		{
+			free(line);
+			minishell(&mini);
+		}
 	}
-	return (0);
+	return (SUCCESS);
 }

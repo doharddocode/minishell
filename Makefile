@@ -1,6 +1,6 @@
 NAME 			= minishell
 
-FLAGS			= -fsanitize=address #-Wall -Werror -Wextra
+FLAGS			= -fsanitize=address -g #-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 
@@ -25,7 +25,7 @@ GNL_FILES		= get_next_line.c \
 
 MAIN_FILES 		= minishell.c
 
-PARSER_FILES	= parser.c parse_env_vars.c parse_double_quotes.c
+PARSER_FILES	= parser.c env_vars.c quotes.c utils.c
 
 BUILINS_FILES	= builtins.c echo.c utils.c
 
