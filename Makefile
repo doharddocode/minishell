@@ -29,7 +29,7 @@ PARSER_FILES	= parser.c env_vars.c quotes.c utils.c
 
 BUILINS_FILES	= builtins.c echo.c utils.c
 
-UTILS_FILES		= free.c envp_list_utils.c arg_list.c common.c
+UTILS_FILES		= free.c envp_list.c arg_list.c common.c
 
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \

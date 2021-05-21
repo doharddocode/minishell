@@ -7,9 +7,23 @@ static int get_arg_len_quote(char *str, int i, int *result, char quote)
 		i++;
 		if (!is_valid_quotes(str, quote))
 			return (0);
-		while (str[i++] != quote)
+		while (str[i])
+		{
+			if (str[i] == quote)
+			{
+				if (i < (ft_strlen(str) - 1))
+				{
+					if (str[i + 1] == ' ')
+					{
+						(*result)++;
+						break;
+					}
+				}
+			}
+			i++;
 			(*result)++;
-		return (*result += 2);
+		}
+		return (*result += 1);
 	}
 	return (*result = -1);
 }
@@ -44,18 +58,17 @@ static int add_arg_to_args(t_minishell *mini, char *arg)
 	{
 		if (parse_double_quotes(mini, &arg_list, arg, &i) == ERROR)
 			return (ERROR);
-		if (parse_single_quotes(mini, arg, &i) == ERROR)
+		if (parse_single_quotes(mini, &arg_list, arg, &i) == ERROR)
 			return (ERROR);
-		parse_single_quotes(mini, arg, &i);
 		parse_env_vars(mini, &arg_list, arg, &i);
-		if (arg[i])
+		if (arg[i] && arg[i] != '\'' && arg[i] != '"')
 		{
-			parse_env_vars(mini, &arg_list, arg, &i);
 			t_arg_addnode_back(&arg_list, t_arg_new_node(arg[i]));
 			i++;
 		}
 	}
-	ft_lstadd_back(&(mini->args), ft_lstnew(t_arg_to_string(arg_list)));
+	if (t_arg_to_string(arg_list))
+		ft_lstadd_back(&(mini->args), ft_lstnew(t_arg_to_string(arg_list)));
 	return (SUCCESS);
 }
 

@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+ static void skip_quotes(char *arg, int *i, char quote)
+{
+	if (arg[*i] == quote && *i > 0 && arg[*i - 1])
+	{
+		while(arg[*i] == quote)
+			(*i)++;
+	}
+}
+
 int is_valid_quotes(char *arg, char quote)
 {
 	int i;
@@ -28,19 +37,20 @@ int parse_double_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 	{
 		if (!is_valid_quotes(&arg[*i], '"'))
 			return (ERROR);
-		(*i) += 2;
-		substr = ft_remove_chrnstr(arg, '"');
+		substr = ft_remove_chrnstr(&arg[++(*i)], '"');
 		if (!substr)
 			return (ERROR);
-		if (!ft_strlen(substr))
-			ft_lstadd_back(&(mini->args), ft_lstnew(""));
-		while (substr[j])
+		(*i)++;
+		if (ft_strlen(substr))
 		{
-			parse_env_vars(mini, arg_list, substr, &j);
-			if (substr[j])
+			while (substr[j])
 			{
-				t_arg_addnode_back(arg_list, t_arg_new_node(substr[j]));
-				j++;
+				parse_env_vars(mini, arg_list, substr, &j);
+				if (substr[j])
+				{
+					t_arg_addnode_back(arg_list, t_arg_new_node(substr[j]));
+					j++;
+				}
 			}
 		}
 		*i += (int)ft_strlen(substr);
@@ -48,20 +58,32 @@ int parse_double_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 	return (SUCCESS);
 }
 
-int parse_single_quotes(t_minishell *mini, char *arg, int *i)
+int parse_single_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
+	int  j;
 	char *substr;
 
+	j = 0;
+	skip_quotes(arg, i, '\'');
 	if (arg[*i] == '\'')
 	{
 		if (!is_valid_quotes(&arg[*i], '\''))
 			return (ERROR);
-		(*i) += 2;
-		substr = ft_remove_chrnstr(arg, '\'');
+		substr = ft_remove_chrnstr(&arg[*i], '\'');
 		if (!substr)
 			return (ERROR);
-		ft_lstadd_back(&(mini->args), ft_lstnew(substr));
-		*i += (int)ft_strlen(substr);
+		if (ft_strlen(substr))
+		{
+			while (substr[j])
+			{
+				if (substr[j])
+				{
+					t_arg_addnode_back(arg_list, t_arg_new_node(substr[j]));
+					j++;
+				}
+			}
+		}
+		*i += ((int)ft_strlen(substr) + 2);
 	}
 	return (SUCCESS);
 }

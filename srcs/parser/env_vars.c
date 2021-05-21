@@ -9,6 +9,8 @@ static char *start_parse_var(t_minishell *mini, char *arg, int *i)
 	var_len = 0;
 	while (arg[*i] && arg[*i] != '$' && arg[*i] != ' ')
 	{
+		if (arg[*i] == '\'' || arg[*i] == '"')
+			break;
 		var_len++;
 		(*i)++;
 	}
@@ -27,19 +29,16 @@ static char *start_parse_var(t_minishell *mini, char *arg, int *i)
 char *get_var_value(t_minishell *mini, char *var_name)
 {
 	t_envp *envp;
-	char *dollar;
 
 	envp = mini->envp;
 	while (envp)
 	{
-		if (!ft_strncmp(envp->key, var_name, ft_strlen(var_name)))
+		if (!ft_strncmp(envp->key, var_name, ft_strlen(var_name))
+				&& ft_strlen(var_name) == ft_strlen(envp->key))
 			return (ft_strinit(ft_strlen(envp->value), envp->value));
 		envp = envp->next;
 	}
-	dollar = ft_strinit(1, "$");
-	if (!dollar)
-		return (NULL);
-	return (ft_strjoin(dollar, var_name));
+	return (ft_strnew(1));
 }
 
 static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
@@ -50,6 +49,10 @@ static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
 	res_lst = NULL;
 	while (arg[*i] && arg[*i] != ' ')
 	{
+		if (arg[*i] == '\'' || arg[*i] == '"')
+		{
+			break;
+		}
 		if (arg[*i] == '$')
 		{
 			(*i)++;
@@ -66,12 +69,13 @@ static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
 
 void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
+	int j;
 	char *env_var;
 
 	if (arg[*i] == '$')
 	{
 		env_var = parse_env_vars_inner(mini, arg, i);
-		int j = 0;
+		j = 0;
 		while (env_var && env_var[j])
 		{
 			t_arg_addnode_back(arg_list, t_arg_new_node(env_var[j]));
