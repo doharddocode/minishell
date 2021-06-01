@@ -19,7 +19,7 @@ int ft_echo(t_minishell *mini)
 	while (args && ft_lstsize(mini->args) > 1)
 	{
 		ft_putstr_fd(args->content, 1);
-		if (args->next)
+		if (args->next && ft_strlen(args->content))
 			write(1, " ", 1);
 		args = args->next;
 	}

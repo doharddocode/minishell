@@ -4,7 +4,7 @@ void parse_to_arglist(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
 	if (!mini->is_quote_parse)
 		parse_quotes(mini, arg_list, arg, i);
-	parse_shield(mini, arg_list, arg, i);
+	parse_escape(mini, arg_list, arg, i);
 	parse_env_vars(mini, arg_list, arg, i);
 	if (arg[*i] && is_normal_symbol(mini, arg[*i]))
 	{

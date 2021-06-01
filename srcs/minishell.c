@@ -13,6 +13,7 @@ int	main(int argc, char **argv, char **envp)
 
 	ft_cpy_env(&mini, envp);
 	mini.exit = 0;
+	mini.is_quote_parse = 0;
 	(void)argc;
 	(void)argv;
 	line = NULL;
