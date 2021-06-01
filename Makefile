@@ -25,7 +25,7 @@ GNL_FILES		= get_next_line.c \
 
 MAIN_FILES 		= minishell.c
 
-PARSER_FILES	= parser.c env_vars.c quotes.c utils.c
+PARSER_FILES	= parser.c arg.c env_var.c quote.c escape.c utils.c
 
 BUILINS_FILES	= builtins.c echo.c utils.c
 
