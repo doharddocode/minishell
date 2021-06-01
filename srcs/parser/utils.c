@@ -1,30 +1,32 @@
 #include "minishell.h"
 
-char *ft_remove_chrnstr(const char *str, char symb)
+void parse_to_arglist(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
-	int		i;
-	int		j;
-	int 	q_cnt;
-	char	*result;
-
-	q_cnt = 0;
-	result = (char *)malloc(ft_strlen(str) * sizeof(char) + 1);
-	if (result)
+	if (!mini->is_quote_parse)
+		parse_quotes(mini, arg_list, arg, i);
+	parse_shield(mini, arg_list, arg, i);
+	parse_env_vars(mini, arg_list, arg, i);
+	if (arg[*i] && is_normal_symbol(mini, arg[*i]))
 	{
-		i = 0;
-		j = 0;
-		while (str[i])
-		{
-			if (str[i] != symb && q_cnt < 2)
-				result[j++] = str[i];
-			else
-				(q_cnt)++;
-			i++;
-		}
-		result[j] = '\0';
-		return (result);
+		t_arg_addnode_back(arg_list, t_arg_new_node(arg[*i]));
+		next_symbol(arg, i);
 	}
-	return (NULL);
+}
+
+void next_symbol(char *str, int *counter)
+{
+	if (str[*counter])
+		(*counter)++;
+}
+
+int is_normal_symbol(t_minishell *mini, char symb)
+{
+	if (mini->is_quote_parse && symb == '\'')
+		return (1);
+	else if (symb != '"' && symb != '\'' && symb != '\\' && symb != '\0')
+		return (1);
+	else
+		return (0);
 }
 
 int skip_spaces(char *str, int i)

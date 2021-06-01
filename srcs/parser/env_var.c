@@ -9,7 +9,7 @@ static char *start_parse_var(t_minishell *mini, char *arg, int *i)
 	var_len = 0;
 	while (arg[*i] && arg[*i] != '$' && arg[*i] != ' ')
 	{
-		if (arg[*i] == '\'' || arg[*i] == '"')
+		if (is_shieild_symb(arg[*i]) || arg[*i] == '"')
 			break;
 		var_len++;
 		(*i)++;
@@ -22,7 +22,6 @@ static char *start_parse_var(t_minishell *mini, char *arg, int *i)
 	var_value = get_var_value(mini, var_name);
 	if (!var_value)
 		return (NULL);
-	*i -= 1;
 	return (var_value);
 }
 
@@ -38,7 +37,7 @@ char *get_var_value(t_minishell *mini, char *var_name)
 			return (ft_strinit(ft_strlen(envp->value), envp->value));
 		envp = envp->next;
 	}
-	return (ft_strnew(1));
+	return (NULL);
 }
 
 static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
@@ -47,21 +46,8 @@ static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
 	char *result;
 
 	res_lst = NULL;
-	while (arg[*i] && arg[*i] != ' ')
-	{
-		if (arg[*i] == '\'' || arg[*i] == '"')
-		{
-			break;
-		}
-		if (arg[*i] == '$')
-		{
-			(*i)++;
-			ft_lstadd_back(&res_lst, ft_lstnew(start_parse_var(mini, arg, i)));
-			if (!arg[*i])
-				break;
-		}
-		(*i)++;
-	}
+	(*i)++;
+	ft_lstadd_back(&res_lst, ft_lstnew(start_parse_var(mini, arg, i)));
 	result = t_list_to_string(res_lst);
 	ft_lstclear(&res_lst, free);
 	return (result);
@@ -72,7 +58,7 @@ void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 	int j;
 	char *env_var;
 
-	if (arg[*i] == '$')
+	if (arg[*i] == '$' && (arg[(*i) + 1] != ' ') && ft_strlen(&arg[*i]) > 1)
 	{
 		env_var = parse_env_vars_inner(mini, arg, i);
 		j = 0;
@@ -81,5 +67,6 @@ void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 			t_arg_addnode_back(arg_list, t_arg_new_node(env_var[j]));
 			j++;
 		}
+		parse_env_vars(mini, arg_list, arg, i);
 	}
 }
