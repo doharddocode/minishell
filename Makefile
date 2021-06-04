@@ -27,7 +27,7 @@ MAIN_FILES 		= minishell.c
 
 PARSER_FILES	= parser.c arg.c env_var.c quote.c escape.c utils.c
 
-BUILINS_FILES	= builtins.c echo.c utils.c
+BUILINS_FILES	= builtins.c echo.c cd.c utils.c
 
 UTILS_FILES		= free.c envp_list.c arg_list.c common.c
 

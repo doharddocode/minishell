@@ -1,11 +1,42 @@
 #include "minishell.h"
 
-t_envp *ft_envp_new_node(char *var)
+t_envp	*ft_get_envp_node(t_envp *envp, char *key)
+{
+	if (!key)
+		return (NULL);
+	while (envp)
+	{
+		if (!ft_strncmp(envp->key, key, ft_strlen(envp->key))
+			&& ft_strlen(envp->key) == ft_strlen(key))
+			return (envp);
+		envp = envp->next;
+	}
+	return (NULL);
+}
+
+int ft_envp_update_node(t_envp *envp, char *key, char *new_value)
+{
+	if (!new_value)
+		return (ERROR);
+	while (envp)
+	{
+		if (!ft_strncmp(envp->key, key, ft_strlen(envp->key))
+			&& ft_strlen(envp->key) == ft_strlen(key))
+		{
+			ft_free_str(envp->value);
+			envp->value = ft_strinit(ft_strlen(new_value), new_value);
+			if (!envp->value)
+				return (ERROR);
+		}
+		envp = envp->next;
+	}
+	return (SUCCESS);
+}
+
+t_envp *ft_envp_new_node(char **result)
 {
 	t_envp *node;
-	char **result;
 
-	result = ft_split(var, '=');
 	node = (t_envp *)malloc(sizeof(t_envp));
 	if (!node || !result)
 		return (NULL);
@@ -43,6 +74,7 @@ void ft_envp_addback_node(t_envp **envp, t_envp *new_node)
 int ft_cpy_env(t_minishell *mini, char **envp)
 {
 	int	i;
+	char **result;
 
 	i = 0;
 	if (!envp)
@@ -50,8 +82,28 @@ int ft_cpy_env(t_minishell *mini, char **envp)
 	mini->envp = NULL;
 	while (envp[i])
 	{
-		ft_envp_addback_node(&mini->envp, ft_envp_new_node(envp[i]));
+		result = ft_split(envp[i], '=');
+		if (!result)
+			return (ERROR);
+		ft_envp_addback_node(&mini->envp, ft_envp_new_node(result));
 		i++;
+//		ft_free_arr(result);
 	}
 	return (SUCCESS);
+}
+
+int is_env_exist(t_envp *envp, char *var_name)
+{
+	if (!var_name)
+		return (ERROR);
+	while (envp)
+	{
+		if (!ft_strncmp(envp->key, var_name, ft_strlen(envp->key))
+			&& ft_strlen(envp->key) == ft_strlen(var_name))
+		{
+			return (1);
+		}
+		envp = envp->next;
+	}
+	return (0);
 }
