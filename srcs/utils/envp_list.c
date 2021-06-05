@@ -2,53 +2,59 @@
 
 t_envp	*ft_get_envp_node(t_envp *envp, char *key)
 {
+	t_envp *res;
+
 	if (!key)
 		return (NULL);
-	while (envp)
-	{
-		if (!ft_strncmp(envp->key, key, ft_strlen(envp->key))
-			&& ft_strlen(envp->key) == ft_strlen(key))
-			return (envp);
-		envp = envp->next;
-	}
-	return (NULL);
-}
-
-int ft_envp_update_node(t_envp *envp, char *key, char *new_value)
-{
-	if (!new_value)
-		return (ERROR);
+	res = (t_envp *)malloc(sizeof(t_envp));
+	if (!res)
+		return (NULL);
 	while (envp)
 	{
 		if (!ft_strncmp(envp->key, key, ft_strlen(envp->key))
 			&& ft_strlen(envp->key) == ft_strlen(key))
 		{
-			ft_free_str(envp->value);
-			envp->value = ft_strinit(ft_strlen(new_value), new_value);
-			if (!envp->value)
-				return (ERROR);
+			res->key = ft_strinit(ft_strlen(envp->key), envp->key);
+			res->value = ft_strinit(ft_strlen(envp->value), envp->value);
+			res->next = NULL;
+			return (res);
 		}
 		envp = envp->next;
+	}
+	return (NULL);
+}
+
+int ft_envp_update_node(t_envp **envp, char *key, char *new_value)
+{
+	if (!new_value)
+		return (ERROR);
+	while (envp)
+	{
+		if (!ft_strncmp((*envp)->key, key, ft_strlen((*envp)->key))
+			&& ft_strlen((*envp)->key) == ft_strlen(key))
+		{
+			ft_free_str((*envp)->value);
+			(*envp)->value = ft_strinit(ft_strlen(new_value), new_value);
+			if ((*envp)->value)
+				return (ERROR);
+		}
+		*envp = (*envp)->next;
 	}
 	return (SUCCESS);
 }
 
-t_envp *ft_envp_new_node(char **result)
+t_envp *ft_envp_new_node(char *key, char *value)
 {
 	t_envp *node;
 
 	node = (t_envp *)malloc(sizeof(t_envp));
-	if (!node || !result)
+	if (!node || !key || !value)
 		return (NULL);
-	if (result[0])
-		node->key = result[0];
-	else
-		node->key = NULL;
-	if (result[1])
-		node->value = result[1];
-	else
-		node->value = NULL;
+	node->key = ft_strinit(ft_strlen(key), key);
+	node->value = ft_strinit(ft_strlen(value), value);
 	node->next = NULL;
+	if (!node->key || !node->value)
+		return (NULL);
 	return (node);
 }
 
@@ -85,9 +91,8 @@ int ft_cpy_env(t_minishell *mini, char **envp)
 		result = ft_split(envp[i], '=');
 		if (!result)
 			return (ERROR);
-		ft_envp_addback_node(&mini->envp, ft_envp_new_node(result));
+		ft_envp_addback_node(&mini->envp, ft_envp_new_node(result[0], result[1]));
 		i++;
-//		ft_free_arr(result);
 	}
 	return (SUCCESS);
 }

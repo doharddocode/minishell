@@ -2,42 +2,40 @@
 
 static int set_oldpwd(t_envp *envp)
 {
-	char *oldpwd;
 	char cwd[255];
 
 	if (!getcwd(cwd, 255))
 		return (ERROR);
-	oldpwd = ft_strjoin("OLDPWD=", cwd);
-	if (!oldpwd)
-		return (ERROR);
 	if (is_env_exist(envp, "OLDPWD"))
-		ft_envp_update_node(envp, "OLDPWD", oldpwd);
+	{
+		ft_envp_update_node(&envp, "OLDPWD", cwd);
+	}
 	else
-		ft_envp_addback_node(&envp, ft_envp_new_node(&oldpwd));
+		ft_envp_addback_node(&envp, ft_envp_new_node("OLDPWD", cwd));
 	return (SUCCESS);
 }
 
 static int set_path(t_envp *envp, int flag)
 {
 	int result;
-	char *env_path;
+	t_envp *envp_node;
 
 	if (flag == 0)
 	{
-		env_path = ft_get_envp_node(envp, "OLDPWD")->value;
-		if (!env_path)
+		envp_node = ft_get_envp_node(envp, "OLDPWD");
+		if (!envp_node)
 			return (ERROR);
 		set_oldpwd(envp);
-
+		ft_putendl_fd(envp_node->value, 1);
 	}
 	else
 	{
 		set_oldpwd(envp);
-		env_path = ft_get_envp_node(envp, "HOME")->value;
-		if (!env_path)
+		envp_node = ft_get_envp_node(envp, "HOME");
+		if (!envp_node)
 			return (ERROR);
 	}
-	result = chdir(env_path);
+	result = chdir(envp_node->value);
 	return (result);
 }
 
@@ -54,6 +52,7 @@ int	ft_cd(t_minishell *mini)
 		result = set_path(envp, 0);
 	else
 	{
+		set_oldpwd(envp);
 		result = chdir(args->content);
 		if (result < 0)
 			return (ERROR);
