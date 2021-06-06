@@ -52,6 +52,7 @@ int ft_echo(t_minishell *mini);
 int	ft_cd(t_minishell *mini);
 int ft_pwd(t_minishell *mini);
 int ft_export(t_minishell *mini);
+int ft_unset(t_minishell *mini);
 
 void	ft_free_str(char *str);
 void 	ft_free_arr(char **arr);
@@ -67,6 +68,7 @@ t_envp	*ft_get_envp_node(t_envp *envp, char *key);
 int is_env_exist(t_envp *envp, char *var_name);
 void sort_envp_list(t_envp **envp);
 void	print_envp_list(t_envp *envp, char *prefix);
+t_envp *ft_delete_envp_node(t_envp *root, t_envp *node);
 
 t_arg *t_arg_new_node(char symb);
 t_arg *t_arg_last_node(t_arg *arg);
