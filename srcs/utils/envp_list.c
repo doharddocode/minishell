@@ -1,5 +1,71 @@
 #include "minishell.h"
 
+char *env_to_str(char *prefix, char *key, char *value)
+{
+	int i;
+	char *result;
+	size_t total_size;
+
+	i = 0;
+	total_size = 0;
+	if (prefix)
+		total_size += ft_strlen(prefix);
+	total_size += ft_strlen(key) + ft_strlen(value);
+	result = ft_strnew(total_size);
+	if (!result)
+		return (NULL);
+	ft_stricpy(&result, prefix, &i);
+	ft_stricpy(&result, key, &i);
+	ft_stricpy(&result, value, &i);
+	return (result);
+}
+
+void	print_envp_list(t_envp *envp, char *prefix)
+{
+	char *env_key;
+	char *result;
+	char *p_str;
+
+	while (envp)
+	{
+		if (prefix)
+			p_str = ft_strjoin(prefix, " ");
+		env_key = ft_strjoin(envp->key, "=");
+		result = env_to_str(p_str, env_key, envp->value);
+		if (result)
+			ft_putendl_fd(result, 1);
+		envp = envp->next;
+	}
+}
+
+void sort_envp_list(t_envp **envp)
+{
+	t_envp *head;
+	t_envp *temp;
+	char *temp_key;
+	char *temp_value;
+
+	head = *envp;
+	while (head != NULL)
+	{
+		temp = head;
+		while (temp->next != NULL)
+		{
+			if (ft_strcmp(temp->key, temp->next->key) > 0)
+			{
+				temp_key = temp->key;
+				temp_value = temp->value;
+				temp->key = temp->next->key;
+				temp->value = temp->next->value;
+				temp->next->key = temp_key;
+				temp->next->value = temp_value;
+			}
+			temp = temp->next;
+		}
+		head = head->next;
+	}
+}
+
 t_envp	*ft_get_envp_node(t_envp *envp, char *key)
 {
 	t_envp *res;
