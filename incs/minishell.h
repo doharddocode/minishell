@@ -30,6 +30,7 @@ typedef struct s_minishell
 	t_list *args;
 	int is_quote_parse;
 	int exit;
+	int ret;
 } t_minishell;
 
 int parser(t_minishell *mini, char *str);
@@ -47,12 +48,12 @@ void next_symbol(char *str, int *counter);
 
 int builtins(t_minishell *mini);
 int is_builtin(char *arg, char *builtin_name);
-
 int ft_echo(t_minishell *mini);
 int	ft_cd(t_minishell *mini);
 int ft_pwd(t_minishell *mini);
 int ft_export(t_minishell *mini);
 int ft_unset(t_minishell *mini);
+int ft_exit(t_minishell *mini);
 
 void	ft_free_str(char *str);
 void 	ft_free_arr(char **arr);
