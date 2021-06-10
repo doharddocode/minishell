@@ -7,7 +7,8 @@ static void init_builtins(int (*builtins_func[7])(t_minishell *mini))
 	builtins_func[2] = ft_pwd;
 	builtins_func[3] = ft_export;
 	builtins_func[4] = ft_unset;
-	builtins_func[5] = ft_exit;
+	builtins_func[5] = ft_env;
+	builtins_func[6] = ft_exit;
 }
 
 int builtins(t_minishell *mini)
@@ -27,8 +28,10 @@ int builtins(t_minishell *mini)
 			builtins_func[3](mini);
 		else if (is_builtin(mini->args->content, "unset"))
 			builtins_func[4](mini);
-		else if (is_builtin(mini->args->content, "exit"))
+		else if (is_builtin(mini->args->content, "env"))
 			builtins_func[5](mini);
+		else if (is_builtin(mini->args->content, "exit"))
+			builtins_func[6](mini);
 		if (mini->args)
 			mini->args = mini->args->next;
 	}
