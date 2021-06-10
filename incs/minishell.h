@@ -53,6 +53,7 @@ int	ft_cd(t_minishell *mini);
 int ft_pwd(t_minishell *mini);
 int ft_export(t_minishell *mini);
 int ft_unset(t_minishell *mini);
+int ft_env(t_minishell *mini);
 int ft_exit(t_minishell *mini);
 
 void	ft_free_str(char *str);

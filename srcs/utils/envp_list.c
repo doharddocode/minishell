@@ -26,6 +26,7 @@ void	print_envp_list(t_envp *envp, char *prefix)
 	char *result;
 	char *p_str;
 
+	p_str = NULL;
 	while (envp)
 	{
 		if (prefix)
