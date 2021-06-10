@@ -1,5 +1,20 @@
 #include "minishell.h"
 
+void	ft_stricpy(char **dest, char *src, int *pos)
+{
+	int i;
+
+	i = 0;
+	if (!src)
+		return;
+	while (src[i] != '\0')
+	{
+		(*dest)[*pos] = src[i];
+		i++;
+		(*pos)++;
+	}
+}
+
 char *t_list_to_string(t_list *list)
 {
 	char *result;

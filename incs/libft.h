@@ -53,6 +53,7 @@ int				ft_lstsize(t_list *lst);
 int				ft_atoi(const char *str);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 int				ft_strncmp(const char *str1, const char *str2, size_t n);
+int				ft_strcmp(char *s1, char *s2);
 
 char			*ft_itoa(int n);
 char			*ft_strdup(const char *s1);

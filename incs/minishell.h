@@ -46,18 +46,27 @@ int is_normal_symbol(t_minishell *mini, char symb);
 void next_symbol(char *str, int *counter);
 
 int builtins(t_minishell *mini);
-
-int ft_echo(t_minishell *mini);
-
 int is_builtin(char *arg, char *builtin_name);
 
-void	ft_free_str(char *str);
-char	*t_list_to_string(t_list *list);
+int ft_echo(t_minishell *mini);
+int	ft_cd(t_minishell *mini);
+int ft_pwd(t_minishell *mini);
+int ft_export(t_minishell *mini);
 
-t_envp *ft_envp_new_node(char *var);
+void	ft_free_str(char *str);
+void 	ft_free_arr(char **arr);
+char	*t_list_to_string(t_list *list);
+void	ft_stricpy(char **dest, char *src, int *pos);
+
+t_envp *ft_envp_new_node(char *key, char *value);
 t_envp *ft_envp_last_node(t_envp *envp);
 void ft_envp_addback_node(t_envp **envp, t_envp *new_node);
 int ft_cpy_env(t_minishell *mini, char **envp);
+int ft_envp_update_node(t_envp **envp, char *key, char *new_value);
+t_envp	*ft_get_envp_node(t_envp *envp, char *key);
+int is_env_exist(t_envp *envp, char *var_name);
+void sort_envp_list(t_envp **envp);
+void	print_envp_list(t_envp *envp, char *prefix);
 
 t_arg *t_arg_new_node(char symb);
 t_arg *t_arg_last_node(t_arg *arg);
