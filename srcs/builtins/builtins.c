@@ -6,26 +6,27 @@ static void init_builtins(int (*builtins_func[7])(t_minishell *mini))
 	builtins_func[1] = ft_cd;
 	builtins_func[2] = ft_pwd;
 	builtins_func[3] = ft_export;
+	builtins_func[4] = ft_unset;
 }
 
 int builtins(t_minishell *mini)
 {
 	int (*builtins_func[7]) (t_minishell *mini);
-	t_list *args;
 
 	init_builtins(builtins_func);
-	args = mini->args;
-	while (args)
+	while (mini->args)
 	{
-		if (is_builtin(args->content, "echo"))
+		if (is_builtin(mini->args->content, "echo"))
 			builtins_func[0](mini);
-		else if (is_builtin(args->content, "cd"))
+		else if (is_builtin(mini->args->content, "cd"))
 			builtins_func[1](mini);
-		else if (is_builtin(args->content, "pwd"))
+		else if (is_builtin(mini->args->content, "pwd"))
 			builtins_func[2](mini);
-		else if (is_builtin(args->content, "export"))
+		else if (is_builtin(mini->args->content, "export"))
 			builtins_func[3](mini);
-		args = args->next;
+		else if (is_builtin(mini->args->content, "unset"))
+			builtins_func[4](mini);
+		mini->args = mini->args->next;
 	}
 	return (SUCCESS);
 }
