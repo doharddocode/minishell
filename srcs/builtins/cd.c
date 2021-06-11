@@ -22,7 +22,7 @@ static int set_path(t_envp *envp, int flag)
 
 	if (flag == 0)
 	{
-		envp_node = ft_get_envp_node(envp, "OLDPWD");
+		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "OLDPWD"));
 		if (!envp_node)
 			return (ERROR);
 		set_oldpwd(envp);
@@ -31,7 +31,7 @@ static int set_path(t_envp *envp, int flag)
 	else
 	{
 		set_oldpwd(envp);
-		envp_node = ft_get_envp_node(envp, "HOME");
+		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "HOME"));
 		if (!envp_node)
 			return (ERROR);
 	}

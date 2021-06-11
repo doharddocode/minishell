@@ -81,6 +81,21 @@ t_envp *ft_delete_envp_node(t_envp *root, t_envp *node)
 	return (temp);
 }
 
+t_envp *ft_copy_envp_node(t_envp *node)
+{
+	t_envp *res;
+
+	if (!node)
+		return (NULL);
+	res = (t_envp *)malloc(sizeof(t_envp) * 1);
+	if (!res)
+		return (NULL);
+	res->key = ft_strinit(ft_strlen(node->key), node->key);
+	res->value = ft_strinit(ft_strlen(node->value), node->value);
+	res->next = node->next;
+	return (res);
+}
+
 t_envp	*ft_get_envp_node(t_envp *envp, char *key)
 {
 	t_envp *res;
@@ -95,10 +110,6 @@ t_envp	*ft_get_envp_node(t_envp *envp, char *key)
 		if (!ft_strncmp(envp->key, key, ft_strlen(envp->key))
 			&& ft_strlen(envp->key) == ft_strlen(key))
 		{
-//			res->key = ft_strinit(ft_strlen(envp->key), envp->key);
-//			res->value = ft_strinit(ft_strlen(envp->value), envp->value);
-//			res->next = envp->next;
-//			return (res);
 			return (envp);
 		}
 		envp = envp->next;
