@@ -2,7 +2,7 @@
 
 int ft_pwd(t_minishell *mini)
 {
-	(void *)mini;
+	(void)mini;
 	char cwd[255];
 
 	if (!getcwd(cwd, 255))
