@@ -2,7 +2,20 @@
 
 int minishell(t_minishell *mini)
 {
-	builtins(mini);
+	t_list *args;
+
+	args = mini->args;
+	if (!args)
+		return (mini->ret = ERROR);
+	while (args)
+	{
+		to_lower_case(args->content);
+		args = args->next;
+	}
+	if (is_builtin(mini->args->content, NULL))
+		builtins(mini);
+	else
+		execute(mini);
 	return (SUCCESS);
 }
 

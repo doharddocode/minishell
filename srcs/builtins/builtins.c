@@ -11,7 +11,7 @@ static void init_builtins(int (*builtins_func[7])(t_minishell *mini))
 	builtins_func[6] = ft_exit;
 }
 
-int builtins(t_minishell *mini)
+int	builtins(t_minishell *mini)
 {
 	int (*builtins_func[7]) (t_minishell *mini);
 
