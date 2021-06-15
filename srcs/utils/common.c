@@ -1,5 +1,26 @@
 #include "minishell.h"
 
+char	*to_lower_case(char* str) {
+	char	*s;
+
+	s = str;
+	while (*str != '\0') {
+		if (*str >= 'A' && *str <= 'Z') {
+			*str = *str + 32;
+		}
+		++str;
+	}
+	return (s);
+}
+
+int is_equal_strs(char *str1, char *str2)
+{
+	if (!ft_strncmp(str1, str2, ft_strlen(str2))
+		&& ft_strlen(str1) == ft_strlen(str2))
+		return (1);
+	return (0);
+}
+
 void	ft_stricpy(char **dest, char *src, int *pos)
 {
 	int i;

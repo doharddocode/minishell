@@ -6,9 +6,12 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <dirent.h>
+# include <signal.h>
 
 #define SP_SYMBOLS "$\"\\`"
-#define SUCCESS 1
+#define BUILTIN_FUNC "cd echo env exit export unset pwd"
+#define SUCCESS 0
 #define ERROR (-1)
 
 typedef struct s_enpv
@@ -24,10 +27,19 @@ typedef struct s_arg
 	struct s_arg *next;
 } t_arg;
 
+typedef struct	s_signal
+{
+	int				sigint;
+	int				sigquit;
+	int				exit_status;
+	pid_t			pid;
+}				t_signal;
+
 typedef struct s_minishell
 {
 	t_envp *envp;
 	t_list *args;
+	t_signal *g_sig;
 	int is_quote_parse;
 	int exit;
 	int ret;
@@ -56,10 +68,16 @@ int ft_unset(t_minishell *mini);
 int ft_env(t_minishell *mini);
 int ft_exit(t_minishell *mini);
 
+int execute(t_minishell *mini);
+
 void	ft_free_str(char *str);
 void 	ft_free_arr(char **arr);
 char	*t_list_to_string(t_list *list);
 void	ft_stricpy(char **dest, char *src, int *pos);
+int is_equal_strs(char *str1, char *str2);
+char	*to_lower_case(char* str);
+char	**t_enpv_to_array(t_envp *envp);
+char	**t_list_to_array(t_list *list);
 
 t_envp *ft_envp_new_node(char *key, char *value);
 t_envp *ft_envp_last_node(t_envp *envp);
@@ -72,6 +90,8 @@ void sort_envp_list(t_envp **envp);
 void	print_envp_list(t_envp *envp, char *prefix);
 t_envp *ft_delete_envp_node(t_envp *root, t_envp *node);
 t_envp *ft_copy_envp_node(t_envp *node);
+size_t ft_envp_size(t_envp *root);
+char *env_to_str(char *prefix, char *key, char *value, char *del);
 
 t_arg *t_arg_new_node(char symb);
 t_arg *t_arg_last_node(t_arg *arg);

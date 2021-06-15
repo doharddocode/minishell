@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char *env_to_str(char *prefix, char *key, char *value)
+char *env_to_str(char *prefix, char *key, char *value, char *del)
 {
 	int i;
 	char *result;
@@ -10,19 +10,19 @@ char *env_to_str(char *prefix, char *key, char *value)
 	total_size = 0;
 	if (prefix)
 		total_size += ft_strlen(prefix);
-	total_size += ft_strlen(key) + ft_strlen(value);
+	total_size += ft_strlen(key) + ft_strlen(value) + ft_strlen(del);
 	result = ft_strnew(total_size);
 	if (!result)
 		return (NULL);
 	ft_stricpy(&result, prefix, &i);
 	ft_stricpy(&result, key, &i);
+	ft_stricpy(&result, del, &i);
 	ft_stricpy(&result, value, &i);
 	return (result);
 }
 
 void	print_envp_list(t_envp *envp, char *prefix)
 {
-	char *env_key;
 	char *result;
 	char *p_str;
 
@@ -31,8 +31,7 @@ void	print_envp_list(t_envp *envp, char *prefix)
 	{
 		if (prefix)
 			p_str = ft_strjoin(prefix, " ");
-		env_key = ft_strjoin(envp->key, "=");
-		result = env_to_str(p_str, env_key, envp->value);
+		result = env_to_str(p_str, envp->key, envp->value, "=");
 		if (result)
 			ft_putendl_fd(result, 1);
 		envp = envp->next;
@@ -65,6 +64,19 @@ void sort_envp_list(t_envp **envp)
 		}
 		head = head->next;
 	}
+}
+
+size_t ft_envp_size(t_envp *root)
+{
+	size_t size;
+
+	size = 0;
+	while (root)
+	{
+		root = root->next;
+		size++;
+	}
+	return (size);
 }
 
 t_envp *ft_delete_envp_node(t_envp *root, t_envp *node)
