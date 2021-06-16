@@ -39,22 +39,21 @@ int launch_exec(t_minishell *mini, char *exec_path)
 {
 	char **envp_arr;
 	char **args_arr;
+	int fork_pid;
 
-	mini->g_sig->pid = fork();
-	if (mini->g_sig->pid == 0)
+	fork_pid = fork();
+	if (fork_pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);
 		args_arr = t_list_to_array(mini->args);
 		if (!envp_arr || !args_arr)
 			return (mini->ret = ERROR);
 		if (ft_strchr(exec_path, '/'))
-			execve(exec_path, args_arr, envp_arr);
+			mini->ret = execve(exec_path, args_arr, envp_arr);
 		ft_exit(mini);
 	}
 	else
-		waitpid(mini->g_sig->pid, &mini->ret, 0);
-	if (mini->g_sig->sigint == 1 || mini->g_sig->sigquit == 1)
-		return (mini->ret = mini->g_sig->exit_status);
+		waitpid(fork_pid, &mini->ret, 0);
 	return (mini->ret);
 }
 

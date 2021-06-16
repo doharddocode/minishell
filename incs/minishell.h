@@ -39,7 +39,11 @@ typedef struct s_minishell
 {
 	t_envp *envp;
 	t_list *args;
+<<<<<<< HEAD
 	t_signal *g_sig;
+=======
+	t_signal *t_sig;
+>>>>>>> execute
 	t_list *work_history;
 	int is_quote_parse;
 	int exit;
