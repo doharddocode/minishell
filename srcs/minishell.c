@@ -14,6 +14,8 @@ int minishell(t_minishell *mini)
 	}
 	if (is_builtin(mini->args->content, NULL))
 		builtins(mini);
+	else if (ft_strcmp(mini->args->content, "history") == 0)
+		show_working_history(mini);
 	else
 		execute(mini);
 	return (SUCCESS);
@@ -25,6 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	char		*line;
 
 	ft_cpy_env(&mini, envp);
+	mini.work_history = NULL;
 	mini.exit = 0;
 	mini.is_quote_parse = 0;
 	(void)argc;
@@ -36,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		get_next_line(0, &line);
 		if (parser(&mini, line) != ERROR)
 		{
+			add_cmd_to_history(&mini, line);
 			free(line);
 			minishell(&mini);
 		}

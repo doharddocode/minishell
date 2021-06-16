@@ -40,6 +40,7 @@ typedef struct s_minishell
 	t_envp *envp;
 	t_list *args;
 	t_signal *g_sig;
+	t_list *work_history;
 	int is_quote_parse;
 	int exit;
 	int ret;
@@ -69,6 +70,9 @@ int ft_env(t_minishell *mini);
 int ft_exit(t_minishell *mini);
 
 int execute(t_minishell *mini);
+
+int show_working_history(t_minishell *mini);
+void add_cmd_to_history(t_minishell *mini, char *cmd);
 
 void	ft_free_str(char *str);
 void 	ft_free_arr(char **arr);
