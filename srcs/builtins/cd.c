@@ -15,7 +15,7 @@ static int set_oldpwd(t_envp *envp)
 	return (SUCCESS);
 }
 
-static int set_path(t_envp *envp, int flag)
+static int set_path(t_minishell *mini, t_envp *envp, int flag)
 {
 	int result;
 	t_envp *envp_node;
@@ -24,7 +24,7 @@ static int set_path(t_envp *envp, int flag)
 	{
 		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "OLDPWD"));
 		if (!envp_node)
-			return (ERROR);
+			return (mini->ret = ERROR);
 		set_oldpwd(envp);
 		ft_putendl_fd(envp_node->value, 1);
 	}
@@ -33,7 +33,7 @@ static int set_path(t_envp *envp, int flag)
 		set_oldpwd(envp);
 		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "HOME"));
 		if (!envp_node)
-			return (ERROR);
+			return (mini->ret = ERROR);
 	}
 	result = chdir(envp_node->value);
 	return (result);
@@ -43,19 +43,20 @@ int	ft_cd(t_minishell *mini)
 {
 	int result;
 	t_list *args;
-	t_envp *envp = mini->envp;
+	t_envp *envp;
 
+	envp = mini->envp;
 	args = mini->args->next;
 	if (!args)
-		return (set_path(envp, 1));
+		return (set_path(mini, envp, 1));
 	else if (!ft_strncmp(args->content, "-", 1))
-		result = set_path(envp, 0);
+		result = set_path(mini, envp, 0);
 	else
 	{
 		set_oldpwd(envp);
 		result = chdir(args->content);
 		if (result < 0)
-			return (ERROR);
+			return (mini->ret = ERROR);
 	}
-	return (result);
+	return (mini->ret = result);
 }

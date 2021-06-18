@@ -6,7 +6,7 @@ int ft_pwd(t_minishell *mini)
 	char cwd[255];
 
 	if (!getcwd(cwd, 255))
-		return (ERROR);
+		return (mini->ret = ERROR);
 	ft_putendl_fd(getcwd(cwd, 255), 1);
-	return (SUCCESS);
+	return (mini->ret = SUCCESS);
 }
