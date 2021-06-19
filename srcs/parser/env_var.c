@@ -1,5 +1,20 @@
 #include "minishell.h"
 
+static void print_exit_status(t_minishell *mini, t_arg **arglist,
+							  char *arg, int *i)
+{
+	char	*exit_status;
+
+	exit_status = ft_itoa(mini->ret);
+	if (exit_status)
+	{
+		next_symbol(arg, i);
+		while (*exit_status)
+			t_arg_addnode_back(arglist, t_arg_new_node(*exit_status++));
+	}
+	next_symbol(arg, i);
+}
+
 static char *start_parse_var(t_minishell *mini, char *arg, int *i)
 {
 	char *var_name;
@@ -60,13 +75,18 @@ void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 
 	if (arg[*i] == '$' && (arg[(*i) + 1] != ' ') && ft_strlen(&arg[*i]) > 1)
 	{
-		env_var = parse_env_vars_inner(mini, arg, i);
-		j = 0;
-		while (env_var && env_var[j])
+		if (arg[(*i) + 1] == '?')
+			print_exit_status(mini, arg_list, arg, i);
+		else
 		{
-			t_arg_addnode_back(arg_list, t_arg_new_node(env_var[j]));
-			j++;
+			env_var = parse_env_vars_inner(mini, arg, i);
+			j = 0;
+			while (env_var && env_var[j])
+			{
+				t_arg_addnode_back(arg_list, t_arg_new_node(env_var[j]));
+				j++;
+			}
+			parse_env_vars(mini, arg_list, arg, i);
 		}
-		parse_env_vars(mini, arg_list, arg, i);
 	}
 }
