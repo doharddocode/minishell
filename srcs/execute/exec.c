@@ -50,7 +50,7 @@ int launch_exec(t_minishell *mini, char *exec_path)
 			return (mini->ret = ERROR);
 		if (ft_strchr(exec_path, '/'))
 			mini->ret = execve(exec_path, args_arr, envp_arr);
-		ft_exit(mini);
+		exit(mini->ret);
 	}
 	else
 		waitpid(fork_pid, &mini->ret, 0);

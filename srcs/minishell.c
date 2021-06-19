@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	char		*line;
 
 	ft_cpy_env(&mini, envp);
+	mini.ret = 0;
 	mini.work_history = NULL;
 	mini.exit = 0;
 	mini.is_quote_parse = 0;
