@@ -25,7 +25,7 @@ UTILS_DIR		= $(MAIN_DIR)utils/
 GNL_FILES		= get_next_line.c \
 					get_next_line_utils.c \
 
-MAIN_FILES 		= minishell.c signals.c
+MAIN_FILES 		= minishell.c
 
 PARSER_FILES	= parser.c arg.c env_var.c quote.c escape.c utils.c
 

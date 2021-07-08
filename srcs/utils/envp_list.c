@@ -179,7 +179,6 @@ void ft_envp_addback_node(t_envp **envp, t_envp *new_node)
 		last_node->next = new_node;
 	else
 		*envp = new_node;
-	new_node->next = NULL;
 }
 
 int ft_cpy_env(t_minishell *mini, char **envp)
