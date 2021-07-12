@@ -14,6 +14,11 @@
 #define SUCCESS 0
 #define ERROR (-1)
 
+typedef struct s_pipe
+{
+	int flag;
+} t_pipe;
+
 typedef struct s_enpv
 {
 	char *key;
@@ -38,6 +43,7 @@ typedef struct	s_signal
 typedef struct s_minishell
 {
 	t_envp *envp;
+	t_pipe *pipe;
 	t_list *args;
 	t_signal *t_sig;
 	t_list *work_history;

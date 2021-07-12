@@ -24,9 +24,12 @@ int minishell(t_minishell *mini)
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	mini;
+	t_pipe		pipe;
 	char		*line;
 
 	ft_cpy_env(&mini, envp);
+	pipe.flag = 0;
+	mini.pipe = &pipe;
 	mini.ret = 0;
 	mini.work_history = NULL;
 	mini.exit = 0;
