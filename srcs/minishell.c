@@ -1,6 +1,11 @@
 #include "minishell.h"
 
-int minishell(t_minishell *mini)
+void	redir_exec(t_minishell *mini, t_list *arg)
+{
+
+}
+
+int minishell_old(t_minishell *mini)
 {
 	t_list *args;
 
@@ -12,6 +17,7 @@ int minishell(t_minishell *mini)
 		to_lower_case(args->content);
 		args = args->next;
 	}
+
 	if (is_builtin(mini->args->content, NULL))
 		builtins(mini);
 	else if (ft_strcmp(mini->args->content, "history") == 0)
@@ -19,6 +25,19 @@ int minishell(t_minishell *mini)
 	else
 		execute(mini);
 	return (SUCCESS);
+}
+
+void	minishell(t_minishell *mini)
+{
+	t_list *arg;
+
+	arg = mini->args;
+	while (!mini->exit && arg)
+	{
+		printf("arg=%s\n", arg->content);
+		redir_exec(mini, arg);
+		arg = arg->next;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
