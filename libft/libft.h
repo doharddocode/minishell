@@ -6,7 +6,7 @@
 /*   By: oryndoon <oryndoon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:50:53 by oryndoon          #+#    #+#             */
-/*   Updated: 2020/11/18 14:26:33 by oryndoon         ###   ########.fr       */
+/*   Updated: 2021/07/13 18:08:16 by oryndoon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct s_list
 {
 	void			*content;
+	int				type;
 	struct s_list	*next;
 }				t_list;
 

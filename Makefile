@@ -33,7 +33,7 @@ EXECUTE_FILES	= exec.c
 
 BUILINS_FILES	= builtins.c echo.c cd.c pwd.c export.c unset.c env.c exit.c utils.c
 
-UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c
+UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c arg_item.c
 
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \

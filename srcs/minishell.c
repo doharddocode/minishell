@@ -1,42 +1,78 @@
 #include "minishell.h"
 
-void	redir_exec(t_minishell *mini, t_list *arg)
+int check_type(t_arg_item *arg_item, int type)
 {
-
+	if (arg_item && arg_item->type == type)
+		return (1);
+	return (0);
 }
 
-int minishell_old(t_minishell *mini)
+
+void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 {
-	t_list *args;
+	int pipe;
+	t_arg_item *next_arg;
+	t_arg_item *prev_arg;
 
-	args = mini->args;
-	if (!args)
-		return (mini->ret = ERROR);
-	while (args)
+	pipe = 0;
+	prev_arg = get_item(mini, arg_item, PREV_ITEM);
+	next_arg = get_item(mini, arg_item, NEXT_ITEM);
+	if (check_type(prev_arg, PIPE))
 	{
-		to_lower_case(args->content);
-		args = args->next;
+		//new pipe
+		pipe = 2;
 	}
+	if (next_arg && check_type(prev_arg, PIPE) && pipe != 1)
+	{
+		redir_exec(mini, next_arg->next);
+	}
+	if ((check_type(prev_arg, PIPE) || !prev_arg)
+		&& pipe != 1)
+		{
+			printf("\ttoken=%s\n", arg_item->name);
+		}
+}
 
-	if (is_builtin(mini->args->content, NULL))
-		builtins(mini);
-	else if (ft_strcmp(mini->args->content, "history") == 0)
-		show_working_history(mini);
+// int minishell_old(t_minishell *mini)
+// {
+// 	t_list *args;
+
+// 	args = mini->args;
+// 	if (!args)
+// 		return (mini->ret = ERROR);
+// 	while (args)
+// 	{
+// 		to_lower_case(args->content);
+// 		args = args->next;
+// 	}
+
+// 	if (is_builtin(mini->args->content, NULL))
+// 		builtins(mini);
+// 	else if (ft_strcmp(mini->args->content, "history") == 0)
+// 		show_working_history(mini);
+// 	else
+// 		execute(mini);
+// 	return (SUCCESS);
+// }
+
+void set_arg_type(t_arg_item *item)
+{
+	if (ft_strcmp(item->name, "|") == 0)
+		item->type = PIPE;
 	else
-		execute(mini);
-	return (SUCCESS);
+		item->type = ARGUMENT;
 }
 
 void	minishell(t_minishell *mini)
 {
-	t_list *arg;
+	t_arg_item *arg_item;
 
-	arg = mini->args;
-	while (!mini->exit && arg)
+	arg_item = mini->arg_item;
+	while (arg_item)
 	{
-		printf("arg=%s\n", arg->content);
-		redir_exec(mini, arg);
-		arg = arg->next;
+		//printf("arg=%s[%d]\n", arg_item->name, arg_item->type);
+		redir_exec(mini, arg_item);
+		arg_item = arg_item->next;
 	}
 }
 

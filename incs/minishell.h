@@ -14,6 +14,20 @@
 #define SUCCESS 0
 #define ERROR (-1)
 
+#define NEXT_ITEM 0
+#define PREV_ITEM 1
+
+#define ARGUMENT 2
+#define PIPE 6
+
+typedef struct s_arg_item
+{
+	int type;
+	char *name;
+	struct s_arg_item *next;
+} t_arg_item;
+
+
 typedef struct s_pipe
 {
 	int flag;
@@ -44,6 +58,7 @@ typedef struct s_minishell
 {
 	t_envp *envp;
 	t_pipe *pipe;
+	t_arg_item *arg_item;
 	t_list *args;
 	t_signal *t_sig;
 	t_list *work_history;
@@ -64,6 +79,12 @@ int is_shieild_symb(char symb);
 void parse_to_arglist(t_minishell *mini, t_arg **arg_list, char *arg, int *i);
 int is_normal_symbol(t_minishell *mini, char symb);
 void next_symbol(char *str, int *counter);
+
+t_arg_item *new_item(char *name);
+t_arg_item *item_last(t_arg_item *root);
+void	add_item_back(t_arg_item **root, t_arg_item *new_item);
+t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item);
+void set_arg_type(t_arg_item *item);
 
 int builtins(t_minishell *mini);
 int is_builtin(char *arg, char *builtin_name);

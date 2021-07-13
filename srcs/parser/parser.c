@@ -12,11 +12,6 @@ int parser(t_minishell *mini, char *str)
 	arg = NULL;
 	while (str[i])
 	{
-		if (str[i] == '|')
-		{
-			mini->pipe->flag = 1;
-			i++;
-		}
 		i = skip_spaces(str, i) + 1;
 		arglen = get_arglen(str, i);
 		if (arglen < 1)
