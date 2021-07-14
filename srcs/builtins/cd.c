@@ -42,19 +42,19 @@ static int set_path(t_minishell *mini, t_envp *envp, int flag)
 int	ft_cd(t_minishell *mini)
 {
 	int result;
-	t_list *args;
+	t_arg_item *args;
 	t_envp *envp;
 
 	envp = mini->envp;
-	args = mini->args->next;
+	args = mini->arg_item->next;
 	if (!args)
 		return (set_path(mini, envp, 1));
-	else if (!ft_strncmp(args->content, "-", 1))
+	else if (!ft_strncmp(args->name, "-", 1))
 		result = set_path(mini, envp, 0);
 	else
 	{
 		set_oldpwd(envp);
-		result = chdir(args->content);
+		result = chdir(args->name);
 		if (result < 0)
 			return (mini->ret = ERROR);
 	}

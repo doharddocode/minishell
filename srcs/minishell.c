@@ -17,24 +17,10 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	pipe = 0;
 	prev_arg = get_prev_arg(arg_item);
 	next_arg = get_next_arg(arg_item);
-	// printf("arg_item=%s[%d]\n", arg_item->name, arg_item->type);
-	// if (prev_arg)
-	// 	printf("\tprev=%s\n", prev_arg->name);
-	// if (next_arg)
-	// 	printf("\tnext=%s\n", next_arg->name);
-	// if (check_type(prev_arg, PIPE))
-	// {
-	// 	pipe = shellpipe(mini);
-	// 	printf("%d\n", pipe);
-	// }
-	//printf("args %s\n", next_arg->name);
 	if (next_arg && pipe != 1)
 		redir_exec(mini, next_arg->next);
 	if ((check_type(prev_arg, PIPE) || !prev_arg) && pipe != 1 && mini->no_exec == 0)
-	{
-		// printf("cmd=%s\n", arg_item->name);
 		run_cmd(mini, arg_item);
-	}
 }
 
 void run_cmd(t_minishell *mini, t_arg_item *arg_item)
@@ -78,7 +64,7 @@ void	minishell(t_minishell *mini)
 	int state;
 
 	arg_item = mini->arg_item;
-	while (arg_item)
+	while (mini->arg_item)
 	{
 		mini->pipe->count = 1;
 		mini->pipe->daddy = 1;
@@ -93,7 +79,8 @@ void	minishell(t_minishell *mini)
 		if (mini->pipe->daddy == 0)
 			exit(mini->ret);
 		mini->exec_no = 0;
-		arg_item = arg_item->next;
+		if (mini->arg_item)
+			mini->arg_item = mini->arg_item->next;
 		mini->no_exec = 0;
 	}
 }

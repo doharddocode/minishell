@@ -67,7 +67,6 @@ typedef struct s_minishell
 	t_envp *envp;
 	t_pipe *pipe;
 	t_arg_item *arg_item;
-	t_list *args;
 	t_signal *t_sig;
 	t_list *work_history;
 	int is_quote_parse;

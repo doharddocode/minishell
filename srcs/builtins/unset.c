@@ -14,8 +14,8 @@ static	void delete_env(t_minishell *mini, char *var_name)
 
 int ft_unset(t_minishell *mini)
 {
-	mini->args = mini->args->next;
-	if (mini->args)
-		delete_env(mini, mini->args->content);
+	mini->arg_item = mini->arg_item->next;
+	if (mini->arg_item)
+		delete_env(mini, mini->arg_item->name);
 	return (mini->ret = SUCCESS);
 }

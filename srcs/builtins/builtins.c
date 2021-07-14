@@ -14,28 +14,26 @@ static void init_builtins(int (*builtins_func[7])(t_minishell *mini))
 int	builtins(t_minishell *mini)
 {
 	int (*builtins_func[7]) (t_minishell *mini);
-	///t_arg_item *arg;
 
-	//arg = mini->arg_item;
 	init_builtins(builtins_func);
-	while (mini->args)
+	while (mini->arg_item)
 	{
-		if (is_builtin(mini->args->content, "echo"))
+		if (is_builtin(mini->arg_item->name, "echo"))
 			builtins_func[0](mini);
-		else if (is_builtin(mini->args->content, "cd"))
+		else if (is_builtin(mini->arg_item->name, "cd"))
 			builtins_func[1](mini);
-		else if (is_builtin(mini->args->content, "pwd"))
+		else if (is_builtin(mini->arg_item->name, "pwd"))
 			builtins_func[2](mini);
-		else if (is_builtin(mini->args->content, "export"))
+		else if (is_builtin(mini->arg_item->name, "export"))
 			builtins_func[3](mini);
-		else if (is_builtin(mini->args->content, "unset"))
+		else if (is_builtin(mini->arg_item->name, "unset"))
 			builtins_func[4](mini);
-		else if (is_builtin(mini->args->content, "env"))
+		else if (is_builtin(mini->arg_item->name, "env"))
 			builtins_func[5](mini);
-		else if (is_builtin(mini->args->content, "exit"))
+		else if (is_builtin(mini->arg_item->name, "exit"))
 			builtins_func[6](mini);
-		if (mini->args)
-			mini->args = mini->args->next;
+		if (mini->arg_item)
+			mini->arg_item = mini->arg_item->next;
 	}
 	return (SUCCESS);
 }

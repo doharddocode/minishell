@@ -15,9 +15,9 @@ static void add_env(t_minishell *mini, char **result)
 int ft_export(t_minishell *mini)
 {
 	char **result;
-	t_list *args;
+	t_arg_item *args;
 
-	args = mini->args->next;
+	args = mini->arg_item->next;
 	if (!args)
 	{
 		sort_envp_list(&mini->envp);
@@ -25,9 +25,9 @@ int ft_export(t_minishell *mini)
 	}
 	else
 	{
-		if (ft_strchr(args->content, '='))
+		if (ft_strchr(args->name, '='))
 		{
-			result = ft_split(args->content, '=');
+			result = ft_split(args->name, '=');
 			add_env(mini, result);
 		}
 	}

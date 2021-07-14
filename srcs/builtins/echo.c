@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-static int check_option(t_list **args, char *option_name)
+static int check_option(t_arg_item **args, char *option_name)
 {
 	int is_n = 0;
 
-	while (*args && !ft_strncmp((*args)->content, option_name, ft_strlen(option_name)))
+	while (*args && !ft_strncmp((*args)->name, option_name, ft_strlen(option_name)))
 	{
-		if (!ft_strncmp((*args)->content, option_name, ft_strlen(option_name))
-			&& ft_strlen((*args)->content) == ft_strlen(option_name))
+		if (!ft_strncmp((*args)->name, option_name, ft_strlen(option_name))
+			&& ft_strlen((*args)->name) == ft_strlen(option_name))
 		{
 			is_n++;
 			(*args) = (*args)->next;
@@ -22,15 +22,15 @@ static int check_option(t_list **args, char *option_name)
 
 int ft_echo(t_minishell *mini)
 {
-	t_list *args;
+	t_arg_item *args;
 	int n_opt;
 
-	args = mini->args->next;
+	args = mini->arg_item->next;
 	n_opt = check_option(&args, "-n");
-	while (args && ft_lstsize(mini->args) > 1)
+	while (args && arg_item_count(mini->arg_item) > 1)
 	{
-		ft_putstr_fd(args->content, 1);
-		if (args->next && ft_strlen(args->content))
+		ft_putstr_fd(args->name, 1);
+		if (args->next && ft_strlen(args->name))
 			write(1, " ", 1);
 		args = args->next;
 	}
