@@ -73,8 +73,8 @@ typedef struct s_minishell
 	int no_exec;
 	int exit;
 	int ret;
-	int exec_no;
 	int last;
+	int pid;
 } t_minishell;
 
 int parser(t_minishell *mini, char *str);
@@ -145,4 +145,6 @@ char *t_arg_to_string(t_arg *arg);
 int		shellpipe(t_minishell *mini);
 void	ft_close(int x);
 void	set_fds(t_minishell *mini);
+
+extern t_signal sigs;
 #endif

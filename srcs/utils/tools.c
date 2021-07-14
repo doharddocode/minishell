@@ -27,7 +27,7 @@ char	**arg_to_array(t_arg_item *arg_item)
 	result_arr = (char **)malloc(sizeof(char *) * (arg_item_count(arg_item) + 1));
 	if (!result_arr)
 		return (NULL);
-	while (arg_item)
+	while (arg_item && arg_item->type < REDIR)
 	{
 		result_arr[i++] = ft_strdup(arg_item->name);
 		arg_item = arg_item->next;

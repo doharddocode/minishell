@@ -39,9 +39,9 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 {
 	char **envp_arr;
 	char **args_arr;
-	int fork_pid;
+	pid_t fork_pid;
 
-	fork_pid = fork();
+	fork_pid = fork(); //убрать глобалку
 	if (fork_pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);
@@ -50,12 +50,16 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 		if (!envp_arr || !args_arr)
 			return (mini->ret = ERROR);
 		printf("args %s\n", args_arr[0]);
+		printf("path %s\n", exec_path);
 		if (ft_strchr(exec_path, '/'))
 			mini->ret = execve(exec_path, args_arr, envp_arr);
 		exit(mini->ret);
 	}
 	else
+	{
 		waitpid(fork_pid, &mini->ret, 0);
+		printf("DAD ALIVE\n");
+	}
 	return (mini->ret);
 }
 
@@ -74,9 +78,9 @@ int execute(t_minishell *mini, t_arg_item *arg_item)
 	bin = ft_split(path_env->value, ':');
 	if (!bin)
 		return (ERROR);
-	while (mini->arg_item && mini->arg_item->name && bin[i] && !exec_path)
+	while (arg_item && arg_item->name && bin[i] && !exec_path)
 	{
-		exec_path = check_dir(bin[i], mini->arg_item->name);
+		exec_path = check_dir(bin[i], arg_item->name);
 		i++;
 	}
 	if (exec_path)
