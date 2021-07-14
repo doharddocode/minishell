@@ -14,7 +14,9 @@ static void init_builtins(int (*builtins_func[7])(t_minishell *mini))
 int	builtins(t_minishell *mini)
 {
 	int (*builtins_func[7]) (t_minishell *mini);
+	///t_arg_item *arg;
 
+	//arg = mini->arg_item;
 	init_builtins(builtins_func);
 	while (mini->args)
 	{

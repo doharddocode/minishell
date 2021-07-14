@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+int arg_item_count(t_arg_item *root)
+{
+	int i;
+
+	i = 0;
+	while (root)
+	{
+		root = root->next;
+		i++;
+	}
+	return (i);
+}
+
 t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item)
 {
 	t_arg_item *root;

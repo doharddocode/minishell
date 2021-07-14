@@ -18,19 +18,19 @@ char	**t_enpv_to_array(t_envp *envp)
 	return (envp_arr);
 }
 
-char	**t_list_to_array(t_list *list)
+char	**arg_to_array(t_arg_item *arg_item)
 {
 	int i;
 	char **result_arr;
 
 	i = 0;
-	result_arr = (char **)malloc(sizeof(char *) * (ft_lstsize(list) + 1));
+	result_arr = (char **)malloc(sizeof(char *) * (arg_item_count(arg_item) + 1));
 	if (!result_arr)
 		return (NULL);
-	while (list)
+	while (arg_item)
 	{
-		result_arr[i++] = ft_strdup(list->content);
-		list = list->next;
+		result_arr[i++] = ft_strdup(arg_item->name);
+		arg_item = arg_item->next;
 	}
 	result_arr[i] = NULL;
 	return (result_arr);

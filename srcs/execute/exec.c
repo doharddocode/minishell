@@ -45,7 +45,7 @@ int launch_exec(t_minishell *mini, char *exec_path)
 	if (fork_pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);
-		args_arr = t_list_to_array(mini->args);
+		args_arr = arg_to_array(mini->arg_item);
 		if (!envp_arr || !args_arr)
 			return (mini->ret = ERROR);
 		if (ft_strchr(exec_path, '/'))
@@ -72,9 +72,9 @@ int execute(t_minishell *mini)
 	bin = ft_split(path_env->value, ':');
 	if (!bin)
 		return (ERROR);
-	while (mini->args && mini->args->content && bin[i] && !exec_path)
+	while (mini->arg_item && mini->arg_item->name && bin[i] && !exec_path)
 	{
-		exec_path = check_dir(bin[i], mini->args->content);
+		exec_path = check_dir(bin[i], mini->arg_item->name);
 		i++;
 	}
 	if (exec_path)

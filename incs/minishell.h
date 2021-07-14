@@ -68,6 +68,7 @@ typedef struct s_minishell
 	t_signal *t_sig;
 	t_list *work_history;
 	int is_quote_parse;
+	int no_exec;
 	int exit;
 	int ret;
 	int exec_no;
@@ -92,6 +93,7 @@ t_arg_item *item_last(t_arg_item *root);
 void	add_item_back(t_arg_item **root, t_arg_item *new_item);
 t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item);
 void set_arg_type(t_arg_item *item);
+int arg_item_count(t_arg_item *root);
 
 int builtins(t_minishell *mini);
 int is_builtin(char *arg, char *builtin_name);
@@ -103,6 +105,7 @@ int ft_unset(t_minishell *mini);
 int ft_env(t_minishell *mini);
 int ft_exit(t_minishell *mini);
 
+void run_cmd(t_minishell *mini, t_arg_item *item);
 int execute(t_minishell *mini);
 
 int show_working_history(t_minishell *mini);
@@ -115,7 +118,7 @@ void	ft_stricpy(char **dest, char *src, int *pos);
 int is_equal_strs(char *str1, char *str2);
 char	*to_lower_case(char* str);
 char	**t_enpv_to_array(t_envp *envp);
-char	**t_list_to_array(t_list *list);
+char	**arg_to_array(t_arg_item *arg_item);
 
 t_envp *ft_envp_new_node(char *key, char *value);
 t_envp *ft_envp_last_node(t_envp *envp);

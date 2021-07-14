@@ -8,7 +8,7 @@ int parser(t_minishell *mini, char *str)
 	int i;
 
 	i = 0;
-	mini->args = NULL;
+	mini->arg_item = NULL;
 	arg = NULL;
 	while (str[i])
 	{
