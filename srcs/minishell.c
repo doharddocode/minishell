@@ -16,29 +16,33 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 
 	pipe = 0;
 	prev_arg = NULL;
-	prev_arg = get_item(mini, arg_item, PREV_ITEM);
-	next_arg = get_item(mini, arg_item, NEXT_ITEM);
+	prev_arg = get_item(mini, arg_item, PREV_ITEM, 0);
+	next_arg = get_item(mini, arg_item, NEXT_ITEM, 0);
 	if (check_type(prev_arg, PIPE))
 	{
 		pipe = shellpipe(mini);
 		printf("%d\n", pipe);
 	}
+	//printf("args %s\n", next_arg->name);
 	if (next_arg && pipe != 1)
 		redir_exec(mini, next_arg->next);
 	if ((check_type(prev_arg, PIPE) || !prev_arg) && pipe != 1 && mini->no_exec == 0)
 	{
+		printf("cmd=%s\n", arg_item->name);
 		run_cmd(mini, arg_item);
 	}
 }
 
-void run_cmd(t_minishell *mini, t_arg_item *item)
+void run_cmd(t_minishell *mini, t_arg_item *arg_item)
 {
 	t_arg_item *temp;
 
-	temp = item;
+	temp = arg_item;
+	if (mini->pipe->count == 0)
+		return ;
 	while (temp)
 	{
-		to_lower_case(item->name);
+		to_lower_case(arg_item->name);
 		temp = temp->next;
 	}
 	if (is_builtin(mini->arg_item->name, NULL))
@@ -46,13 +50,20 @@ void run_cmd(t_minishell *mini, t_arg_item *item)
 	else if (ft_strcmp(mini->arg_item->name, "history") == 0)
 		show_working_history(mini);
 	else
-		execute(mini);
+		execute(mini, arg_item);
+	ft_close(mini->pipe->pipein);
+	ft_close(mini->pipe->pipeout);
+	mini->pipe->pipein = -1;
+	mini->pipe->pipeout = -1;
+	mini->pipe->count = 0;
 }
 
 void set_arg_type(t_arg_item *item)
 {
 	if (ft_strcmp(item->name, "|") == 0)
 		item->type = PIPE;
+	else if (ft_strcmp(item->name, ">") == 0)
+		item->type = REDIR;
 	else
 		item->type = ARGUMENT;
 }

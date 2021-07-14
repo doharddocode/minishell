@@ -13,15 +13,23 @@ int arg_item_count(t_arg_item *root)
 	return (i);
 }
 
-t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item)
+t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item, int is_skip)
 {
 	t_arg_item *root;
 
 	root = mini->arg_item;
-	while (root)
+	if (is_skip)
 	{
 		if (n_item == NEXT_ITEM && root == current_item)
 			return (root->next);
+		else if (n_item == PREV_ITEM && root->next == current_item)
+			return (root);
+	}
+	while (root && root->type < REDIR)
+	{
+		//printf("roots %s %d\n", root->name, root->type);
+		if (n_item == NEXT_ITEM && root == current_item)
+			return(root->next);
 		else if (n_item == PREV_ITEM && root->next == current_item)
 			return (root);
 		root = root->next;

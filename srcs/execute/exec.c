@@ -35,7 +35,7 @@ char *check_dir(char *path, char *cmd)
 	return (result);
 }
 
-int launch_exec(t_minishell *mini, char *exec_path)
+int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 {
 	char **envp_arr;
 	char **args_arr;
@@ -45,9 +45,10 @@ int launch_exec(t_minishell *mini, char *exec_path)
 	if (fork_pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);
-		args_arr = arg_to_array(mini->arg_item);
+		args_arr = arg_to_array(arg_item);
 		if (!envp_arr || !args_arr)
 			return (mini->ret = ERROR);
+		printf("args %s\n", args_arr[0]);
 		if (ft_strchr(exec_path, '/'))
 			mini->ret = execve(exec_path, args_arr, envp_arr);
 		exit(mini->ret);
@@ -57,7 +58,7 @@ int launch_exec(t_minishell *mini, char *exec_path)
 	return (mini->ret);
 }
 
-int execute(t_minishell *mini)
+int execute(t_minishell *mini, t_arg_item *arg_item)
 {
 	int i;
 	char *exec_path;
@@ -78,6 +79,6 @@ int execute(t_minishell *mini)
 		i++;
 	}
 	if (exec_path)
-		launch_exec(mini, exec_path);
+		launch_exec(mini, exec_path, arg_item);
 	return (mini->ret);
 }

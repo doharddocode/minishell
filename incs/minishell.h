@@ -17,7 +17,9 @@
 #define NEXT_ITEM 0
 #define PREV_ITEM 1
 
+#define COMMAND 1
 #define ARGUMENT 2
+#define REDIR 3
 #define PIPE 6
 
 typedef struct s_arg_item
@@ -91,7 +93,7 @@ void next_symbol(char *str, int *counter);
 t_arg_item *new_item(char *name);
 t_arg_item *item_last(t_arg_item *root);
 void	add_item_back(t_arg_item **root, t_arg_item *new_item);
-t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item);
+t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item, int is_skip);
 void set_arg_type(t_arg_item *item);
 int arg_item_count(t_arg_item *root);
 
@@ -105,8 +107,8 @@ int ft_unset(t_minishell *mini);
 int ft_env(t_minishell *mini);
 int ft_exit(t_minishell *mini);
 
-void run_cmd(t_minishell *mini, t_arg_item *item);
-int execute(t_minishell *mini);
+void run_cmd(t_minishell *mini, t_arg_item *arg_item);
+int execute(t_minishell *mini, t_arg_item *arg_item);
 
 int show_working_history(t_minishell *mini);
 void add_cmd_to_history(t_minishell *mini, char *cmd);
