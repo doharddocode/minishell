@@ -8,12 +8,11 @@ void add_cmd_to_history(t_minishell *mini, char *cmd)
 	{
 		result = ft_strinit(ft_strlen(cmd), cmd);
 		if (result)
-			ft_lstadd_back(&mini->work_history, ft_lstnew(result));
+			ft_lstadd_back(&(mini->work_history), ft_lstnew(result));
 	}
 }
 
-static void print_history_line(t_list *line, char *content,
-							   char *sep, int counter)
+static void print_history_line(t_list *line, char *content, char *sep, int counter)
 {
 	int i;
 
@@ -39,18 +38,18 @@ static void print_history_line(t_list *line, char *content,
 int show_working_history(t_minishell *mini)
 {
 	int counter;
-	t_arg_item *line;
-	t_arg_item *history;
+	t_list *line;
+	t_list *history;
 
-	// counter = 1;
-	// history = mini->work_history;
-	// while (history)
-	// {
-	// 	line = NULL;
-	// 	if (history->content)
-	// 		print_history_line(line, history->content, "  ", counter++);
-	// 	ft_lstclear(&line, free);
-	// 	history = history->next;
-	// }
+	counter = 1;
+	history = mini->work_history;
+	while (history)
+	{
+		line = NULL;
+		if (history->content)
+			print_history_line(line, history->content, "  ", counter++);
+		ft_lstclear(&line, free);
+		history = history->next;
+	}
 	return (mini->ret = SUCCESS);
 }

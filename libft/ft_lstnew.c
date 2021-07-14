@@ -11,6 +11,5 @@ t_list	*ft_lstnew(void *content)
 		res->next = NULL;
 		return (res);
 	}
-	free(res);
 	return (NULL);
 }

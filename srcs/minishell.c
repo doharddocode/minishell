@@ -17,22 +17,22 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	pipe = 0;
 	prev_arg = get_prev_arg(arg_item);
 	next_arg = get_next_arg(arg_item);
-	printf("arg_item=%s[%d]\n", arg_item->name, arg_item->type);
-	if (prev_arg)
-		printf("\tprev=%s\n", prev_arg->name);
-	if (next_arg)
-		printf("\tnext=%s\n", next_arg->name);
-	if (check_type(prev_arg, PIPE))
-	{
-		pipe = shellpipe(mini);
-		printf("%d\n", pipe);
-	}
+	// printf("arg_item=%s[%d]\n", arg_item->name, arg_item->type);
+	// if (prev_arg)
+	// 	printf("\tprev=%s\n", prev_arg->name);
+	// if (next_arg)
+	// 	printf("\tnext=%s\n", next_arg->name);
+	// if (check_type(prev_arg, PIPE))
+	// {
+	// 	pipe = shellpipe(mini);
+	// 	printf("%d\n", pipe);
+	// }
 	//printf("args %s\n", next_arg->name);
 	if (next_arg && pipe != 1)
 		redir_exec(mini, next_arg->next);
 	if ((check_type(prev_arg, PIPE) || !prev_arg) && pipe != 1 && mini->no_exec == 0)
 	{
-		printf("cmd=%s\n", arg_item->name);
+		// printf("cmd=%s\n", arg_item->name);
 		run_cmd(mini, arg_item);
 	}
 }
