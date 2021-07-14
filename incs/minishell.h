@@ -27,6 +27,7 @@ typedef struct s_arg_item
 	int type;
 	char *name;
 	struct s_arg_item *next;
+	struct s_arg_item *prev;
 } t_arg_item;
 
 
@@ -93,7 +94,8 @@ void next_symbol(char *str, int *counter);
 t_arg_item *new_item(char *name);
 t_arg_item *item_last(t_arg_item *root);
 void	add_item_back(t_arg_item **root, t_arg_item *new_item);
-t_arg_item *get_item(t_minishell *mini, t_arg_item *current_item, int n_item, int is_skip);
+t_arg_item *get_prev_arg(t_arg_item *current_arg);
+t_arg_item *get_next_arg(t_arg_item *current_arg);
 void set_arg_type(t_arg_item *item);
 int arg_item_count(t_arg_item *root);
 

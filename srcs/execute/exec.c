@@ -45,6 +45,7 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 	if (fork_pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);
+		printf("%s\n", arg_item->name);
 		args_arr = arg_to_array(arg_item);
 		if (!envp_arr || !args_arr)
 			return (mini->ret = ERROR);

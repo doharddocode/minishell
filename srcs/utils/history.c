@@ -39,18 +39,18 @@ static void print_history_line(t_list *line, char *content,
 int show_working_history(t_minishell *mini)
 {
 	int counter;
-	t_list *line;
-	t_list *history;
+	t_arg_item *line;
+	t_arg_item *history;
 
-	counter = 1;
-	history = mini->work_history;
-	while (history)
-	{
-		line = NULL;
-		if (history->content)
-			print_history_line(line, history->content, "  ", counter++);
-		ft_lstclear(&line, free);
-		history = history->next;
-	}
+	// counter = 1;
+	// history = mini->work_history;
+	// while (history)
+	// {
+	// 	line = NULL;
+	// 	if (history->content)
+	// 		print_history_line(line, history->content, "  ", counter++);
+	// 	ft_lstclear(&line, free);
+	// 	history = history->next;
+	// }
 	return (mini->ret = SUCCESS);
 }

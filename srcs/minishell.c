@@ -15,9 +15,13 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	t_arg_item *prev_arg;
 
 	pipe = 0;
-	prev_arg = NULL;
-	prev_arg = get_item(mini, arg_item, PREV_ITEM, 0);
-	next_arg = get_item(mini, arg_item, NEXT_ITEM, 0);
+	prev_arg = get_prev_arg(arg_item);
+	next_arg = get_next_arg(arg_item);
+	printf("arg_item=%s[%d]\n", arg_item->name, arg_item->type);
+	if (prev_arg)
+		printf("\tprev=%s\n", prev_arg->name);
+	if (next_arg)
+		printf("\tnext=%s\n", next_arg->name);
 	if (check_type(prev_arg, PIPE))
 	{
 		pipe = shellpipe(mini);
