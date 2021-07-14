@@ -19,17 +19,19 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	next_arg = get_item(mini, arg_item, NEXT_ITEM);
 	if (check_type(prev_arg, PIPE))
 	{
-		//new pipe
-		pipe = 2;
+		pipe = shellpipe(mini);
+		printf("%d\n", pipe);
 	}
-	if (next_arg && check_type(prev_arg, PIPE) && pipe != 1)
+	if (next_arg && pipe != 1)
 	{
 		redir_exec(mini, next_arg->next);
 	}
 	if ((check_type(prev_arg, PIPE) || !prev_arg)
-		&& pipe != 1)
+		&& pipe != 1 && mini->exec_no == 0)
 		{
-			printf("\ttoken=%s\n", arg_item->name);
+			printf("i am here\n");
+			execute(mini);
+			//printf("\ttoken=%s\n", arg_item->name);
 		}
 }
 
@@ -66,12 +68,24 @@ void set_arg_type(t_arg_item *item)
 void	minishell(t_minishell *mini)
 {
 	t_arg_item *arg_item;
+	int state;
 
 	arg_item = mini->arg_item;
 	while (arg_item)
 	{
-		//printf("arg=%s[%d]\n", arg_item->name, arg_item->type);
+		mini->pipe->count = 1;
+		mini->pipe->daddy = 1;
+		mini->last = 1;
 		redir_exec(mini, arg_item);
+		ft_close(mini->pipe->pipein);
+		ft_close(mini->pipe->pipeout);
+		set_fds(mini);
+		waitpid(-1, &state, 0);
+		state = WEXITSTATUS(state);
+		mini->ret = (mini->last != 0) ? mini->ret : state;
+		if (mini->pipe->daddy == 0)
+			exit(mini->ret);
+		mini->exec_no = 0;
 		arg_item = arg_item->next;
 	}
 }

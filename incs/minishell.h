@@ -31,6 +31,11 @@ typedef struct s_arg_item
 typedef struct s_pipe
 {
 	int flag;
+	int pipeout;
+	int pipein;
+	int daddy;
+	int count;
+
 } t_pipe;
 
 typedef struct s_enpv
@@ -65,6 +70,8 @@ typedef struct s_minishell
 	int is_quote_parse;
 	int exit;
 	int ret;
+	int exec_no;
+	int last;
 } t_minishell;
 
 int parser(t_minishell *mini, char *str);
@@ -129,4 +136,7 @@ t_arg *t_arg_last_node(t_arg *arg);
 void t_arg_addnode_back(t_arg **arg, t_arg *new_node);
 char *t_arg_to_string(t_arg *arg);
 
+int		shellpipe(t_minishell *mini);
+void	ft_close(int x);
+void	set_fds(t_minishell *mini);
 #endif

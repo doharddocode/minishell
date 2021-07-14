@@ -22,6 +22,8 @@ BUILINTS_DIR	= $(MAIN_DIR)builtins/
 
 UTILS_DIR		= $(MAIN_DIR)utils/
 
+PIPE_DIR		= $(MAIN_DIR)redirs/
+
 GNL_FILES		= get_next_line.c \
 					get_next_line_utils.c \
 
@@ -35,12 +37,15 @@ BUILINS_FILES	= builtins.c echo.c cd.c pwd.c export.c unset.c env.c exit.c utils
 
 UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c arg_item.c
 
+PIPE_FILES		= pipes.c fd.c
+
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \
 					$(addprefix $(EXECUTE_DIR), $(EXECUTE_FILES)) \
 					$(addprefix $(BUILINTS_DIR), $(BUILINS_FILES)) \
 					$(addprefix $(PARSER_DIR), $(PARSER_FILES)) \
 					$(addprefix $(UTILS_DIR), $(UTILS_FILES)) \
+					$(addprefix $(PIPE_DIR), $(PIPE_FILES)) \
 
 OBJS 			= $(SRCS:.c=.o)
 
