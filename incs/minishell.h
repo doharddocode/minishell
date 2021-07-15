@@ -79,7 +79,7 @@ typedef struct s_minishell
 	int pid;
 } t_minishell;
 
-int parser(t_minishell *mini, char *str);
+int parser(t_minishell *mini);
 int add_arg_to_args(t_minishell *mini, char *arg);
 int get_arglen(char *str, int i);
 void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i);
@@ -148,5 +148,8 @@ int		shellpipe(t_minishell *mini);
 void	ft_close(int x);
 void	set_fds(t_minishell *mini);
 
-extern t_signal sigs;
+void	init_signal(void);
+
+extern t_signal sig;
+void handle_signal(int signal_code);
 #endif

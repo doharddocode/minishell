@@ -1,15 +1,19 @@
 #include "minishell.h"
 
-int parser(t_minishell *mini, char *str)
+int parser(t_minishell *mini)
 {
 
 	int arglen;
 	char *arg;
 	int i;
+	char *str;
 
 	i = 0;
 	mini->arg_item = NULL;
 	arg = NULL;
+	str = NULL;
+	signal(SIGINT, handle_signal);
+	get_next_line(0, &str);
 	while (str[i])
 	{
 		i = skip_spaces(str, i) + 1;

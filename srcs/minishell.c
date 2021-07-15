@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_signal	sigs;
+t_signal	sig;
 
 int check_type(t_arg_item *arg_item, int type)
 {
@@ -136,9 +136,9 @@ int	main(int argc, char **argv, char **envp)
 	line = NULL;
 	while (!mini.exit)
 	{
+		init_signal();
 		ft_putstr_fd("minishell> ", 1);
-		get_next_line(0, &line);
-		if (parser(&mini, line) != ERROR)
+		if (parser(&mini) != ERROR)
 		{
 			add_cmd_to_history(&mini, line);
 			free(line);
