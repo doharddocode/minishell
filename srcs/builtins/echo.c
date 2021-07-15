@@ -27,11 +27,13 @@ int ft_echo(t_minishell *mini)
 
 	args = mini->arg_item->next;
 	n_opt = check_option(&args, "-n");
-	while (args && arg_item_count(mini->arg_item) > 1)
+	while (args && arg_item_count(mini->arg_item) > 1 && args->type < REDIR)
 	{
 		ft_putstr_fd(args->name, 1);
-		if (args->next && ft_strlen(args->name))
+		if (args->next && ft_strlen(args->name) && (args->next->type < REDIR))
+		{
 			write(1, " ", 1);
+		}
 		args = args->next;
 	}
 	if (!n_opt)

@@ -8,6 +8,8 @@
 # include <stdlib.h>
 # include <dirent.h>
 # include <signal.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
 #define SP_SYMBOLS "$\"\\`"
 #define BUILTIN_FUNC "cd echo env exit export unset pwd"
@@ -20,6 +22,8 @@
 #define COMMAND 1
 #define ARGUMENT 2
 #define REDIR 3
+#define INPUT 4
+#define APPEND 5
 #define PIPE 6
 
 typedef struct s_arg_item
@@ -69,6 +73,8 @@ typedef struct s_minishell
 	t_arg_item *arg_item;
 	t_signal *t_sig;
 	t_list *work_history;
+	int fdin;
+	int fdout;
 	int in;
 	int out;
 	int is_quote_parse;
@@ -147,6 +153,8 @@ char *t_arg_to_string(t_arg *arg);
 int		shellpipe(t_minishell *mini);
 void	ft_close(int x);
 void	set_fds(t_minishell *mini);
+void	redirect(t_minishell *mini, t_arg_item *arg,int flag);
+void	input(t_minishell *mini, t_arg_item *arg);
 
 extern t_signal sigs;
 #endif

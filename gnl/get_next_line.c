@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ivangluskov <ivangluskov@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mrosette <mrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 01:59:21 by ivangluskov       #+#    #+#             */
-/*   Updated: 2020/12/13 01:59:22 by ivangluskov      ###   ########.fr       */
+/*   Updated: 2021/07/15 12:18:34 by mrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_gnl		*gnl_ft_lstnew(int fd)
+t_gnl	*gnl_ft_lstnew(int fd)
 {
-	t_gnl *res;
+	t_gnl	*res;
 
-	if ((res = malloc(sizeof(t_gnl))))
+	res = malloc(sizeof(t_gnl));
+	//if	((res = malloc(sizeof(t_gnl))))
+	if (res)
 	{
 		res->fd = fd;
 		res->remainer = NULL;
@@ -26,7 +28,7 @@ t_gnl		*gnl_ft_lstnew(int fd)
 	return (NULL);
 }
 
-char		*process_remainer(char **remainer, char **line)
+char	*process_remainer(char **remainer, char **line)
 {
 	char	*e_l_p;
 

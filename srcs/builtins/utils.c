@@ -9,7 +9,9 @@ int is_builtin(char *arg, char *builtin_name)
 	if (!arg || ft_strlen(arg) < 0)
 		return (ERROR);
 	if (builtin_name)
+	{
 			return (is_equal_strs(arg, builtin_name));
+	}
 	else
 	{
 		builtins = ft_split(BUILTIN_FUNC, ' ');

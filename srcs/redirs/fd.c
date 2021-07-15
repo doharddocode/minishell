@@ -4,6 +4,8 @@ void	set_fds(t_minishell *mini)
 {
 	mini->pipe->pipeout = -1;
 	mini->pipe->pipein = -1;
+	mini->fdin = -1;
+	mini->fdout = -1;
 	mini->pid = -1;
 }
 

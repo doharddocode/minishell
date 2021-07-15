@@ -15,6 +15,10 @@ void set_arg_type(t_arg_item *item)
 		item->type = PIPE;
 	else if (ft_strcmp(item->name, ">") == 0)
 		item->type = REDIR;
+	else if (ft_strcmp(item->name, "<") == 0)
+		item->type = INPUT;
+	else if (ft_strcmp(item->name, ">>") == 0)
+		item->type = APPEND;
 	else if (item->prev == NULL && item->prev->type >= REDIR)
 		item->type = COMMAND;
 	else
@@ -33,12 +37,15 @@ void run_cmd(t_minishell *mini, t_arg_item *arg_item)
 		to_lower_case(arg_item->name);
 		temp = temp->next;
 	}
-	if (is_builtin(mini->arg_item->name, NULL))
+	if (is_builtin(arg_item->name, NULL))
+	{
 		builtins(mini);
-	else if (ft_strcmp(mini->arg_item->name, "history") == 0)
+	}else if (ft_strcmp(arg_item->name, "history") == 0)
 		show_working_history(mini);
 	else
+	{
 		execute(mini, arg_item);
+	}
 	close(mini->pipe->pipein);
 	close(mini->pipe->pipeout);
 	mini->pipe->pipein = -1;
@@ -55,10 +62,18 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	pipe = 0;
 	prev_arg = get_prev_arg(arg_item);
 	next_arg = get_next_arg(arg_item);
-	if (check_type(prev_arg, PIPE))
-	{
+	// if (prev_arg)
+	// 	printf("prev %s\n", prev_arg->name);
+	// if (next_arg)
+	// 	printf("next %s\n", next_arg->name);
+	if (check_type(prev_arg, REDIR))
+		redirect(mini, arg_item, REDIR);
+	else if (check_type(prev_arg, APPEND))
+		redirect(mini, arg_item, APPEND);
+	else if (check_type(prev_arg, INPUT))
+		input(mini, arg_item);
+	else if (check_type(prev_arg, PIPE))
 		pipe = shellpipe(mini);
-	}
 	if (next_arg && pipe != 1)
 	{
 		redir_exec(mini, next_arg->next);
@@ -74,8 +89,8 @@ t_arg_item *next_arg(t_minishell *mini)
 	t_arg_item *arg;
 
 	arg = mini->arg_item;
-	arg = arg->next;
-
+	if (arg)
+		arg = arg->next;
 	while (arg && arg->type != COMMAND)
 	{
 		arg = arg->next;
@@ -101,6 +116,8 @@ void	minishell(t_minishell *mini)
 		redir_exec(mini, arg_item);
 		close(mini->pipe->pipein);
 		close(mini->pipe->pipeout);
+		close(mini->fdin);
+		close(mini->fdout);
 		set_fds(mini);
 		dup2(mini->in, 0);
 		dup2(mini->out, 1);
@@ -110,7 +127,6 @@ void	minishell(t_minishell *mini)
 		if (mini->pipe->daddy == 0)
 			exit(mini->ret);
 		mini->no_exec = 0;
-		//mini->arg_item = mini->arg_item->next->next;
 		mini->arg_item = next_arg(mini);
 	}
 }
@@ -134,6 +150,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	line = NULL;
+	mini.no_exec = 0;
 	while (!mini.exit)
 	{
 		ft_putstr_fd("minishell> ", 1);
