@@ -15,6 +15,8 @@ void set_arg_type(t_arg_item *item)
 		item->type = PIPE;
 	else if (ft_strcmp(item->name, ">") == 0)
 		item->type = REDIR;
+	else if (item->prev == NULL && item->prev->type >= REDIR)
+		item->type = COMMAND;
 	else
 		item->type = ARGUMENT;
 }
@@ -37,8 +39,8 @@ void run_cmd(t_minishell *mini, t_arg_item *arg_item)
 		show_working_history(mini);
 	else
 		execute(mini, arg_item);
-	ft_close(mini->pipe->pipein);
-	ft_close(mini->pipe->pipeout);
+	close(mini->pipe->pipein);
+	close(mini->pipe->pipeout);
 	mini->pipe->pipein = -1;
 	mini->pipe->pipeout = -1;
 	mini->pipe->count = 0;
@@ -53,28 +55,36 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	pipe = 0;
 	prev_arg = get_prev_arg(arg_item);
 	next_arg = get_next_arg(arg_item);
-	printf("arg %s\n", arg_item->name);
-	if (next_arg)
-		printf("next %s\n", next_arg->name);
-		if (prev_arg)
-		printf("prev %s\n", prev_arg->name);
 	if (check_type(prev_arg, PIPE))
 	{
 		pipe = shellpipe(mini);
-		printf("pipe %d\n", pipe);
 	}
 	if (next_arg && pipe != 1)
 	{
 		redir_exec(mini, next_arg->next);
-		printf("exit redir\n");
 	}
-	printf("i am here bitch\n");
 	if ((check_type(prev_arg, PIPE) || !prev_arg) && pipe != 1 && mini->no_exec == 0)
 	{
 		run_cmd(mini, arg_item);
-		printf("exit epta\n");
 	}
-	printf("pipein %d\n", mini->pipe->pipein);
+}
+
+t_arg_item *next_arg(t_minishell *mini)
+{
+	t_arg_item *arg;
+
+	arg = mini->arg_item;
+	arg = arg->next;
+
+	while (arg && arg->type != COMMAND)
+	{
+		arg = arg->next;
+		if (arg && arg->type == COMMAND && arg->prev == NULL)
+			;
+		else if (arg && arg->type == COMMAND)
+			arg = arg->next;
+	}
+	return(arg);
 }
 
 void	minishell(t_minishell *mini)
@@ -89,23 +99,19 @@ void	minishell(t_minishell *mini)
 		mini->pipe->daddy = 1;
 		mini->last = 1;
 		redir_exec(mini, arg_item);
-		ft_close(mini->pipe->pipein);
-		ft_close(mini->pipe->pipeout);
+		close(mini->pipe->pipein);
+		close(mini->pipe->pipeout);
 		set_fds(mini);
-		printf("	stop\n");
-		printf("pipein %d\n", mini->pipe->pipein);
+		dup2(mini->in, 0);
+		dup2(mini->out, 1);
 		waitpid(-1, &state, 0);
-		printf("	stop\n");
 		state = WEXITSTATUS(state);
-		mini->ret = (mini->last != 0) ? mini->ret : state;
-		printf("dad %d\n", mini->pipe->daddy);
+		mini->ret = (mini->last == 0) ? state : mini->ret;
 		if (mini->pipe->daddy == 0)
 			exit(mini->ret);
-		printf("epta\n");
 		mini->no_exec = 0;
-		// if (mini->arg_item)
-		// 	mini->arg_item = mini->arg_item->next;
-		mini->arg_item = mini->arg_item->next;
+		//mini->arg_item = mini->arg_item->next->next;
+		mini->arg_item = next_arg(mini);
 	}
 }
 
@@ -123,6 +129,8 @@ int	main(int argc, char **argv, char **envp)
 	mini.exit = 0;
 	mini.is_quote_parse = 0;
 	mini.no_exec = 0;
+	mini.in = dup(0);
+	mini.out = dup(1);
 	(void)argc;
 	(void)argv;
 	line = NULL;

@@ -38,7 +38,7 @@ typedef struct s_pipe
 	int pipein;
 	int daddy;
 	int count;
-
+	int closefd;
 } t_pipe;
 
 typedef struct s_enpv
@@ -69,6 +69,8 @@ typedef struct s_minishell
 	t_arg_item *arg_item;
 	t_signal *t_sig;
 	t_list *work_history;
+	int in;
+	int out;
 	int is_quote_parse;
 	int no_exec;
 	int exit;
