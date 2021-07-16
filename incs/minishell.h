@@ -152,4 +152,5 @@ void	init_signal(void);
 
 extern t_signal sig;
 void handle_signal(int signal_code);
+
 #endif

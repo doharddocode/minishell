@@ -83,11 +83,12 @@ int add_arg_to_args(t_minishell *mini, char *arg)
 
 	i = 0;
 	arg_list = NULL;
-	//printf("arg_prev=%s\n", arg);
 	while (arg[i])
 		parse_to_arglist(mini, &arg_list, arg, &i);
 	if (t_arg_to_string(arg_list))
+	{
 		add_item_back(&(mini->arg_item), new_item(t_arg_to_string(arg_list)));
+	}
 	else
 		add_item_back(&(mini->arg_item), new_item(ft_strnew(0)));
 	return (SUCCESS);

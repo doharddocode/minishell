@@ -12,8 +12,10 @@ int parser(t_minishell *mini)
 	mini->arg_item = NULL;
 	arg = NULL;
 	str = NULL;
-	signal(SIGINT, handle_signal);
-	get_next_line(0, &str);
+	signal(SIGINT, &handle_signal);
+	signal(SIGQUIT, &handle_signal);
+	if (get_next_line(0, &str) == -2 && mini->exit == 1)
+		printf("exit\n");
 	while (str[i])
 	{
 		i = skip_spaces(str, i) + 1;
