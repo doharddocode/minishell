@@ -73,6 +73,7 @@ t_arg_item *next_arg(t_minishell *mini)
 {
 	t_arg_item *arg;
 
+	return NULL;
 	arg = mini->arg_item;
 	arg = arg->next;
 
@@ -110,7 +111,6 @@ void	minishell(t_minishell *mini)
 		if (mini->pipe->daddy == 0)
 			exit(mini->ret);
 		mini->no_exec = 0;
-		//mini->arg_item = mini->arg_item->next->next;
 		mini->arg_item = next_arg(mini);
 	}
 }
@@ -119,8 +119,13 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	mini;
 	t_pipe		pipe;
-	char		*line;
+	char		**line;
+	struct termios ts;
 
+
+	tcgetattr(STDIN_FILENO, &ts);
+    ts.c_lflag &= ~ECHOCTL;
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &ts);
 	ft_cpy_env(&mini, envp);
 	pipe.flag = 0;
 	mini.pipe = &pipe;
@@ -137,13 +142,11 @@ int	main(int argc, char **argv, char **envp)
 	while (!mini.exit)
 	{
 		init_signal();
+		signal(SIGINT, &handle_signal);
+		signal(SIGQUIT, &handle_signal);
 		ft_putstr_fd("minishell> ", 1);
 		if (parser(&mini) != ERROR)
-		{
-			add_cmd_to_history(&mini, line);
-			free(line);
 			minishell(&mini);
-		}
 	}
 	return (SUCCESS);
 }

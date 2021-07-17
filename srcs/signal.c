@@ -9,10 +9,7 @@ void handle_signal(int signal_code)
 		if (sig.pid == 0)
 		{
 			sig.sigint = 1;
-			ft_putstr_fd("\b\b  ", 2);
-			ft_putstr_fd("\n", 2);
-			ft_putstr_fd("minishell> ", 2);
-
+			ft_putstr_fd("\nminishell> ", 2);
 			sig.exit_status = 1;
 		}
 		else
@@ -22,7 +19,6 @@ void handle_signal(int signal_code)
 	{
 		sig.exit_status = 131;
 		sig.sigquit = 1;
-		ft_putstr_fd("\b\b  \b\b", 2);
 	}
 }
 

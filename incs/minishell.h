@@ -8,6 +8,9 @@
 # include <stdlib.h>
 # include <dirent.h>
 # include <signal.h>
+# include <termios.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #define SP_SYMBOLS "$\"\\`"
 #define BUILTIN_FUNC "cd echo env exit export unset pwd"

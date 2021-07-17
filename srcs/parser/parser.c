@@ -6,28 +6,26 @@ int parser(t_minishell *mini)
 	int arglen;
 	char *arg;
 	int i;
-	char *str;
+	char *line;
 
 	i = 0;
 	mini->arg_item = NULL;
 	arg = NULL;
-	str = NULL;
-	signal(SIGINT, &handle_signal);
-	signal(SIGQUIT, &handle_signal);
-	if (get_next_line(0, &str) == -2 && mini->exit == 1)
-		printf("exit\n");
-	while (str[i])
+	line = NULL;
+	get_next_line(1, &line);
+	add_cmd_to_history(&mini, line);
+	while (line[i])
 	{
-		i = skip_spaces(str, i) + 1;
-		arglen = get_arglen(str, i);
+		i = skip_spaces(line, i) + 1;
+		arglen = get_arglen(line, i);
 		if (arglen < 1)
 			return (ERROR);
-		arg = ft_substr(str, i, arglen);
+		arg = ft_substr(line, i, arglen);
 		if (!arg)
 			return (ERROR);
 		add_arg_to_args(mini, arg);
 		i += arglen;
-		i = skip_spaces(str, i);
+		i = skip_spaces(line, i);
 		i++;
 	}
 	return (SUCCESS);
