@@ -19,8 +19,9 @@ void	heredoc(t_minishell *mini, t_arg_item * arg)
 	printf("epta2\n");
 	while (flag)
 	{
-		buf = readline("> ");
-		printf("gg %s\n", buf);
+		ft_putstr_fd("> ", 1);
+		// buf = readline("> ");
+		get_next_line(1, &buf);
 		str_len = ft_strlen(buf);
 		wrote = 0;
 		if (!ft_strcmp(buf, end))
