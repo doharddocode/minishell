@@ -25,6 +25,7 @@
 #define INPUT 4
 #define APPEND 5
 #define PIPE 6
+#define HEREDOC 7
 
 typedef struct s_arg_item
 {
@@ -73,8 +74,12 @@ typedef struct s_minishell
 	t_arg_item *arg_item;
 	t_signal *t_sig;
 	t_list *work_history;
+	int	pipocunt;
+	int	*pipelocs;
+	char *herecmd;
 	int fdin;
 	int fdout;
+	int fd_temp;
 	int in;
 	int out;
 	int is_quote_parse;
@@ -83,6 +88,8 @@ typedef struct s_minishell
 	int ret;
 	int last;
 	int pid;
+	int heredoc;
+	int pipe_here;
 } t_minishell;
 
 int parser(t_minishell *mini, char *str);
@@ -155,6 +162,8 @@ void	ft_close(int x);
 void	set_fds(t_minishell *mini);
 void	redirect(t_minishell *mini, t_arg_item *arg,int flag);
 void	input(t_minishell *mini, t_arg_item *arg);
+void	heredoc(t_minishell *mini, t_arg_item * arg);
+void	check_for_hd_pip(t_minishell *mini, char *line);
 
 extern t_signal sigs;
 #endif

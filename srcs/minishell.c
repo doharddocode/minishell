@@ -19,6 +19,8 @@ void set_arg_type(t_arg_item *item)
 		item->type = INPUT;
 	else if (ft_strcmp(item->name, ">>") == 0)
 		item->type = APPEND;
+	else if (ft_strcmp(item->name, "<<") == 0)
+		item->type = HEREDOC;
 	else if (item->prev == NULL && item->prev->type >= REDIR)
 		item->type = COMMAND;
 	else
@@ -62,21 +64,31 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	pipe = 0;
 	prev_arg = get_prev_arg(arg_item);
 	next_arg = get_next_arg(arg_item);
-	// if (prev_arg)
-	// 	printf("prev %s\n", prev_arg->name);
-	// if (next_arg)
-	// 	printf("next %s\n", next_arg->name);
+	if (prev_arg)
+		printf("prev %s\n", prev_arg->name);
+	if (next_arg)
+		printf("next %s\n", next_arg->name);
 	if (check_type(prev_arg, REDIR))
 		redirect(mini, arg_item, REDIR);
 	else if (check_type(prev_arg, APPEND))
+	{
 		redirect(mini, arg_item, APPEND);
-	else if (check_type(prev_arg, INPUT))
+	}else if (check_type(prev_arg, INPUT))
+	{
 		input(mini, arg_item);
-	else if (check_type(prev_arg, PIPE))
+	}else if (check_type(prev_arg, HEREDOC))
+	{
+		heredoc(mini, arg_item);
+	}else if (check_type(prev_arg, PIPE))
+	{
+		printf("still suck\n");
 		pipe = shellpipe(mini);
+	}
 	if (next_arg && pipe != 1)
 	{
+		printf("i am in\n");
 		redir_exec(mini, next_arg->next);
+		printf("I am out\n");
 	}
 	if ((check_type(prev_arg, PIPE) || !prev_arg) && pipe != 1 && mini->no_exec == 0)
 	{
@@ -118,6 +130,7 @@ void	minishell(t_minishell *mini)
 		close(mini->pipe->pipeout);
 		close(mini->fdin);
 		close(mini->fdout);
+		close(mini->fd_temp);
 		set_fds(mini);
 		dup2(mini->in, 0);
 		dup2(mini->out, 1);
@@ -151,6 +164,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	line = NULL;
 	mini.no_exec = 0;
+	//mini.heredoc = 0;
 	while (!mini.exit)
 	{
 		ft_putstr_fd("minishell> ", 1);
@@ -158,6 +172,7 @@ int	main(int argc, char **argv, char **envp)
 		if (parser(&mini, line) != ERROR)
 		{
 			add_cmd_to_history(&mini, line);
+			//check_for_hd_pip(&mini, line);
 			free(line);
 			minishell(&mini);
 		}

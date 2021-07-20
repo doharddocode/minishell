@@ -7,6 +7,7 @@ void	set_fds(t_minishell *mini)
 	mini->fdin = -1;
 	mini->fdout = -1;
 	mini->pid = -1;
+	mini->fd_temp = -1;
 }
 
 void	ft_close(int x)

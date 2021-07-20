@@ -2,6 +2,7 @@
 
 void	redirect(t_minishell *mini, t_arg_item *arg,int flag)
 {
+	printf("epta\n");
 	close(mini->fdout);
 	if (flag == REDIR)
 	{
@@ -20,7 +21,9 @@ void	redirect(t_minishell *mini, t_arg_item *arg,int flag)
 		mini->no_exec = 1;
 		return ;
 	}
+	printf("epta\n");
 	dup2(mini->fdout, 1);
+	printf("epta\n");
 }
 
 void	input(t_minishell *mini, t_arg_item *arg)

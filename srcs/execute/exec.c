@@ -41,7 +41,7 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 	char **args_arr;
 	pid_t fork_pid;
 
-	fork_pid = fork(); //убрать глобалку
+	fork_pid = fork();
 	if (fork_pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);

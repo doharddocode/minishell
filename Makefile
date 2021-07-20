@@ -1,6 +1,6 @@
 NAME 			= minishell
 
-FLAGS			= -fsanitize=address -g #-Wall -Werror -Wextra
+FLAGS			= -fsanitize=address -g -lreadline
 
 LIBFT_DIR 		= libft/
 
@@ -37,7 +37,7 @@ BUILINS_FILES	= builtins.c echo.c cd.c pwd.c export.c unset.c env.c exit.c utils
 
 UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c arg_item.c
 
-PIPE_FILES		= pipes.c fd.c
+PIPE_FILES		= pipes.c fd.c redir_tool.c heredoc.c
 
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \
