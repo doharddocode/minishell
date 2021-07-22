@@ -35,7 +35,7 @@ t_arg_item *new_item(char *name)
 	if (result)
 	{
 		result->name = name;
-		set_arg_type(result);
+		// set_arg_type(result);
 		result->next = NULL;
 		result->prev = NULL;
 		return (result);
@@ -63,5 +63,6 @@ void	add_item_back(t_arg_item **root, t_arg_item *new_item)
 	else
 		*root = new_item;
 	new_item->next = NULL;
+	set_arg_type(new_item);
 }
 

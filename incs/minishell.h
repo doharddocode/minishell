@@ -44,6 +44,7 @@ typedef struct s_pipe
 	int daddy;
 	int count;
 	int closefd;
+	int insidepipe;
 } t_pipe;
 
 typedef struct s_enpv

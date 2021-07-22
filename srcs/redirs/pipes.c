@@ -44,6 +44,7 @@ int		shellpipe(t_minishell *mini)
 	pid_t pid;
 	int pipfd[2];
 
+	mini->pipe->insidepipe = 1;
 	pipe(pipfd);
 	pid = fork();
 	if (pid == 0)
