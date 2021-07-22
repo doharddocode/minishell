@@ -61,7 +61,7 @@ int		check_for_redirs(t_arg_item *prev, t_arg_item *next)
 {
 	if (prev && next)
 	{
-		if ((prev->type == REDIR || prev->type == INPUT || prev->type == APPEND) &&
+		if ((prev->type == REDIR/*|| prev->type == INPUT*/ || prev->type == APPEND) &&
 			next->type == PIPE)
 			return (1);
 	}
@@ -78,9 +78,9 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	prev_arg = get_prev_arg(arg_item);
 	next_arg = get_next_arg(arg_item);
 	// if (prev_arg)
-	// 	// printf("prev %s\n", prev_arg->name);
+	// 	printf("prev %s\n", prev_arg->name);
 	// if (next_arg)
-	// 	// printf("next %s\n", next_arg->name);
+	// 	printf("next %s\n", next_arg->name);
 	if (check_type(prev_arg, REDIR))
 		redirect(mini, arg_item, REDIR);
 	else if (check_type(prev_arg, APPEND))
@@ -94,45 +94,34 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 		heredoc(mini, arg_item);
 	}else if (check_type(prev_arg, PIPE))
 	{
-		// printf("still suck\n");
 		pipe = shellpipe(mini);
 	}
 	if (next_arg && check_for_redirs(prev_arg, next_arg) == 0 && pipe != 1)
 	{
-		// printf("i am in\n");
 		redir_exec(mini, next_arg->next);
-		// printf("I am out\n");
 	}
-	if ((/*(check_for_redirs(prev_arg, next_arg) ||*/ check_type(prev_arg, PIPE) || !prev_arg)
-		&& pipe != 1 && mini->no_exec == 0)
+	if ((check_type(prev_arg, PIPE) || !prev_arg) && pipe != 1 && mini->no_exec == 0)
 	{
 		run_cmd(mini, arg_item);
 	}
 }
 
-t_arg_item *next_arg(t_minishell *mini)
+t_arg_item *next_arg(t_arg_item *arg, int insidepipe)
 {
-	t_arg_item *arg;
-	printf("tyta\n");
-	arg = mini->arg_item;
-	printf("arg %s\n", arg->name);
-	if (mini->pipe->insidepipe)
+	if (insidepipe)
 	{
-		while (arg->type != PIPE)
+		while (arg->type != PIPE && arg->next)
 		{
 			arg = arg->next;
 		}
-		arg = arg->next;
+		if (arg)
+			arg = arg->next;
 	}
 	if (arg)
 		arg = arg->next;
 	while (arg && arg->type != COMMAND)
 	{
 		arg = arg->next;
-		// if (arg && arg->type == COMMAND && arg->prev == NULL)
-		// 	;
-		// else if (arg && arg->type == COMMAND)
-		// 	arg = arg->next;
 	}
 	return(arg);
 }
@@ -143,9 +132,8 @@ void	minishell(t_minishell *mini)
 	int state;
 
 	arg_item = mini->arg_item;
-	while (mini->arg_item)
+	while (arg_item)
 	{
-		arg_item = mini->arg_item;
 		mini->pipe->count = 1;
 		mini->pipe->daddy = 1;
 		mini->last = 1;
@@ -165,7 +153,7 @@ void	minishell(t_minishell *mini)
 		if (mini->pipe->daddy == 0)
 			exit(mini->ret);
 		mini->no_exec = 0;
-		mini->arg_item = next_arg(mini);
+		arg_item = next_arg(arg_item, mini->pipe->insidepipe);
 	}
 }
 

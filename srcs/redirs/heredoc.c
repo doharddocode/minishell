@@ -11,16 +11,13 @@ void	heredoc(t_minishell *mini, t_arg_item * arg)
 	size_t wrote;
 
 	end = arg->name;
-	printf("end %s\n", end);
 	close(mini->fd_temp);
 	mini->fd_temp = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	char *buf;
 	int flag = 1;
-	printf("epta2\n");
 	while (flag)
 	{
 		ft_putstr_fd("> ", 1);
-		// buf = readline("> ");
 		get_next_line(1, &buf);
 		str_len = ft_strlen(buf);
 		wrote = 0;
