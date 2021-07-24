@@ -73,10 +73,7 @@ t_arg_item *next_arg(t_minishell *mini)
 {
 	t_arg_item *arg;
 
-	return NULL;
 	arg = mini->arg_item;
-	arg = arg->next;
-
 	while (arg && arg->type != COMMAND)
 	{
 		arg = arg->next;
@@ -119,13 +116,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	mini;
 	t_pipe		pipe;
-	char		**line;
 	struct termios ts;
 
-
-	tcgetattr(STDIN_FILENO, &ts);
-    ts.c_lflag &= ~ECHOCTL;
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &ts);
+	tgetent(0, "xterm-256color");
+	tcgetattr(0, &ts);
+	ts.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &ts);
 	ft_cpy_env(&mini, envp);
 	pipe.flag = 0;
 	mini.pipe = &pipe;
@@ -138,13 +134,9 @@ int	main(int argc, char **argv, char **envp)
 	mini.out = dup(1);
 	(void)argc;
 	(void)argv;
-	line = NULL;
 	while (!mini.exit)
 	{
 		init_signal();
-		signal(SIGINT, &handle_signal);
-		signal(SIGQUIT, &handle_signal);
-		ft_putstr_fd("minishell> ", 1);
 		if (parser(&mini) != ERROR)
 			minishell(&mini);
 	}

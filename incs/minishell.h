@@ -9,6 +9,7 @@
 # include <dirent.h>
 # include <signal.h>
 # include <termios.h>
+# include <term.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -17,8 +18,7 @@
 #define SUCCESS 0
 #define ERROR (-1)
 
-#define NEXT_ITEM 0
-#define PREV_ITEM 1
+#define PROMT "minishell> "
 
 #define COMMAND 1
 #define ARGUMENT 2
@@ -63,6 +63,7 @@ typedef struct	s_signal
 	int				sigquit;
 	int				exit_status;
 	pid_t			pid;
+	struct termios ts;
 }				t_signal;
 
 typedef struct s_minishell

@@ -7,13 +7,27 @@ int parser(t_minishell *mini)
 	char *arg;
 	int i;
 	char *line;
+	struct termios ts;
 
+	tgetent(0, "xterm-256color");
+	tcgetattr(0, &ts);
+	ts.c_lflag |= ECHOCTL;
+	tcsetattr(0, TCSANOW, &ts);
+	signal(SIGINT, &handle_signal);
+	signal(SIGQUIT, &handle_signal);
+	ft_putstr_fd(PROMT, 1);
 	i = 0;
 	mini->arg_item = NULL;
 	arg = NULL;
 	line = NULL;
-	get_next_line(1, &line);
-	add_cmd_to_history(&mini, line);
+	line = readline(NULL);
+	if (line == NULL)
+	{
+		mini->exit = 1;
+		ft_exit(mini);
+		return (ERROR);
+	}
+	add_cmd_to_history(mini, line);
 	while (line[i])
 	{
 		i = skip_spaces(line, i) + 1;

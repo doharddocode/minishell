@@ -2,14 +2,19 @@
 
 void handle_signal(int signal_code)
 {
-	char *code;
+	struct termios ts;
 
+	tgetent(0, "xterm-256color");
+	tcgetattr(0, &ts);
+	ts.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &ts);
 	if (signal_code == SIGINT)
 	{
 		if (sig.pid == 0)
 		{
 			sig.sigint = 1;
-			ft_putstr_fd("\nminishell> ", 2);
+			ft_putstr_fd("\n", 2);
+			ft_putstr_fd(PROMT, 2);
 			sig.exit_status = 1;
 		}
 		else

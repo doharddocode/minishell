@@ -1,6 +1,6 @@
 NAME 			= minishell
 
-FLAGS			= -fsanitize=address -g -lreadline #-Wall -Werror -Wextra
+FLAGS			= -fsanitize=address -g -lreadline -lcurses -ltermcap #-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 
