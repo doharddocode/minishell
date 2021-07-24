@@ -1,6 +1,6 @@
 NAME 			= minishell
 
-FLAGS			= -fsanitize=address -g -lreadline -L/Users/ivangluskov/.brew/Cellar/readline/8.1/lib/ -I/Users/ivangluskov/.brew/Cellar/readline/8.1/include#-Wall -Werror -Wextra
+FLAGS			= -fsanitize=address -g -lreadline -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include#-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 
@@ -52,12 +52,15 @@ OBJS 			= $(SRCS:.c=.o)
 all: $(NAME)
 
 .c.o: $(HEADERS)
-	gcc $(FLAGS) -I$(INCS) -c $< -o $(<:.c=.o)
+	@printf "\033[mMinishell: %-33.33s\r" $@
+	@gcc -I$(INCS) -c $< -o $(<:.c=.o)
 
 $(NAME): $(OBJS) $(HEADERS)
-	make -C $(LIBFT_DIR)
-	make bonus -C $(LIBFT_DIR)
-	gcc $(FLAGS) $(LIBFT_DIR)libft.a $(OBJS) -o $(NAME)
+	@echo ""
+	@make -C $(LIBFT_DIR)
+	@make bonus -C $(LIBFT_DIR)
+	@gcc $(FLAGS) $(LIBFT_DIR)libft.a $(OBJS) -o $(NAME)
+	@echo "\033[0mMinishel is ready!"
 
 clean:
 	make clean -C $(LIBFT_DIR)

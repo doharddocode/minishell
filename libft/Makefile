@@ -61,13 +61,15 @@ BONUS_OBJS= $(BONUS_SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
 
 bonus: $(OBJS) $(BONUS_OBJS)
-	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+	@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+	@echo "\033[0m"
 
 %.o:%.c
-	gcc -Wall -Wextra -Werror -c $< -o $@
+	@printf "\033[mLibft: %-33.33s\r" $@
+	@gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:
 	@rm -f $(OBJ)
