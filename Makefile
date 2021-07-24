@@ -1,6 +1,10 @@
 NAME 			= minishell
 
+<<<<<<< HEAD
 FLAGS			= -fsanitize=address -g -lreadline
+=======
+FLAGS			= -fsanitize=address -g -lreadline -lcurses -ltermcap #-Wall -Werror -Wextra
+>>>>>>> signals
 
 LIBFT_DIR 		= libft/
 
@@ -27,7 +31,7 @@ PIPE_DIR		= $(MAIN_DIR)redirs/
 GNL_FILES		= get_next_line.c \
 					get_next_line_utils.c \
 
-MAIN_FILES 		= minishell.c
+MAIN_FILES 		= minishell.c signal.c
 
 PARSER_FILES	= parser.c arg.c env_var.c quote.c escape.c utils.c
 

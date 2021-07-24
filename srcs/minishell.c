@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_signal	sigs;
+t_signal	sig;
 
 int check_type(t_arg_item *arg_item, int type)
 {
@@ -161,8 +161,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	mini;
 	t_pipe		pipe;
-	char		*line;
+	struct termios ts;
 
+	tgetent(0, "xterm-256color");
+	tcgetattr(0, &ts);
+	ts.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &ts);
 	ft_cpy_env(&mini, envp);
 	pipe.flag = 0;
 	mini.pipe = &pipe;
@@ -175,20 +179,12 @@ int	main(int argc, char **argv, char **envp)
 	mini.out = dup(1);
 	(void)argc;
 	(void)argv;
-	line = NULL;
 	mini.no_exec = 0;
-	//mini.heredoc = 0;
-	while (!mini.exit)
+	while (mini.exit == 0)
 	{
-		ft_putstr_fd("minishell> ", 1);
-		get_next_line(0, &line);
-		if (parser(&mini, line) != ERROR)
-		{
-			add_cmd_to_history(&mini, line);
-			//check_for_hd_pip(&mini, line);
-			free(line);
+		init_signal();
+		if (parser(&mini) != ERROR)
 			minishell(&mini);
-		}
 	}
 	return (SUCCESS);
 }

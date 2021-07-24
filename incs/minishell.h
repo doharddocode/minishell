@@ -10,14 +10,17 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <termios.h>
+# include <term.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #define SP_SYMBOLS "$\"\\`"
 #define BUILTIN_FUNC "cd echo env exit export unset pwd"
 #define SUCCESS 0
 #define ERROR (-1)
 
-#define NEXT_ITEM 0
-#define PREV_ITEM 1
+#define PROMT "minishell> "
 
 #define COMMAND 1
 #define ARGUMENT 2
@@ -66,6 +69,7 @@ typedef struct	s_signal
 	int				sigquit;
 	int				exit_status;
 	pid_t			pid;
+	struct termios ts;
 }				t_signal;
 
 typedef struct s_minishell
@@ -93,7 +97,7 @@ typedef struct s_minishell
 	int pipe_here;
 } t_minishell;
 
-int parser(t_minishell *mini, char *str);
+int parser(t_minishell *mini);
 int add_arg_to_args(t_minishell *mini, char *arg);
 int get_arglen(char *str, int i);
 void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i);
@@ -166,5 +170,9 @@ void	input(t_minishell *mini, t_arg_item *arg);
 void	heredoc(t_minishell *mini, t_arg_item * arg);
 void	check_for_hd_pip(t_minishell *mini, char *line);
 
-extern t_signal sigs;
+void	init_signal(void);
+
+extern t_signal sig;
+void handle_signal(int signal_code);
+
 #endif

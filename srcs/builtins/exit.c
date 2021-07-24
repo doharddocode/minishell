@@ -17,7 +17,7 @@ static int is_numeric(char *str)
 
 int ft_exit(t_minishell *mini)
 {
-	ft_putstr_fd("exit ", 2);
+	ft_putstr_fd("exit\n", 2);
 	mini->exit = 1;
 	if (mini->arg_item)
 	{
