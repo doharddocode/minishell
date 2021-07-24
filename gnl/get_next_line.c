@@ -1,24 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mrosette <mrosette@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/13 01:59:21 by ivangluskov       #+#    #+#             */
-/*   Updated: 2021/07/15 12:18:34 by mrosette         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
-t_gnl	*gnl_ft_lstnew(int fd)
+t_gnl		*ft_lstnew(int fd)
 {
-	t_gnl	*res;
+	t_gnl *res;
 
-	res = malloc(sizeof(t_gnl));
-	//if	((res = malloc(sizeof(t_gnl))))
-	if (res)
+	if ((res = malloc(sizeof(t_gnl))))
 	{
 		res->fd = fd;
 		res->remainer = NULL;
@@ -28,7 +14,7 @@ t_gnl	*gnl_ft_lstnew(int fd)
 	return (NULL);
 }
 
-char	*process_remainer(char **remainer, char **line)
+char		*process_remainer(char **remainer, char **line)
 {
 	char	*e_l_p;
 
@@ -115,13 +101,13 @@ int			get_next_line(int fd, char **line)
 	if (fd < 0 || !line || !BUFFER_SIZE)
 		return (-1);
 	if (!first)
-		if (!(first = gnl_ft_lstnew(fd)))
+		if (!(first = ft_lstnew(fd)))
 			return (-1);
 	lst = first;
 	while (lst->fd != fd)
 	{
 		if (!lst->next)
-			lst->next = gnl_ft_lstnew(fd);
+			lst->next = ft_lstnew(fd);
 		lst = lst->next;
 	}
 	if ((res = ft_get_line(lst->fd, bytes_r, line, &lst->remainer)) < 1)
