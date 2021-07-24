@@ -69,7 +69,6 @@ typedef struct	s_signal
 	int				sigquit;
 	int				exit_status;
 	pid_t			pid;
-	struct termios ts;
 }				t_signal;
 
 typedef struct s_minishell

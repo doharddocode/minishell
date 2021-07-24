@@ -16,10 +16,8 @@ int parser(t_minishell *mini)
 	if (line == NULL)
 	{
 		mini->exit = 1;
-		rl_on_new_line();
-		rl_redisplay();
-		ft_exit(mini);
-		return (ERROR);
+		ft_putstr_fd("\e[1A\e[11C" "exit\n", 1);
+		exit(0);
 	}
 	add_cmd_to_history(mini, line);
 	while (line[i])
