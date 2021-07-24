@@ -1,6 +1,6 @@
 NAME 			= minishell
 
-FLAGS			= -fsanitize=address -g -lreadline -lcurses -ltermcap #-Wall -Werror -Wextra
+FLAGS			= -fsanitize=address -g -lreadline -L/Users/ivangluskov/.brew/Cellar/readline/8.1/lib/ -I/Users/ivangluskov/.brew/Cellar/readline/8.1/include#-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 

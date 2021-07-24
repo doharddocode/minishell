@@ -39,10 +39,9 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 {
 	char **envp_arr;
 	char **args_arr;
-	pid_t fork_pid;
 
-	fork_pid = fork();
-	if (fork_pid == 0)
+	sig.pid = fork();
+	if (sig.pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);
 		args_arr = arg_to_array(arg_item);
@@ -55,7 +54,7 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 	}
 	else
 	{
-		waitpid(fork_pid, &mini->ret, 0);
+		waitpid(sig.pid, &mini->ret, 0);
 	}
 	return (mini->ret);
 }

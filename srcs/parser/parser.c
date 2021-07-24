@@ -2,28 +2,22 @@
 
 int parser(t_minishell *mini)
 {
-
 	int arglen;
 	char *arg;
 	int i;
 	char *line;
-	struct termios ts;
 
-	tgetent(0, "xterm-256color");
-	tcgetattr(0, &ts);
-	ts.c_lflag |= ECHOCTL;
-	tcsetattr(0, TCSANOW, &ts);
 	signal(SIGINT, &handle_signal);
 	signal(SIGQUIT, &handle_signal);
-	ft_putstr_fd(PROMT, 1);
 	i = 0;
 	mini->arg_item = NULL;
 	arg = NULL;
-	line = NULL;
-	line = readline(NULL);
+	line = readline(PROMT);
 	if (line == NULL)
 	{
 		mini->exit = 1;
+		rl_on_new_line();
+		rl_redisplay();
 		ft_exit(mini);
 		return (ERROR);
 	}

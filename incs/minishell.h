@@ -174,5 +174,6 @@ void	init_signal(void);
 
 extern t_signal sig;
 void handle_signal(int signal_code);
+void rl_replace_line (const char *text, int clear_undo);
 
 #endif

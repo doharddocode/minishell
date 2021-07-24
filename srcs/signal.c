@@ -2,26 +2,27 @@
 
 void handle_signal(int signal_code)
 {
-	struct termios ts;
-
-	tgetent(0, "xterm-256color");
-	tcgetattr(0, &ts);
-	ts.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &ts);
 	if (signal_code == SIGINT)
 	{
 		if (sig.pid == 0)
 		{
 			sig.sigint = 1;
-			ft_putstr_fd("\n", 2);
-			ft_putstr_fd(PROMT, 2);
+			printf("\n");
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
 			sig.exit_status = 1;
 		}
 		else
+		{
+			ft_putstr_fd("\n", 2);
 			sig.exit_status = 130;
+		}
 	}
 	else if (signal_code == SIGQUIT)
 	{
+		rl_on_new_line();
+		rl_redisplay();
 		sig.exit_status = 131;
 		sig.sigquit = 1;
 	}
