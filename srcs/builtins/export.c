@@ -31,5 +31,5 @@ int ft_export(t_minishell *mini)
 			add_env(mini, result);
 		}
 	}
-	return (mini->ret = SUCCESS);
+	return (SUCCESS);
 }
