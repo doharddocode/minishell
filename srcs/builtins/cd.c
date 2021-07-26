@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+//static void		print_cd_error(char **args)
+//{
+//	ft_putstr_fd("cd: ", 2);
+//	if (args[2])
+//		ft_putstr_fd("string not in pwd: ", 2);
+//	else
+//	{
+//		ft_putstr_fd(strerror(errno), 2);
+//		ft_putstr_fd(": ", 2);
+//	}
+//	ft_putendl_fd(args[1], 2);
+//}
+
 static int set_oldpwd(t_envp *envp)
 {
 	char cwd[255];
@@ -24,7 +37,7 @@ static int set_path(t_minishell *mini, t_envp *envp, int flag)
 	{
 		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "OLDPWD"));
 		if (!envp_node)
-			return (mini->ret = ERROR);
+			return (item_not_found(mini, "cd", "OLDPWD not set"));
 		set_oldpwd(envp);
 		ft_putendl_fd(envp_node->value, 1);
 	}
@@ -33,7 +46,7 @@ static int set_path(t_minishell *mini, t_envp *envp, int flag)
 		set_oldpwd(envp);
 		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "HOME"));
 		if (!envp_node)
-			return (mini->ret = ERROR);
+			return (item_not_found(mini, "cd", "HOME not set"));
 	}
 	result = chdir(envp_node->value);
 	return (result);
@@ -56,7 +69,7 @@ int	ft_cd(t_minishell *mini)
 		set_oldpwd(envp);
 		result = chdir(args->name);
 		if (result < 0)
-			return (mini->ret = ERROR);
+			return (ERROR);
 	}
 	return (mini->ret = result);
 }

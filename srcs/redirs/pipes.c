@@ -13,9 +13,9 @@ void	redirect(t_minishell *mini, t_arg_item *arg,int flag)
 	}
 	if (mini->fdout == -1)
 	{
-		ft_putstr_fd("minishell> ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(arg->name, 2);
-		ft_putendl_fd(": No such file or dir", 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		mini->ret = 1;
 		mini->no_exec = 1;
 		return ;
@@ -29,9 +29,9 @@ void	input(t_minishell *mini, t_arg_item *arg)
 	mini->fdin = open(arg->name, O_RDONLY, S_IRWXU);
 	if (mini->fdin == -1)
 	{
-		ft_putstr_fd("minishell> ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(arg->name, 2);
-		ft_putstr_fd(": No such file or dir", 2);
+		ft_putstr_fd(": No such file or directory", 2);
 		mini->ret = 1;
 		mini->no_exec = 1;
 		return ;

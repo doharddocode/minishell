@@ -141,6 +141,7 @@ int is_equal_strs(char *str1, char *str2);
 char	*to_lower_case(char* str);
 char	**t_enpv_to_array(t_envp *envp);
 char	**arg_to_array(t_arg_item *arg_item);
+int check_type(t_arg_item *arg_item, int type);
 
 t_envp *ft_envp_new_node(char *key, char *value);
 t_envp *ft_envp_last_node(t_envp *envp);
@@ -174,5 +175,11 @@ void	init_signal(void);
 extern t_signal sig;
 void handle_signal(int signal_code);
 void rl_replace_line (const char *text, int clear_undo);
+
+int check_param_quote(char *param, char quote_type);
+int exit_with_error(char *error_text);
+int item_not_found(t_minishell *mini, char *command_name, char *err_text);
+int validate_line(t_minishell *mini, t_arg_item *arg_item);
+int get_errror_msg(char *exec_path);
 
 #endif

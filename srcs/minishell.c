@@ -42,14 +42,11 @@ void run_cmd(t_minishell *mini, t_arg_item *arg_item)
 		temp = temp->next;
 	}
 	if (is_builtin(arg_item->name, NULL))
-	{
-		builtins(mini);
-	}else if (ft_strcmp(arg_item->name, "history") == 0)
+		mini->ret = builtins(mini);
+	else if (ft_strcmp(arg_item->name, "history") == 0)
 		show_working_history(mini);
 	else
-	{
-		execute(mini, arg_item);
-	}
+		mini->ret = execute(mini, arg_item);
 	close(mini->pipe->pipein);
 	close(mini->pipe->pipeout);
 	mini->pipe->pipein = -1;
@@ -183,7 +180,7 @@ int	main(int argc, char **argv, char **envp)
 	while (mini.exit == 0)
 	{
 		init_signal();
-		if (parser(&mini) != ERROR)
+		if (parser(&mini) != ERROR && validate_line(&mini, mini.arg_item) != ERROR)
 			minishell(&mini);
 	}
 	return (SUCCESS);

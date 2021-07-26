@@ -37,6 +37,7 @@ char *check_dir(char *path, char *cmd)
 
 int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 {
+	int return_val;
 	char **envp_arr;
 	char **args_arr;
 
@@ -49,19 +50,25 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 			return (mini->ret = ERROR);
 		if (ft_strchr(exec_path, '/'))
 			mini->ret = execve(exec_path, args_arr, envp_arr);
-		exit(mini->ret);
+		return_val = get_errror_msg(exec_path);
+		exit(return_val);
 		close(mini->pipe->pipein);
 	}
 	else
-	{
-		waitpid(sig.pid, &mini->ret, 0);
-	}
-	return (mini->ret);
+		waitpid(sig.pid, &return_val, 0);
+	if (sig.sigint == 1 || sig.sigquit == 1)
+		return (sig.exit_status);
+	if (return_val == 32256 || return_val == 32512)
+		return_val /= 256;
+	else
+		return_val = return_val != 0;
+	return (return_val);
 }
 
 int execute(t_minishell *mini, t_arg_item *arg_item)
 {
 	int i;
+	int return_val;
 	char *exec_path;
 	char **bin;
 	t_envp *path_env;
@@ -80,6 +87,8 @@ int execute(t_minishell *mini, t_arg_item *arg_item)
 		i++;
 	}
 	if (exec_path)
-		launch_exec(mini, exec_path, arg_item);
-	return (mini->ret);
+		return_val = launch_exec(mini, exec_path, arg_item);
+	else
+		return_val = launch_exec(mini, arg_item->name, arg_item);
+	return (return_val);
 }

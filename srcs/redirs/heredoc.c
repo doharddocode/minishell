@@ -3,7 +3,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-
 void	heredoc(t_minishell *mini, t_arg_item * arg)
 {
 	char *end;
