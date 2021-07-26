@@ -1,17 +1,17 @@
 #include "minishell.h"
 
-//static void		print_cd_error(char **args)
-//{
-//	ft_putstr_fd("cd: ", 2);
-//	if (args[2])
-//		ft_putstr_fd("string not in pwd: ", 2);
-//	else
-//	{
-//		ft_putstr_fd(strerror(errno), 2);
-//		ft_putstr_fd(": ", 2);
-//	}
-//	ft_putendl_fd(args[1], 2);
-//}
+static void		print_cd_error(t_arg_item *args)
+{
+	ft_putstr_fd("cd: ", 2);
+	if (args->next)
+		ft_putstr_fd("string not in pwd: ", 2);
+	else
+	{
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putendl_fd(args->name, 2);
+}
 
 static int set_oldpwd(t_envp *envp)
 {
@@ -68,8 +68,8 @@ int	ft_cd(t_minishell *mini)
 	{
 		set_oldpwd(envp);
 		result = chdir(args->name);
-		if (result < 0)
-			return (ERROR);
+		if (result != 0)
+			print_cd_error(args);
 	}
 	return (mini->ret = result);
 }

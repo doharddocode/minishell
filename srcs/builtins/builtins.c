@@ -16,24 +16,19 @@ int	builtins(t_minishell *mini)
 	int (*builtins_func[7]) (t_minishell *mini);
 
 	init_builtins(builtins_func);
-	while (mini->arg_item)
-	{
-		if (is_builtin(mini->arg_item->name, "echo"))
-			builtins_func[0](mini);
-		else if (is_builtin(mini->arg_item->name, "cd"))
-			builtins_func[1](mini);
-		else if (is_builtin(mini->arg_item->name, "pwd"))
-			builtins_func[2](mini);
-		else if (is_builtin(mini->arg_item->name, "export"))
-			builtins_func[3](mini);
-		else if (is_builtin(mini->arg_item->name, "unset"))
-			builtins_func[4](mini);
-		else if (is_builtin(mini->arg_item->name, "env"))
-			builtins_func[5](mini);
-		else if (is_builtin(mini->arg_item->name, "exit"))
-			builtins_func[6](mini);
-		if (mini->arg_item)
-			mini->arg_item = mini->arg_item->next;
-	}
+	if (is_builtin(mini->arg_item->name, "echo"))
+		return (builtins_func[0](mini));
+	else if (is_builtin(mini->arg_item->name, "cd"))
+		return (builtins_func[1](mini));
+	else if (is_builtin(mini->arg_item->name, "pwd"))
+		return (builtins_func[2](mini));
+	else if (is_builtin(mini->arg_item->name, "export"))
+		return (builtins_func[3](mini));
+	else if (is_builtin(mini->arg_item->name, "unset"))
+		return (builtins_func[4](mini));
+	else if (is_builtin(mini->arg_item->name, "env"))
+		return (builtins_func[5](mini));
+	else if (is_builtin(mini->arg_item->name, "exit"))
+		return (builtins_func[6](mini));
 	return (SUCCESS);
 }
