@@ -1,5 +1,23 @@
 #include "minishell.h"
 
+void	t_arg_lstdelone(t_arg *lst)
+{
+	free(lst);
+	lst = NULL;
+}
+
+
+void	t_arg_clear(t_arg **lst, void (*del)(void *))
+{
+	if (*lst)
+	{
+		if ((*lst)->next)
+			t_arg_clear(&((*lst)->next), del);
+		t_arg_lstdelone(*lst);
+		*lst = NULL;
+	}
+}
+
 char *t_arg_to_string(t_arg *arg)
 {
 	char *result;

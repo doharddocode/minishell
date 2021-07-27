@@ -10,7 +10,6 @@ int parser(t_minishell *mini)
 	signal(SIGINT, &handle_signal);
 	signal(SIGQUIT, &handle_signal);
 	i = 0;
-	mini->arg_item = NULL;
 	arg = NULL;
 	line = readline(PROMT);
 	if (line == NULL)
@@ -38,5 +37,6 @@ int parser(t_minishell *mini)
 		i++;
 		free(arg);
 	}
+	free(line);
 	return (SUCCESS);
 }

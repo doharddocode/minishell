@@ -11,8 +11,6 @@ void add_cmd_to_history(t_minishell *mini, char *cmd)
 		if (result)
 			ft_lstadd_back(&(mini->work_history), ft_lstnew(result));
 	}
-	if (result)
-		free(result);
 }
 
 static void print_history_line(t_list *line, char *content, char *sep, int counter)

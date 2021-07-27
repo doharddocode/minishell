@@ -75,10 +75,10 @@ typedef struct	s_signal
 
 typedef struct s_minishell
 {
-	t_envp *envp;
+	t_envp *envp; //free
 	t_pipe *pipe;
 	t_arg_item *arg_item;
-	t_list *work_history;
+	t_list *work_history; //free
 	int	pipocunt;
 	int	*pipelocs;
 	char *herecmd;
@@ -117,6 +117,8 @@ t_arg_item *get_prev_arg(t_arg_item *current_arg);
 t_arg_item *get_next_arg(t_arg_item *current_arg);
 void set_arg_type(t_arg_item *item);
 int arg_item_count(t_arg_item *root);
+void	t_arg_clear(t_arg **lst, void (*del)(void *));
+void	t_arg_lstdelone(t_arg *lst);
 
 int builtins(t_minishell *mini);
 int is_builtin(char *arg, char *builtin_name);
@@ -179,6 +181,8 @@ void rl_replace_line (const char *text, int clear_undo);
 
 void free_history(t_minishell *mini);
 void free_envp_list(t_minishell *mini);
+void free_arg_item(t_minishell *mini);
+
 int check_param_quote(char *param, char quote_type);
 int exit_with_error(char *error_text);
 int item_not_found(t_minishell *mini, char *command_name, char *err_text);

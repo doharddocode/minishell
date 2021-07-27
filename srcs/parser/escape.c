@@ -12,7 +12,6 @@ static int escape_quotes(t_arg **arg_list, char *arg, int *i)
 {
 	if (is_shieild_symb(arg[(*i) + 1]))
 	{
-
 		t_arg_addnode_back(arg_list, t_arg_new_node(arg[++(*i)]));
 		next_symbol(arg, i);
 	}

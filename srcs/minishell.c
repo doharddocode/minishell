@@ -158,12 +158,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	mini;
 	t_pipe		pipe;
-//	struct termios ts;
-//
-//	tgetent(0, "xterm-256color");
-//	tcgetattr(0, &ts);
-//	ts.c_lflag &= ~ECHOCTL;
-//	tcsetattr(0, TCSANOW, &ts);
+	struct termios ts;
+
+	tcgetattr(0, &ts);
+	ts.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &ts);
 	ft_cpy_env(&mini, envp);
 	pipe.flag = 0;
 	mini.pipe = &pipe;
@@ -181,8 +180,10 @@ int	main(int argc, char **argv, char **envp)
 	while (mini.exit == 0)
 	{
 		init_signal();
+		mini.arg_item = NULL;
 		if (parser(&mini) != ERROR && validate_line(&mini, mini.arg_item) != ERROR)
 			minishell(&mini);
+		free_arg_item(&mini);
 	}
 	free_envp_list(&mini);
 	free_history(&mini);

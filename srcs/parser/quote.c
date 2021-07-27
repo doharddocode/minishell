@@ -38,6 +38,7 @@ static int parse_double_quotes(t_minishell *mini, t_arg **arg_list, char *arg, i
 			while (substr[j])
 				parse_to_arglist(mini, arg_list, substr, &j);
 		*i += (int)ft_strlen(substr);
+		ft_free_str(substr);
 	}
 	return (SUCCESS);
 }
@@ -64,6 +65,7 @@ static int parse_single_quotes(t_minishell *mini, t_arg **arg_list, char *arg, i
 			}
 		}
 		*i += ((int)ft_strlen(substr) + q_cnt - 1);
+		ft_free_str(substr);
 	}
 	return (SUCCESS);
 }

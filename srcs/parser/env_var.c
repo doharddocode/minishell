@@ -87,6 +87,7 @@ void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 				j++;
 			}
 			parse_env_vars(mini, arg_list, arg, i);
+			ft_free_str(env_var);
 		}
 	}
 }
