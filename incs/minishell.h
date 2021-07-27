@@ -76,7 +76,6 @@ typedef struct s_minishell
 	t_envp *envp;
 	t_pipe *pipe;
 	t_arg_item *arg_item;
-	t_signal *t_sig;
 	t_list *work_history;
 	int	pipocunt;
 	int	*pipelocs;
@@ -174,5 +173,8 @@ void	init_signal(void);
 extern t_signal sig;
 void handle_signal(int signal_code);
 void rl_replace_line (const char *text, int clear_undo);
+
+void free_history(t_minishell *mini);
+void free_envp_list(t_minishell *mini);
 
 #endif

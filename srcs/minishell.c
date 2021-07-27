@@ -187,5 +187,7 @@ int	main(int argc, char **argv, char **envp)
 		if (parser(&mini) != ERROR)
 			minishell(&mini);
 	}
+	free_envp_list(&mini);
+	free_history(&mini);
 	return (SUCCESS);
 }
