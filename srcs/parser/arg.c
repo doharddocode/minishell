@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+int check_param_quote(char *param, char quote_type)
+{
+	int i;
+
+	i = 1;
+	while (param && param[i])
+	{
+		if (param[i] == quote_type)
+			return (1);
+		i++;
+	}
+	return (ERROR);
+}
+
 static void get_arglen_s_quote(char *str, int i, int *result, char quote)
 {
 	i++;

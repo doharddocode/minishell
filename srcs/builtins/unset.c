@@ -17,5 +17,5 @@ int ft_unset(t_minishell *mini)
 	mini->arg_item = mini->arg_item->next;
 	if (mini->arg_item)
 		delete_env(mini, mini->arg_item->name);
-	return (mini->ret = SUCCESS);
+	return (SUCCESS);
 }

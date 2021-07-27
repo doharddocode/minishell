@@ -54,5 +54,5 @@ int show_working_history(t_minishell *mini)
 		ft_lstclear(&line, free);
 		history = history->next;
 	}
-	return (mini->ret = SUCCESS);
+	return (SUCCESS);
 }

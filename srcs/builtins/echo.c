@@ -38,5 +38,5 @@ int ft_echo(t_minishell *mini)
 	}
 	if (!n_opt)
 		write(1, "\n", 1);
-	return (mini->ret = SUCCESS);
+	return (SUCCESS);
 }

@@ -29,6 +29,9 @@ int parser(t_minishell *mini)
 		arg = ft_substr(line, i, arglen);
 		if (!arg)
 			return (ERROR);
+		if (arg[0] == '\'' || arg[0] == '"')
+			if (check_param_quote(arg, arg[0]) == ERROR)
+				return (exit_with_error("bad syntax near quotes!"));
 		add_arg_to_args(mini, arg);
 		i += arglen;
 		i = skip_spaces(line, i);

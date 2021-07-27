@@ -7,7 +7,7 @@ void handle_signal(int signal_code)
 		if (sig.pid == 0)
 		{
 			sig.sigint = 1;
-			printf("\n");
+			ft_putstr_fd("\n", 2);
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();

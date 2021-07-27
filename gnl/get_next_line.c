@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-t_gnl		*ft_lstnew(int fd)
+t_gnl		*gnl_ft_lstnew(int fd)
 {
 	t_gnl *res;
 
@@ -101,13 +101,13 @@ int			get_next_line(int fd, char **line)
 	if (fd < 0 || !line || !BUFFER_SIZE)
 		return (-1);
 	if (!first)
-		if (!(first = ft_lstnew(fd)))
+		if (!(first = gnl_ft_lstnew(fd)))
 			return (-1);
 	lst = first;
 	while (lst->fd != fd)
 	{
 		if (!lst->next)
-			lst->next = ft_lstnew(fd);
+			lst->next = gnl_ft_lstnew(fd);
 		lst = lst->next;
 	}
 	if ((res = ft_get_line(lst->fd, bytes_r, line, &lst->remainer)) < 1)

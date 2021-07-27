@@ -27,7 +27,7 @@ PIPE_DIR		= $(MAIN_DIR)redirs/
 GNL_FILES		= get_next_line.c \
 					get_next_line_utils.c \
 
-MAIN_FILES 		= minishell.c signal.c
+MAIN_FILES 		= minishell.c signal.c error_handle.c
 
 PARSER_FILES	= parser.c arg.c env_var.c quote.c escape.c utils.c
 
@@ -35,7 +35,7 @@ EXECUTE_FILES	= exec.c
 
 BUILINS_FILES	= builtins.c echo.c cd.c pwd.c export.c unset.c env.c exit.c utils.c
 
-UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c arg_item.c free_src.c
+UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c arg_item.c free_src.c validate_line.c
 
 PIPE_FILES		= pipes.c fd.c redir_tool.c heredoc.c
 
