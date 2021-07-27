@@ -11,7 +11,7 @@ void	heredoc(t_minishell *mini, t_arg_item * arg)
 	size_t wrote;
 
 	end = arg->name;
-	close(mini->fd_temp);
+	ft_close(mini->fd_temp);
 	mini->fd_temp = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	char *buf;
 	int flag = 1;
@@ -31,7 +31,7 @@ void	heredoc(t_minishell *mini, t_arg_item * arg)
 		}
 		write(mini->fd_temp, "\n", 1);
 	}
-	close(mini->fd_temp);
+	ft_close(mini->fd_temp);
 	mini->fd_temp = open("tmp", O_RDONLY, S_IRWXU);
 	dup2(mini->fd_temp, 0);
 	unlink("tmp");

@@ -32,6 +32,7 @@ char *check_dir(char *path, char *cmd)
 			result = join_path(path, item->d_name);
 		item = readdir(catalog);
 	}
+	closedir(catalog);
 	return (result);
 }
 
@@ -49,8 +50,14 @@ int launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 			return (mini->ret = ERROR);
 		if (ft_strchr(exec_path, '/'))
 			mini->ret = execve(exec_path, args_arr, envp_arr);
+		int i = 0;
+		while(args_arr[i])
+			free(args_arr[i++]);
+		free(args_arr);
+		while(envp_arr[i])
+			free(envp_arr[i++]);
+		free(envp_arr);
 		exit(mini->ret);
-		close(mini->pipe->pipein);
 	}
 	else
 	{
@@ -81,5 +88,12 @@ int execute(t_minishell *mini, t_arg_item *arg_item)
 	}
 	if (exec_path)
 		launch_exec(mini, exec_path, arg_item);
+	i = 0;
+	while (bin[i])
+	{
+		free(bin[i++]);
+	}
+	free(bin);
+	free(exec_path);
 	return (mini->ret);
 }

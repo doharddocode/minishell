@@ -33,6 +33,7 @@ int parser(t_minishell *mini)
 		i += arglen;
 		i = skip_spaces(line, i);
 		i++;
+		free(arg);
 	}
 	return (SUCCESS);
 }

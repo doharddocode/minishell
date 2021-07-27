@@ -1,0 +1,315 @@
+==16461== Memcheck, a memory error detector
+==16461== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16461== Using Valgrind-3.17.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==16461== Command: ./minishell
+==16461== Parent PID: 86651
+==16461== 
+==16461== Conditional jump or move depends on uninitialised value(s)
+==16461==    at 0x100000CF7: ft_strlen (in ./minishell)
+==16461==    by 0x100000F9B: ft_strlcpy (in ./minishell)
+==16461==    by 0x1000013C3: ft_strinit (in ./minishell)
+==16461==    by 0x100005E14: t_arg_to_string (in ./minishell)
+==16461==    by 0x100004493: add_arg_to_args (in ./minishell)
+==16461==    by 0x1000041AC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== Conditional jump or move depends on uninitialised value(s)
+==16461==    at 0x100000FD3: ft_strlcpy (in ./minishell)
+==16461==    by 0x1000013C3: ft_strinit (in ./minishell)
+==16461==    by 0x100005E14: t_arg_to_string (in ./minishell)
+==16461==    by 0x100004493: add_arg_to_args (in ./minishell)
+==16461==    by 0x1000041AC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== Conditional jump or move depends on uninitialised value(s)
+==16461==    at 0x100006B1F: ft_close (in ./minishell)
+==16461==    by 0x10000275E: run_cmd (in ./minishell)
+==16461==    by 0x1000029B8: redir_exec (in ./minishell)
+==16461==    by 0x100002B07: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Syscall param close(fd) contains uninitialised byte(s)
+==16461==    at 0x10056B202: close (in /usr/lib/system/libsystem_kernel.dylib)
+==16461==    by 0x100006B2C: ft_close (in ./minishell)
+==16461==    by 0x10000275E: run_cmd (in ./minishell)
+==16461==    by 0x1000029B8: redir_exec (in ./minishell)
+==16461==    by 0x100002B07: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Warning: invalid file descriptor 76368560 in syscall close()
+==16461== Conditional jump or move depends on uninitialised value(s)
+==16461==    at 0x100006B1F: ft_close (in ./minishell)
+==16461==    by 0x10000276E: run_cmd (in ./minishell)
+==16461==    by 0x1000029B8: redir_exec (in ./minishell)
+==16461==    by 0x100002B07: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Syscall param close(fd) contains uninitialised byte(s)
+==16461==    at 0x10056B202: close (in /usr/lib/system/libsystem_kernel.dylib)
+==16461==    by 0x100006B2C: ft_close (in ./minishell)
+==16461==    by 0x10000276E: run_cmd (in ./minishell)
+==16461==    by 0x1000029B8: redir_exec (in ./minishell)
+==16461==    by 0x100002B07: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Warning: invalid file descriptor 1919512164 in syscall close()
+==16461== Conditional jump or move depends on uninitialised value(s)
+==16461==    at 0x100006B1F: ft_close (in ./minishell)
+==16461==    by 0x100002B58: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Syscall param close(fd) contains uninitialised byte(s)
+==16461==    at 0x10056B202: close (in /usr/lib/system/libsystem_kernel.dylib)
+==16461==    by 0x100006B2C: ft_close (in ./minishell)
+==16461==    by 0x100002B58: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Warning: invalid file descriptor 76368248 in syscall close()
+==16461== Conditional jump or move depends on uninitialised value(s)
+==16461==    at 0x100006B1F: ft_close (in ./minishell)
+==16461==    by 0x100002B64: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Syscall param close(fd) contains uninitialised byte(s)
+==16461==    at 0x10056B202: close (in /usr/lib/system/libsystem_kernel.dylib)
+==16461==    by 0x100006B2C: ft_close (in ./minishell)
+==16461==    by 0x100002B64: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== Conditional jump or move depends on uninitialised value(s)
+==16461==    at 0x100006B1F: ft_close (in ./minishell)
+==16461==    by 0x100002B70: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== 
+==16461== HEAP SUMMARY:
+==16461==     in use at exit: 302,214 bytes in 478 blocks
+==16461==   total heap usage: 788 allocs, 310 frees, 343,862 bytes allocated
+==16461== 
+==16461== 3 bytes in 1 blocks are definitely lost in loss record 2 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BCEC: xmalloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9B48: readline_internal_teardown (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9674: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 12 bytes in 1 blocks are definitely lost in loss record 8 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BCEC: xmalloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E95D3: rl_set_prompt (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E962C: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 16 bytes in 1 blocks are definitely lost in loss record 15 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x1000E9887: rl_initialize (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9631: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 24 bytes in 1 blocks are possibly lost in loss record 21 of 111
+==16461==    at 0x1000DE1B1: malloc_zone_calloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x100669DE3: freeBuckets(NXHashTable*, int) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669AFE: NXHashInsert (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x1006699BF: hashPrototype(void const*, void const*) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100668AB4: _read_images (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100667A4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067A55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10000F47A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==16461==    by 0x10000F62D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==16461==    by 0x1002C1A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==16461==    by 0x100667233: environ_init (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100258E35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==16461== 
+==16461== 24 bytes in 1 blocks are possibly lost in loss record 22 of 111
+==16461==    at 0x1000DE1B1: malloc_zone_calloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x100669DE3: freeBuckets(NXHashTable*, int) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669EC7: remapClass(objc_class*) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669E1E: TimeLogger::log(char const*) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669921: NXHashGet (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669846: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10066B417: NXMapRemove (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067F067: _unload_image (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA8C: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461== 
+==16461== 24 bytes in 1 blocks are definitely lost in loss record 23 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x100005871: ft_get_envp_node (in ./minishell)
+==16461==    by 0x1000030D1: execute (in ./minishell)
+==16461==    by 0x100002746: run_cmd (in ./minishell)
+==16461==    by 0x1000029B8: redir_exec (in ./minishell)
+==16461==    by 0x100002B07: minishell (in ./minishell)
+==16461==    by 0x100002CDC: main (in ./minishell)
+==16461== 
+==16461== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 32 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x100005E97: t_arg_new_node (in ./minishell)
+==16461==    by 0x100005221: parse_to_arglist (in ./minishell)
+==16461==    by 0x100004485: add_arg_to_args (in ./minishell)
+==16461==    by 0x1000041AC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 35 (32 direct, 3 indirect) bytes in 1 blocks are definitely lost in loss record 33 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x1000066D5: new_item (in ./minishell)
+==16461==    by 0x1000044B7: add_arg_to_args (in ./minishell)
+==16461==    by 0x1000041AC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 48 bytes in 2 blocks are possibly lost in loss record 39 of 111
+==16461==    at 0x1000DDFF0: calloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x100667742: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067A55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10000F47A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==16461==    by 0x10000F62D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==16461==    by 0x1002C1A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==16461==    by 0x100667233: environ_init (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100258E35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==16461==    by 0x100264AD1: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==16461==    by 0x1001269C4: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==16461==    by 0x100022591: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==16461==    by 0x100022797: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==16461== 
+==16461== 256 bytes in 1 blocks are definitely lost in loss record 55 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BCEC: xmalloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E972B: rl_initialize (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9631: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 528 bytes in 1 blocks are possibly lost in loss record 63 of 111
+==16461==    at 0x1000DDC0A: malloc_zone_malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x100669968: NXHashGet (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669846: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10066B417: NXMapRemove (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067F067: _unload_image (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA8C: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669266: _read_images (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100667A4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067A55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==16461== 
+==16461== 2,064 bytes in 1 blocks are possibly lost in loss record 78 of 111
+==16461==    at 0x1000DDC0A: malloc_zone_malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x100669968: NXHashGet (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669846: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100668A91: _read_images (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100667A4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067A55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10000F47A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==16461==    by 0x10000F62D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==16461==    by 0x1002C1A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==16461==    by 0x100667233: environ_init (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100258E35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==16461==    by 0x100264AD1: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==16461== 
+==16461== 2,064 bytes in 1 blocks are possibly lost in loss record 79 of 111
+==16461==    at 0x1000DDC0A: malloc_zone_malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10066A845: objc_class::setHasCustomRR(bool) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10066A70F: addSubclass(objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669021: _read_images (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100667A4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067A55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10000F47A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==16461==    by 0x10000F62D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==16461==    by 0x1002C1A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==16461==    by 0x100667233: environ_init (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100258E35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==16461==    by 0x100264AD1: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==16461== 
+==16461== 3,776 (1,536 direct, 2,240 indirect) bytes in 1 blocks are definitely lost in loss record 84 of 111
+==16461==    at 0x1000DE336: realloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BD36: xrealloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000EE775: rl_add_funmap_entry (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000EE7F7: rl_initialize_funmap (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9773: rl_initialize (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9631: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 4,112 bytes in 1 blocks are possibly lost in loss record 87 of 111
+==16461==    at 0x1000DDC0A: malloc_zone_malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10066A845: objc_class::setHasCustomRR(bool) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10066A70F: addSubclass(objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x1006856A8: std::__1::__hash_table<std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*>, std::__1::__unordered_map_hasher<unsigned long, std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*>, objc_references_support::DisguisedPointerHash, true>, std::__1::__unordered_map_equal<unsigned long, std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*>, objc_references_support::DisguisedPointerEqual, true>, objc_references_support::ObjcAllocator<std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*> > >::__rehash(unsigned long) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100675E29: updateCustomRR_AWZ(objc_class*, method_t*) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10066AEC4: addMethod(objc_class*, objc_selector*, void (*)(), char const*, bool) (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EFDE: realizeAllClasses() (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA8C: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x10067EA6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==16461==    by 0x100669266: _read_images (in /usr/lib/libobjc.A.dylib)
+==16461== 
+==16461== 4,112 bytes in 1 blocks are definitely lost in loss record 97 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BCEC: xmalloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000EE8C6: rl_make_bare_keymap (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F43CF: rl_generic_bind (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F4168: rl_bind_keyseq_if_unbound_in_map (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1001027D5: bind_termcap_arrow_keys (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1001026BC: _rl_init_terminal_io (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9759: rl_initialize (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9631: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 45,232 (4,112 direct, 41,120 indirect) bytes in 1 blocks are definitely lost in loss record 108 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BCEC: xmalloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000EE8C6: rl_make_bare_keymap (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F43CF: rl_generic_bind (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F4168: rl_bind_keyseq_if_unbound_in_map (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x100102847: bind_termcap_arrow_keys (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1001026BC: _rl_init_terminal_io (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9759: rl_initialize (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9631: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 45,232 (4,112 direct, 41,120 indirect) bytes in 1 blocks are definitely lost in loss record 109 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BCEC: xmalloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000EE8C6: rl_make_bare_keymap (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F43CF: rl_generic_bind (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F4168: rl_bind_keyseq_if_unbound_in_map (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1001027D5: bind_termcap_arrow_keys (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1001026C8: _rl_init_terminal_io (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9759: rl_initialize (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9631: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== 53,456 (4,112 direct, 49,344 indirect) bytes in 1 blocks are definitely lost in loss record 110 of 111
+==16461==    at 0x1000DD995: malloc (in /Users/mrosette/.brew/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==16461==    by 0x10010BCEC: xmalloc (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000EE8C6: rl_make_bare_keymap (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F43CF: rl_generic_bind (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000F4168: rl_bind_keyseq_if_unbound_in_map (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1001027D5: bind_termcap_arrow_keys (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1001026D4: _rl_init_terminal_io (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9759: rl_initialize (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000E9631: readline (in /Users/mrosette/.brew/Cellar/readline/8.1/lib/libreadline.8.1.dylib)
+==16461==    by 0x1000040EC: parser (in ./minishell)
+==16461==    by 0x100002CC7: main (in ./minishell)
+==16461== 
+==16461== LEAK SUMMARY:
+==16461==    definitely lost: 18,343 bytes in 12 blocks
+==16461==    indirectly lost: 133,843 bytes in 174 blocks
+==16461==      possibly lost: 8,864 bytes in 8 blocks
+==16461==    still reachable: 141,164 bytes in 284 blocks
+==16461==         suppressed: 0 bytes in 0 blocks
+==16461== Reachable blocks (those to which a pointer was found) are not shown.
+==16461== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==16461== 
+==16461== Use --track-origins=yes to see where uninitialised values come from
+==16461== For lists of detected and suppressed errors, rerun with: -s
+==16461== ERROR SUMMARY: 32 errors from 30 contexts (suppressed: 401 from 7)

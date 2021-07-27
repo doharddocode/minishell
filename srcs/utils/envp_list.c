@@ -184,9 +184,11 @@ void ft_envp_addback_node(t_envp **envp, t_envp *new_node)
 int ft_cpy_env(t_minishell *mini, char **envp)
 {
 	int	i;
+	int j;
 	char **result;
 
 	i = 0;
+	j = 0;
 	if (!envp)
 		return (ERROR);
 	mini->envp = NULL;
@@ -197,6 +199,9 @@ int ft_cpy_env(t_minishell *mini, char **envp)
 			return (ERROR);
 		ft_envp_addback_node(&mini->envp, ft_envp_new_node(result[0], result[1]));
 		i++;
+		free(result[0]);
+		free(result[1]);
+		free(result);
 	}
 	return (SUCCESS);
 }

@@ -2,7 +2,7 @@
 
 void	redirect(t_minishell *mini, t_arg_item *arg,int flag)
 {
-	close(mini->fdout);
+	ft_close(mini->fdout);
 	if (flag == REDIR)
 	{
 		mini->fdout = open(arg->name, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
@@ -25,7 +25,7 @@ void	redirect(t_minishell *mini, t_arg_item *arg,int flag)
 
 void	input(t_minishell *mini, t_arg_item *arg)
 {
-	close(mini->fdin);
+	ft_close(mini->fdin);
 	mini->fdin = open(arg->name, O_RDONLY, S_IRWXU);
 	if (mini->fdin == -1)
 	{
@@ -49,7 +49,7 @@ int		shellpipe(t_minishell *mini)
 	pid = fork();
 	if (pid == 0)
 	{
-		close(pipfd[1]);
+		ft_close(pipfd[1]);
 		dup2(pipfd[0], 0);
 		mini->pipe->pipein = pipfd[0];
 		mini->pipe->daddy = 0;
@@ -59,7 +59,7 @@ int		shellpipe(t_minishell *mini)
 	}
 	else
 	{
-		close(pipfd[0]);
+		ft_close(pipfd[0]);
 		dup2(pipfd[1], 1);
 		mini->pipe->pipeout = pipfd[1];
 		mini->last = 0;

@@ -24,5 +24,11 @@ int is_builtin(char *arg, char *builtin_name)
 				return (1);
 		}
 	}
+	i = 0;
+	while (builtins[i])
+	{
+		free(builtins[i++]);
+	}
+	free(builtins);
 	return (SUCCESS);
 }

@@ -80,14 +80,17 @@ int add_arg_to_args(t_minishell *mini, char *arg)
 {
 	t_arg *arg_list;
 	int i;
+	char *res;
+	t_arg_item *result;
 
 	i = 0;
 	arg_list = NULL;
 	while (arg[i])
 		parse_to_arglist(mini, &arg_list, arg, &i);
-	if (t_arg_to_string(arg_list))
+	res = t_arg_to_string(arg_list);
+	if (res)
 	{
-		add_item_back(&(mini->arg_item), new_item(t_arg_to_string(arg_list)));
+		add_item_back(&(mini->arg_item), new_item(res));
 	}
 	else
 		add_item_back(&(mini->arg_item), new_item(ft_strnew(0)));

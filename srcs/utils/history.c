@@ -4,12 +4,15 @@ void add_cmd_to_history(t_minishell *mini, char *cmd)
 {
 	char *result;
 
+	result = NULL;
 	if (cmd)
 	{
 		result = ft_strinit(ft_strlen(cmd), cmd);
 		if (result)
 			ft_lstadd_back(&(mini->work_history), ft_lstnew(result));
 	}
+	if (result)
+		free(result);
 }
 
 static void print_history_line(t_list *line, char *content, char *sep, int counter)

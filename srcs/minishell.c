@@ -50,8 +50,8 @@ void run_cmd(t_minishell *mini, t_arg_item *arg_item)
 	{
 		execute(mini, arg_item);
 	}
-	close(mini->pipe->pipein);
-	close(mini->pipe->pipeout);
+	ft_close(mini->pipe->pipein);
+	ft_close(mini->pipe->pipeout);
 	mini->pipe->pipein = -1;
 	mini->pipe->pipeout = -1;
 	mini->pipe->count = 0;
@@ -139,14 +139,14 @@ void	minishell(t_minishell *mini)
 		mini->last = 1;
 		mini->pipe->insidepipe = 0;
 		redir_exec(mini, arg_item);
-		close(mini->pipe->pipein);
-		close(mini->pipe->pipeout);
-		close(mini->fdin);
-		close(mini->fdout);
-		close(mini->fd_temp);
-		set_fds(mini);
 		dup2(mini->in, 0);
 		dup2(mini->out, 1);
+		ft_close(mini->pipe->pipein);
+		ft_close(mini->pipe->pipeout);
+		ft_close(mini->fdin);
+		ft_close(mini->fdout);
+		ft_close(mini->fd_temp);
+		set_fds(mini);
 		waitpid(-1, &state, 0);
 		state = WEXITSTATUS(state);
 		mini->ret = (mini->last == 0) ? state : mini->ret;
@@ -180,6 +180,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	mini.no_exec = 0;
+	set_fds(&mini);
 	while (mini.exit == 0)
 	{
 		init_signal();

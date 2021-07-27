@@ -10,8 +10,8 @@ void	set_fds(t_minishell *mini)
 	mini->fd_temp = -1;
 }
 
-void	ft_close(int x)
+void	ft_close(int fd)
 {
-	if (x > 0)
-		close(x);
+	if (fd > 0)
+		close(fd);
 }
