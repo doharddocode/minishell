@@ -35,6 +35,7 @@ static char *start_parse_var(t_minishell *mini, char *arg, int *i)
 	if (!var_name)
 		return (NULL);
 	var_value = get_var_value(mini, var_name);
+	ft_free_str(var_name);
 	if (!var_value)
 		return (NULL);
 	return (var_value);
