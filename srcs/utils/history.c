@@ -13,37 +13,41 @@ void add_cmd_to_history(t_minishell *mini, char *cmd)
 	}
 }
 
-static void print_history_line(t_list *line, char *content, char *sep, int counter)
+static void print_history_line(t_list **line, char *content, char *sep, int counter)
 {
 	int i;
+	char *cnt;
 	t_list *tmp;
 
-	ft_lstadd_back(&line, ft_lstnew(sep));
-	ft_lstadd_back(&line, ft_lstnew(ft_itoa(counter)));
-	ft_lstadd_back(&line, ft_lstnew(content));
-	tmp = line;
-	while (line)
+	cnt = ft_itoa(counter);
+	if (!cnt)
+		return ;
+	ft_lstadd_back(line, ft_lstnew(sep));
+	ft_lstadd_back(line, ft_lstnew(cnt));
+	ft_lstadd_back(line, ft_lstnew(content));
+	ft_free_str(cnt);
+	tmp = *line;
+	while (tmp)
 	{
-		if (line->content)
+		if (tmp->content)
 		{
 			i = 0;
-			while (((char *)(line->content))[i])
-				write(1, &(line->content)[i++], 1);
-			if (line->next)
+			while (((char *)(tmp->content))[i])
+				write(1, &(tmp->content)[i++], 1);
+			if (tmp->next)
 				write(1, " ", 1);
 			else
 				write(1, "\n", 1);
 		}
-		line = line->next;
+		tmp = tmp->next;
 	}
 	t_list *tmp2;
-	while (tmp)
+	while (*line)
 	{
-		tmp2 = tmp;
-		tmp = tmp->next;
+		tmp2 = *line;
+		*line = (*line)->next;
 		free(tmp2);
 	}
-	tmp = NULL;
 }
 
 int show_working_history(t_minishell *mini)
@@ -56,10 +60,11 @@ int show_working_history(t_minishell *mini)
 	history = mini->work_history;
 	while (history)
 	{
-		line = NULL;
 		if (history->content)
-			print_history_line(line, history->content, "  ", counter++);
-		ft_lstclear(&line, free);
+		{
+			line = NULL;
+			print_history_line(&line, history->content, "  ", counter++);
+		}
 		history = history->next;
 	}
 	return (SUCCESS);
