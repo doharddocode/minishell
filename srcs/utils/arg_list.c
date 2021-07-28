@@ -49,7 +49,8 @@ t_arg *t_arg_new_node(char symb)
 {
 	t_arg *node;
 
-	node = (t_arg *)malloc(sizeof(t_arg) * 1);
+	// node = (t_arg *)malloc(sizeof(t_arg) * 1);
+	node = (t_arg *)calloc(1, sizeof(t_arg));
 	if (!node)
 		return (NULL);
 	node->symb = symb;

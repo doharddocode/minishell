@@ -16,10 +16,12 @@ void add_cmd_to_history(t_minishell *mini, char *cmd)
 static void print_history_line(t_list *line, char *content, char *sep, int counter)
 {
 	int i;
+	t_list *tmp;
 
 	ft_lstadd_back(&line, ft_lstnew(sep));
 	ft_lstadd_back(&line, ft_lstnew(ft_itoa(counter)));
 	ft_lstadd_back(&line, ft_lstnew(content));
+	tmp = line;
 	while (line)
 	{
 		if (line->content)
@@ -34,6 +36,14 @@ static void print_history_line(t_list *line, char *content, char *sep, int count
 		}
 		line = line->next;
 	}
+	t_list *tmp2;
+	while (tmp)
+	{
+		tmp2 = tmp;
+		tmp = tmp->next;
+		free(tmp2);
+	}
+	tmp = NULL;
 }
 
 int show_working_history(t_minishell *mini)

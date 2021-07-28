@@ -114,9 +114,6 @@ t_envp	*ft_get_envp_node(t_envp *envp, char *key)
 
 	if (!key)
 		return (NULL);
-	res = (t_envp *)malloc(sizeof(t_envp));
-	if (!res)
-		return (NULL);
 	while (envp)
 	{
 		if (!ft_strncmp(envp->key, key, ft_strlen(envp->key))

@@ -2,13 +2,18 @@
 
 void free_envp_list(t_minishell *mini)
 {
+	t_envp *tmp;
+
 	while (mini->envp)
 	{
-		ft_free_str(mini->envp->key);
-		ft_free_str(mini->envp->value);
+		tmp = mini->envp;
 		mini->envp = mini->envp->next;
+
+		ft_free_str(tmp->key);
+		ft_free_str(tmp->value);
+		free(tmp);
 	}
-	free(mini->envp);
+	// free(mini->envp);
 	mini->envp = NULL;
 }
 
@@ -19,11 +24,15 @@ void free_history(t_minishell *mini)
 
 void free_arg_item(t_minishell *mini)
 {
+	t_arg_item *tmp;
+
 	while (mini->arg_item)
 	{
-		ft_free_str(mini->arg_item->name);
+		tmp = mini->arg_item;
 		mini->arg_item = mini->arg_item->next;
+		ft_free_str(tmp->name);
+		free(tmp);
 	}
-	free(mini->arg_item);
+	// free(mini->arg_item);
 	mini->arg_item = NULL;
 }

@@ -21,7 +21,15 @@ int is_builtin(char *arg, char *builtin_name)
 		while (builtins[i])
 		{
 			if (is_equal_strs(arg, builtins[i++]))
+			{
+				i = 0;
+				while (builtins[i])
+				{
+					free(builtins[i++]);
+				}
+				free(builtins);
 				return (1);
+			}
 		}
 	}
 	i = 0;
