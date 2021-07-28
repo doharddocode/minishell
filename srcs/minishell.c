@@ -197,7 +197,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_envp_list(&mini);
 	free_history(&mini);
-	free_arg_item(&mini);
-	getchar();
 	return (SUCCESS);
 }

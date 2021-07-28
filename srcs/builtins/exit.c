@@ -19,23 +19,26 @@ int ft_exit(t_minishell *mini)
 {
 	ft_putstr_fd("exit\n", 2);
 	mini->exit = 1;
-	if (mini->arg_item)
+	t_arg_item *tmp;
+
+	tmp = mini->arg_item;
+	if (tmp)
 	{
-		mini->arg_item = mini->arg_item->next;
-		if (mini->arg_item && mini->arg_item->next)
+		tmp = tmp->next;
+		if (tmp && tmp->next)
 		{
 			mini->ret = 1;
 			ft_putendl_fd("minishell: exit: too many arguments", 2);
 		}
-		else if (mini->arg_item && !is_numeric(mini->arg_item->name))
+		else if (tmp && !is_numeric(tmp->name))
 		{
 			mini->ret = 255;
 			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(mini->arg_item->name, 2);
+			ft_putstr_fd(tmp->name, 2);
 			ft_putendl_fd(": numeric argument required", 2);
 		}
-		else if (mini->arg_item && mini->arg_item->name)
-			mini->ret = ft_atoi(mini->arg_item->name);
+		else if (tmp && tmp->name)
+			mini->ret = ft_atoi(tmp->name);
 		else
 			mini->ret = 0;
 	}
