@@ -95,6 +95,7 @@ typedef struct s_minishell
 	int pid;
 	int heredoc;
 	int pipe_here;
+	int redir_flag;
 } t_minishell;
 
 int parser(t_minishell *mini);

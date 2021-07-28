@@ -54,13 +54,16 @@ void run_cmd(t_minishell *mini, t_arg_item *arg_item)
 	mini->pipe->count = 0;
 }
 
-int		check_for_redirs(t_arg_item *prev, t_arg_item *next)
+int		check_for_redirs(t_arg_item *prev, t_arg_item *next, t_minishell *mini)
 {
 	if (prev && next)
 	{
-		if ((prev->type == REDIR/*|| prev->type == INPUT*/ || prev->type == APPEND) &&
+		if ((prev->type == REDIR || prev->type == APPEND) &&
 			next->type == PIPE)
+		{
+			mini->redir_flag = 1;
 			return (1);
+		}
 	}
 	return (0);
 }
@@ -93,7 +96,7 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 	{
 		pipe = shellpipe(mini);
 	}
-	if (next_arg && check_for_redirs(prev_arg, next_arg) == 0 && pipe != 1)
+	if (next_arg && check_for_redirs(prev_arg, next_arg, mini) == 0 && pipe != 1)
 	{
 		redir_exec(mini, next_arg->next);
 	}
@@ -105,6 +108,9 @@ void	redir_exec(t_minishell *mini, t_arg_item *arg_item)
 
 t_arg_item *next_arg(t_arg_item *arg, int insidepipe)
 {
+	t_arg_item *tmp;
+
+	tmp = arg;
 	if (insidepipe)
 	{
 		while (arg->type != PIPE && arg->next)
@@ -135,6 +141,7 @@ void	minishell(t_minishell *mini)
 		mini->pipe->daddy = 1;
 		mini->last = 1;
 		mini->pipe->insidepipe = 0;
+		mini->redir_flag = 0;
 		redir_exec(mini, arg_item);
 		dup2(mini->in, 0);
 		dup2(mini->out, 1);
@@ -150,7 +157,10 @@ void	minishell(t_minishell *mini)
 		if (mini->pipe->daddy == 0)
 			exit(mini->ret);
 		mini->no_exec = 0;
-		arg_item = next_arg(arg_item, mini->pipe->insidepipe);
+		if (mini->redir_flag)
+			arg_item = next_arg(arg_item, mini->pipe->insidepipe);
+		else
+			break ;
 	}
 }
 
