@@ -8,7 +8,10 @@ static void add_env(t_minishell *mini, char **result)
 			ft_envp_addback_node(&mini->envp,
 								 ft_envp_new_node(result[0], result[1]));
 		else
-			ft_envp_update_node(&mini->envp, result[0], result[1]);
+		{
+			printf("update node\n");
+			ft_envp_update_node(mini->envp, result[0], result[1]);
+		}
 	}
 }
 
@@ -29,7 +32,6 @@ int ft_export(t_minishell *mini)
 		{
 			result = ft_split(args->name, '=');
 			add_env(mini, result);
-
 			int i = 0;
 			while (result[i])
 				free(result[i++]);

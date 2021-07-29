@@ -129,21 +129,21 @@ t_envp	*ft_get_envp_node(t_envp *envp, char *key)
 	return (NULL);
 }
 
-int ft_envp_update_node(t_envp **envp, char *key, char *new_value)
+int ft_envp_update_node(t_envp *envp, char *key, char *new_value)
 {
 	if (!new_value)
 		return (ERROR);
 	while (envp)
 	{
-		if (!ft_strncmp((*envp)->key, key, ft_strlen((*envp)->key))
-			&& ft_strlen((*envp)->key) == ft_strlen(key))
+		if (!ft_strncmp(envp->key, key, ft_strlen(envp->key))
+			&& ft_strlen(envp->key) == ft_strlen(key))
 		{
-			ft_free_str((*envp)->value);
-			(*envp)->value = ft_strinit(ft_strlen(new_value), new_value);
-			if ((*envp)->value)
+			ft_free_str(envp->value);
+			envp->value = ft_strinit(ft_strlen(new_value), new_value);
+			if (envp->value)
 				return (ERROR);
 		}
-		*envp = (*envp)->next;
+		envp = envp->next;
 	}
 	return (SUCCESS);
 }

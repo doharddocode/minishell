@@ -151,7 +151,7 @@ t_envp *ft_envp_new_node(char *key, char *value);
 t_envp *ft_envp_last_node(t_envp *envp);
 void ft_envp_addback_node(t_envp **envp, t_envp *new_node);
 int ft_cpy_env(t_minishell *mini, char **envp);
-int ft_envp_update_node(t_envp **envp, char *key, char *new_value);
+int ft_envp_update_node(t_envp *envp, char *key, char *new_value);
 t_envp	*ft_get_envp_node(t_envp *envp, char *key);
 int is_env_exist(t_envp *envp, char *var_name);
 void sort_envp_list(t_envp **envp);
