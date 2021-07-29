@@ -8,10 +8,7 @@ static void add_env(t_minishell *mini, char **result)
 			ft_envp_addback_node(&mini->envp,
 								 ft_envp_new_node(result[0], result[1]));
 		else
-		{
-			printf("update node\n");
 			ft_envp_update_node(mini->envp, result[0], result[1]);
-		}
 	}
 }
 

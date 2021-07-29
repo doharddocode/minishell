@@ -21,7 +21,7 @@ static int set_oldpwd(t_envp *envp)
 		return (ERROR);
 	if (is_env_exist(envp, "OLDPWD"))
 	{
-		ft_envp_update_node(&envp, "OLDPWD", cwd);
+		ft_envp_update_node(envp, "OLDPWD", cwd);
 	}
 	else
 		ft_envp_addback_node(&envp, ft_envp_new_node("OLDPWD", cwd));
