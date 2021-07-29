@@ -19,6 +19,7 @@ int parser(t_minishell *mini)
 		exit(0);
 	}
 	add_cmd_to_history(mini, line);
+	add_history(line);
 	while (line[i])
 	{
 		i = skip_spaces(line, i) + 1;
