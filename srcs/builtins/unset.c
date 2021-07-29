@@ -8,14 +8,16 @@ static	void delete_env(t_minishell *mini, char *var_name)
 	{
 		node = ft_get_envp_node(mini->envp, var_name);
 		if (node)
-			mini->envp = ft_delete_envp_node(mini->envp, node);
+			ft_delete_envp_node(mini->envp, node);
 	}
 }
-
+:
 int ft_unset(t_minishell *mini)
 {
-	mini->arg_item = mini->arg_item->next;
-	if (mini->arg_item)
-		delete_env(mini, mini->arg_item->name);
+	t_arg_item *arg_item_tmp;
+
+	arg_item_tmp = mini->arg_item->next;
+	if (arg_item_tmp)
+		delete_env(mini, arg_item_tmp->name);
 	return (SUCCESS);
 }
