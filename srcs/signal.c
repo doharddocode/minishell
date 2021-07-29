@@ -2,6 +2,8 @@
 
 void handle_signal(int signal_code)
 {
+	char	*num;
+
 	if (signal_code == SIGINT)
 	{
 		if (sig.pid == 0)
@@ -21,10 +23,23 @@ void handle_signal(int signal_code)
 	}
 	else if (signal_code == SIGQUIT)
 	{
-		rl_on_new_line();
-		rl_redisplay();
-		sig.exit_status = 131;
-		sig.sigquit = 1;
+		if (sig.pid != 0)
+		{
+			num = ft_itoa(signal_code);
+			if (num)
+			{
+				ft_putstr_fd("Quit: ", 2);
+				ft_putendl_fd(num, 2);
+				sig.exit_status = 131;
+				sig.sigquit = 1;
+				ft_free_str(num);
+			}
+		}
+		else
+		{
+			rl_on_new_line();
+			rl_redisplay();
+		}
 	}
 }
 
