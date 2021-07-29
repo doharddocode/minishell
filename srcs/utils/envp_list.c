@@ -35,7 +35,10 @@ void	print_envp_list(t_envp *envp, char *prefix)
 		if (result)
 			ft_putendl_fd(result, 1);
 		envp = envp->next;
+		free(result);
+		free(p_str);
 	}
+
 }
 
 void sort_envp_list(t_envp **envp)
