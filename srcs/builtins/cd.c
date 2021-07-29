@@ -49,6 +49,10 @@ static int set_path(t_minishell *mini, t_envp *envp, int flag)
 			return (item_not_found(mini, "cd", "HOME not set"));
 	}
 	result = chdir(envp_node->value);
+	ft_free_str(envp_node->value);
+	ft_free_str(envp_node->key);
+	free(envp_node);
+	envp_node = NULL;
 	return (result);
 }
 
