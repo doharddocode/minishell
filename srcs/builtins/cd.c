@@ -68,6 +68,8 @@ int	ft_cd(t_minishell *mini)
 	{
 		set_oldpwd(envp);
 		result = chdir(args->name);
+		if (result < 0)
+			result *= -1;
 		if (result != 0)
 			print_cd_error(args);
 	}
