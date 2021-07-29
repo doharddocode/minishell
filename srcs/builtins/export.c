@@ -29,11 +29,12 @@ int ft_export(t_minishell *mini)
 		{
 			result = ft_split(args->name, '=');
 			add_env(mini, result);
+
+			int i = 0;
+			while (result[i])
+				free(result[i++]);
+			free(result);
 		}
-		int i = 0;
-		while (result[i])
-			free(result[i++]);
-		free(result);
 	}
 	return (SUCCESS);
 }
