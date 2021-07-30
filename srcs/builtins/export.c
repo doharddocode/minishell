@@ -1,20 +1,70 @@
 #include "minishell.h"
 
-static void add_env(t_minishell *mini, char **result)
+static int error_handle(t_arg_item *args, int valid_value)
 {
-	if (result)
-	{
-		if (!is_env_exist(mini->envp, result[0]))
-			ft_envp_addback_node(&mini->envp,
-								 ft_envp_new_node(result[0], result[1]));
-		else
-			ft_envp_update_node(mini->envp, result[0], result[1]);
-	}
+	ft_putstr_fd("export: ", 2);
+	ft_putstr_fd("'", 2);
+	if (valid_value == -1 && args->next)
+		ft_putstr_fd(args->next->name, 2);
+	else
+		ft_putstr_fd(args->name, 2);
+	ft_putstr_fd("': ", 2);
+	ft_putendl_fd("not a valid identifier", 2);
+	return (ERROR);
 }
+
+static int check_env(char *env_name)
+{
+	int	i;
+
+	i = 0;
+	if (env_name[i] == '=')
+		return (-1);
+	if (env_name[i] != '_' && ft_isdigit(env_name[i]))
+		return (0);
+	while (env_name[i] && env_name[i] != '=')
+	{
+		if (!ft_isalpha(env_name[i])
+				&& !ft_isdigit(env_name[i])
+				&& env_name[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void add_env(t_minishell *mini, char *arg)
+{
+	int i;
+	char *env_name;
+	char *env_val;
+
+	i = 0;
+	while (arg[i] != '=')
+		i++;
+	env_name = ft_substr(arg, 0, i);
+	if (!env_name)
+		return ;
+	if (i == ft_strlen(arg))
+		env_val = ft_strnew(1);
+	else
+		env_val = ft_substr(arg, i + 1, ft_strlen(arg));
+	if (!env_val)
+		return ;
+	if (!is_env_exist(mini->envp, env_name))
+		ft_envp_addback_node(&mini->envp,
+							 ft_envp_new_node(env_name, env_val));
+	else
+		ft_envp_update_node(mini->envp, env_name, env_val);
+	ft_free_str(env_name);
+	ft_free_str(env_val);
+}
+
+//сделать нормальную сортировку
 
 int ft_export(t_minishell *mini)
 {
-	char **result;
+	int is_valid_env;
 	t_arg_item *args;
 
 	args = mini->arg_item->next;
@@ -25,15 +75,11 @@ int ft_export(t_minishell *mini)
 	}
 	else
 	{
-		if (ft_strchr(args->name, '='))
-		{
-			result = ft_split(args->name, '=');
-			add_env(mini, result);
-			int i = 0;
-			while (result[i])
-				free(result[i++]);
-			free(result);
-		}
+		is_valid_env = check_env(args->name);
+		if (is_valid_env == 1)
+			add_env(mini, args->name);
+		else
+			return (error_handle(args, is_valid_env));
 	}
 	return (SUCCESS);
 }
