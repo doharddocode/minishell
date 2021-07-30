@@ -3,14 +3,17 @@
 static void print_exit_status(t_minishell *mini, t_arg **arglist,
 							  char *arg, int *i)
 {
+	int cnt;
 	char	*exit_status;
 
 	exit_status = ft_itoa(mini->ret);
 	if (exit_status)
 	{
 		next_symbol(arg, i);
-		while (*exit_status)
-			t_arg_addnode_back(arglist, t_arg_new_node(*exit_status++));
+		cnt = 0;
+		while (exit_status[cnt])
+			t_arg_addnode_back(arglist, t_arg_new_node(exit_status[cnt++]));
+		ft_free_str(exit_status);
 	}
 	next_symbol(arg, i);
 }
