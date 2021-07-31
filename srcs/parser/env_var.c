@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-static void print_exit_status(t_minishell *mini, t_arg **arglist,
-							  char *arg, int *i)
+static void	print_exit_status(t_minishell *mini, t_arg **arglist,
+			char *arg, int *i)
 {
-	int cnt;
+	int		cnt;
 	char	*exit_status;
 
 	exit_status = ft_itoa(mini->ret);
@@ -18,17 +18,17 @@ static void print_exit_status(t_minishell *mini, t_arg **arglist,
 	next_symbol(arg, i);
 }
 
-static char *start_parse_var(t_minishell *mini, char *arg, int *i)
+static char	*start_parse_var(t_minishell *mini, char *arg, int *i)
 {
-	char *var_name;
-	char *var_value;
-	int var_len;
+	char	*var_name;
+	char	*var_value;
+	int		var_len;
 
 	var_len = 0;
 	while (arg[*i] && arg[*i] != '$' && arg[*i] != ' ')
 	{
 		if (is_shieild_symb(arg[*i]) || arg[*i] == '"')
-			break;
+			break ;
 		var_len++;
 		(*i)++;
 	}
@@ -44,9 +44,9 @@ static char *start_parse_var(t_minishell *mini, char *arg, int *i)
 	return (var_value);
 }
 
-char *get_var_value(t_minishell *mini, char *var_name)
+char	*get_var_value(t_minishell *mini, char *var_name)
 {
-	t_envp *envp;
+	t_envp	*envp;
 
 	envp = mini->envp;
 	if (!var_name || !envp->key || !envp->value)
@@ -54,25 +54,25 @@ char *get_var_value(t_minishell *mini, char *var_name)
 	while (envp)
 	{
 		if (envp->key && envp->value && ft_strncmp(envp->key, var_name, 1 ) == 0
-				&& ft_strlen(var_name) == ft_strlen(envp->key))
-			{
-				return (ft_strinit(ft_strlen(envp->value), envp->value));
-			}
+			&& ft_strlen(var_name) == ft_strlen(envp->key))
+		{
+			return (ft_strinit(ft_strlen(envp->value), envp->value));
+		}
 		envp = envp->next;
 	}
 	return (NULL);
 }
 
-static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
+static char	*parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
 {
-	t_list *res_lst;
-	char *result;
+	t_list	*res_lst;
+	char	*result;
+	t_list	*tmp2;
 
 	res_lst = NULL;
 	(*i)++;
 	ft_lstadd_back(&res_lst, ft_lstnew(start_parse_var(mini, arg, i)));
 	result = t_list_to_string(res_lst);
-	t_list *tmp2;
 	while (res_lst)
 	{
 		tmp2 = res_lst;
@@ -84,12 +84,13 @@ static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
 	return (result);
 }
 
-void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
+void	parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
-	int j;
-	char *env_var;
+	int		j;
+	char	*env_var;
 
-	if (arg && arg[*i] == '$' && (arg[(*i) + 1] != ' ') && ft_strlen(&arg[*i]) > 1)
+	if (arg && arg[*i] == '$' && (arg[(*i) + 1] != ' ')
+		&& ft_strlen(&arg[*i]) > 1)
 	{
 		if (arg[(*i) + 1] == '?')
 			print_exit_status(mini, arg_list, arg, i);

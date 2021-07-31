@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-static char *quote_substr(int *q_cnt, char *str, char symb)
+static char	*quote_substr(int *q_cnt, char *str, char symb)
 {
-	char *result;
-	int i;
+	char	*result;
+	int		i;
 
 	i = 1;
 	(*q_cnt) = 1;
@@ -20,11 +20,12 @@ static char *quote_substr(int *q_cnt, char *str, char symb)
 	return (result);
 }
 
-static int parse_double_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
+static int	parse_double_quotes(t_minishell *mini, t_arg **arg_list,
+		char *arg, int *i)
 {
-	int j;
-	int q_cnt;
-	char *substr;
+	int		j;
+	int		q_cnt;
+	char	*substr;
 
 	j = 0;
 	if (arg[*i] == '"')
@@ -43,11 +44,12 @@ static int parse_double_quotes(t_minishell *mini, t_arg **arg_list, char *arg, i
 	return (SUCCESS);
 }
 
-static int parse_single_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
+static int	parse_single_quotes(t_minishell *mini, t_arg **arg_list,
+		char *arg, int *i)
 {
-	int  j;
-	int q_cnt;
-	char *substr;
+	int		j;
+	int		q_cnt;
+	char	*substr;
 
 	j = 0;
 	if (arg[*i] == '\'')
@@ -70,7 +72,7 @@ static int parse_single_quotes(t_minishell *mini, t_arg **arg_list, char *arg, i
 	return (SUCCESS);
 }
 
-int parse_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
+int	parse_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
 	mini->is_quote_parse = 1;
 	parse_single_quotes(mini, arg_list, arg, i);

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int is_shieild_symb(char symb)
+int	is_shieild_symb(char symb)
 {
 	if (ft_strchr(SP_SYMBOLS, symb))
 		return (1);
@@ -8,7 +8,7 @@ int is_shieild_symb(char symb)
 		return (0);
 }
 
-static int escape_quotes(t_arg **arg_list, char *arg, int *i)
+static int	escape_quotes(t_arg **arg_list, char *arg, int *i)
 {
 	if (is_shieild_symb(arg[(*i) + 1]))
 	{
@@ -20,14 +20,14 @@ static int escape_quotes(t_arg **arg_list, char *arg, int *i)
 	return (SUCCESS);
 }
 
-static int escape_common(t_arg **arg_list, char *arg, int *i)
+static int	escape_common(t_arg **arg_list, char *arg, int *i)
 {
 	t_arg_addnode_back(arg_list, t_arg_new_node(arg[++(*i)]));
 	next_symbol(arg, i);
 	return (SUCCESS);
 }
 
-int parse_escape(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
+int	parse_escape(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
 	if (arg[*i] == '\\' && arg[*i + 1])
 	{
@@ -41,4 +41,3 @@ int parse_escape(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 		next_symbol(arg, i);
 	return (SUCCESS);
 }
-

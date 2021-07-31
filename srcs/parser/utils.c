@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void parse_to_arglist(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
+void	parse_to_arglist(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
 	if (!mini->is_quote_parse)
 		parse_quotes(mini, arg_list, arg, i);
@@ -13,13 +13,13 @@ void parse_to_arglist(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 	}
 }
 
-void next_symbol(char *str, int *counter)
+void	next_symbol(char *str, int *counter)
 {
 	if (str[*counter])
 		(*counter)++;
 }
 
-int is_normal_symbol(t_minishell *mini, char symb)
+int	is_normal_symbol(t_minishell *mini, char symb)
 {
 	if (mini->is_quote_parse && symb == '\'')
 		return (1);
@@ -29,7 +29,7 @@ int is_normal_symbol(t_minishell *mini, char symb)
 		return (0);
 }
 
-int skip_spaces(char *str, int i)
+int	skip_spaces(char *str, int i)
 {
 	if (str[i])
 	{

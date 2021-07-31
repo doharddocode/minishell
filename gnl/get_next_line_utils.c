@@ -1,32 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ivangluskov <ivangluskov@student.42.fr>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/13 01:59:17 by ivangluskov       #+#    #+#             */
-/*   Updated: 2020/12/13 01:59:17 by ivangluskov      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
-size_t		g_strlen(const char *str, int flag)
+size_t	check_len(const char *str)
 {
-	size_t count;
+	size_t	len;
 
-	count = 0;
-	if (flag)
-		while (str[count] && str[count] != '\n')
-			count++;
+	if (str)
+		len = g_strlen(str, 1);
 	else
-		while (str[count])
-			count++;
-	return (count);
+		len = 0;
+	return (len);
 }
 
-char		*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*start;
 	char	*result;
@@ -35,10 +20,11 @@ char		*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 && !s2)
 		return (NULL);
-	s1_len = (s1) ? g_strlen(s1, 1) : 0;
-	s2_len = (s2) ? g_strlen(s2, 1) : 0;
-	result = (char*)malloc(s1_len + s2_len + 1);
-	if (!(start = result))
+	s1_len = check_len(s1);
+	s2_len = check_len(s2);
+	result = (char *)malloc(s1_len + s2_len + 1);
+	start = result;
+	if (!start)
 		return (NULL);
 	while (*s1)
 		*result++ = *s1++;
@@ -48,13 +34,14 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	return (start);
 }
 
-char		*ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1)
 {
 	char	*str;
 	size_t	len;
 
 	len = g_strlen(s1, 0);
-	if (!(str = (char *)malloc(BUFFER_SIZE + 1)))
+	str = (char *)malloc(BUFFER_SIZE + 1);
+	if (!str)
 		return (NULL);
 	str[len] = '\0';
 	while (len--)
@@ -62,7 +49,7 @@ char		*ft_strdup(const char *s1)
 	return (str);
 }
 
-char		*ft_gnl_strchr(const char *str, int c)
+char	*ft_gnl_strchr(const char *str, int c)
 {
 	if (str)
 	{
@@ -78,9 +65,9 @@ char		*ft_gnl_strchr(const char *str, int c)
 	return (NULL);
 }
 
-char		*ft_gnl_strncpy(char *dst, const char *src)
+char	*ft_gnl_strncpy(char *dst, const char *src)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (src[i])

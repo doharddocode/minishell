@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-static int is_numeric(char *str)
+static int	is_numeric(char *str)
 {
-	int i;
+	int	i;
 
 	if (!str)
 		return (0);
@@ -15,12 +15,19 @@ static int is_numeric(char *str)
 	return (1);
 }
 
-int ft_exit(t_minishell *mini)
+void	message(t_arg_item *tmp)
 {
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(tmp->name, 2);
+	ft_putendl_fd(": numeric argument required", 2);
+}
+
+int	ft_exit(t_minishell *mini)
+{
+	t_arg_item	*tmp;
+
 	ft_putstr_fd("exit\n", 2);
 	mini->exit = 1;
-	t_arg_item *tmp;
-
 	tmp = mini->arg_item;
 	if (tmp)
 	{
@@ -33,9 +40,7 @@ int ft_exit(t_minishell *mini)
 		else if (tmp && !is_numeric(tmp->name))
 		{
 			mini->ret = 255;
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(tmp->name, 2);
-			ft_putendl_fd(": numeric argument required", 2);
+			message(tmp);
 		}
 		else if (tmp && tmp->name)
 			mini->ret = ft_atoi(tmp->name);

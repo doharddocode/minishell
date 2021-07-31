@@ -1,20 +1,6 @@
 #include "minishell.h"
 
-int check_param_quote(char *param, char quote_type)
-{
-	int i;
-
-	i = 1;
-	while (param && param[i])
-	{
-		if (param[i] == quote_type)
-			return (1);
-		i++;
-	}
-	return (ERROR);
-}
-
-static void get_arglen_s_quote(char *str, int i, int *result, char quote)
+static void	get_arglen_s_quote(char *str, int i, int *result, char quote)
 {
 	i++;
 	(*result)++;
@@ -27,7 +13,7 @@ static void get_arglen_s_quote(char *str, int i, int *result, char quote)
 		(*result)++;
 }
 
-static void get_arglen_d_quote(char *str, int i, int *result, char quote)
+static void	get_arglen_d_quote(char *str, int i, int *result, char quote)
 {
 	if (quote == '"')
 	{
@@ -51,7 +37,7 @@ static void get_arglen_d_quote(char *str, int i, int *result, char quote)
 	}
 }
 
-static int get_arglen_quote(char *str, int i, int *result)
+static int	get_arglen_quote(char *str, int i, int *result)
 {
 	if (str[i] == '"')
 		get_arglen_d_quote(str, i, result, str[i]);
@@ -60,41 +46,39 @@ static int get_arglen_quote(char *str, int i, int *result)
 	return (*result);
 }
 
-int get_arglen(char *str, int i)
+int	get_arglen(t_minishell *mini, char *str, int i)
 {
-	int result;
-
-	result = 0;
+	mini->arg_len = 0;
 	if (str[i] == '\\')
 	{
-		result++;
+		mini->arg_len++;
 		i++;
 		while (str[i] && (str[i] == ' ' || str[i] != ' '))
 		{
 			i++;
-			result++;
+			mini->arg_len++;
 		}
 	}
 	else if (str[i] == '"' || str[i] == '\'')
-		return (get_arglen_quote(str, i, &result));
+		return (get_arglen_quote(str, i, &mini->arg_len));
 	else
 	{
 		while (str[i] && str[i] != ' ')
 		{
 			if (str[i] == '"' || str[i] == '\'')
-				return (get_arglen_quote(str, i, &result));
-			result++;
+				return (get_arglen_quote(str, i, &mini->arg_len));
+			mini->arg_len++;
 			i++;
 		}
 	}
-	return (result);
+	return (mini->arg_len);
 }
 
-int add_arg_to_args(t_minishell *mini, char *arg)
+int	add_arg_to_args(t_minishell *mini, char *arg)
 {
-	t_arg *arg_list;
-	int i;
-	char *res;
+	t_arg	*arg_list;
+	int		i;
+	char	*res;
 
 	i = 0;
 	arg_list = NULL;

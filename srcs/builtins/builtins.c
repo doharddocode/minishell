@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void init_builtins(int (*builtins_func[7])(t_minishell *mini))
+static void	init_builtins(int (*builtins_func[7])(t_minishell *mini))
 {
 	builtins_func[0] = ft_echo;
 	builtins_func[1] = ft_cd;
@@ -13,7 +13,7 @@ static void init_builtins(int (*builtins_func[7])(t_minishell *mini))
 
 int	builtins(t_minishell *mini)
 {
-	int (*builtins_func[7]) (t_minishell *mini);
+	int	(*builtins_func[7])(t_minishell *mini);
 
 	init_builtins(builtins_func);
 	if (is_builtin(mini->arg_item->name, "echo"))

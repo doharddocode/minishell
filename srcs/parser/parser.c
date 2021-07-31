@@ -1,16 +1,50 @@
 #include "minishell.h"
 
-int parser(t_minishell *mini)
+int	iterator(int i, int arglen, char *line)
 {
-	int arglen;
-	char *arg;
-	int i;
-	char *line;
+	i += arglen;
+	i = skip_spaces(line, i);
+	i++;
+	return (i);
+}
 
+static int	parser_util(t_minishell *mini, char *line, int i, char *arg)
+{
+	int		arglen;
+
+	while (line[i])
+	{
+		i = skip_spaces(line, i) + 1;
+		arglen = get_arglen(mini, line, i);
+		if (arglen < 1)
+			return (ERROR);
+		arg = ft_substr(line, i, arglen);
+		if (!arg)
+			return (ERROR);
+		if (arg[0] == '\'' || arg[0] == '"')
+		{
+			if (check_param_quote(arg, arg[0]) == ERROR)
+			{
+				free(arg);
+				return (exit_with_error("bad syntax near quotes!"));
+			}
+		}
+		add_arg_to_args(mini, arg);
+		i = iterator(i, arglen, line);
+		free(arg);
+	}
+	return (0);
+}
+
+int	parser(t_minishell *mini)
+{
+	char	*line;
+	int		res;
+	char	*arg;
+
+	arg = NULL;
 	signal(SIGINT, &handle_signal);
 	signal(SIGQUIT, &handle_signal);
-	i = 0;
-	arg = NULL;
 	line = readline(PROMT);
 	if (line == NULL)
 	{
@@ -20,24 +54,26 @@ int parser(t_minishell *mini)
 	}
 	add_cmd_to_history(mini, line);
 	add_history(line);
-	while (line[i])
+	res = parser_util(mini, line, 0, arg);
+	if (res == ERROR)
 	{
-		i = skip_spaces(line, i) + 1;
-		arglen = get_arglen(line, i);
-		if (arglen < 1)
-			return (ERROR);
-		arg = ft_substr(line, i, arglen);
-		if (!arg)
-			return (ERROR);
-		if (arg[0] == '\'' || arg[0] == '"')
-			if (check_param_quote(arg, arg[0]) == ERROR)
-				return (exit_with_error("bad syntax near quotes!"));
-		add_arg_to_args(mini, arg);
-		i += arglen;
-		i = skip_spaces(line, i);
-		i++;
-		free(arg);
+		free(line);
+		return (ERROR);
 	}
 	free(line);
 	return (SUCCESS);
+}
+
+int	check_param_quote(char *param, char quote_type)
+{
+	int	i;
+
+	i = 1;
+	while (param && param[i])
+	{
+		if (param[i] == quote_type)
+			return (1);
+		i++;
+	}
+	return (ERROR);
 }

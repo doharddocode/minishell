@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-static	void delete_env(t_minishell *mini, char *var_name)
+static void	delete_env(t_minishell *mini, char *var_name)
 {
-	t_envp *node;
+	t_envp	*node;
 
 	if (is_env_exist(mini->envp, var_name))
 	{
@@ -12,9 +12,9 @@ static	void delete_env(t_minishell *mini, char *var_name)
 	}
 }
 
-int ft_unset(t_minishell *mini)
+int	ft_unset(t_minishell *mini)
 {
-	t_arg_item *arg_item_tmp;
+	t_arg_item	*arg_item_tmp;
 
 	arg_item_tmp = mini->arg_item->next;
 	if (arg_item_tmp)

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_env(t_minishell *mini)
+int	ft_env(t_minishell *mini)
 {
 	if (!is_env_exist(mini->envp, "PATH"))
 	{

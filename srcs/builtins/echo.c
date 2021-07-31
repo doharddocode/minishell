@@ -1,10 +1,12 @@
 #include "minishell.h"
 
-static int check_option(t_arg_item **args, char *option_name)
+static int	check_option(t_arg_item **args, char *option_name)
 {
-	int is_n = 0;
+	int	is_n;
 
-	while (*args && !ft_strncmp((*args)->name, option_name, ft_strlen(option_name)))
+	is_n = 0;
+	while (*args && !ft_strncmp((*args)->name, option_name,
+			ft_strlen(option_name)))
 	{
 		if (!ft_strncmp((*args)->name, option_name, ft_strlen(option_name))
 			&& ft_strlen((*args)->name) == ft_strlen(option_name))
@@ -13,17 +15,17 @@ static int check_option(t_arg_item **args, char *option_name)
 			(*args) = (*args)->next;
 		}
 		else
-			break;
+			break ;
 	}
 	if (is_n)
 		return (1);
 	return (0);
 }
 
-int ft_echo(t_minishell *mini)
+int	ft_echo(t_minishell *mini)
 {
-	t_arg_item *args;
-	int n_opt;
+	t_arg_item	*args;
+	int			n_opt;
 
 	args = mini->arg_item->next;
 	n_opt = check_option(&args, "-n");

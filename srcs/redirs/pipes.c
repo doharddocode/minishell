@@ -1,16 +1,12 @@
 #include "minishell.h"
 
-void	redirect(t_minishell *mini, t_arg_item *arg,int flag)
+void	redirect(t_minishell *mini, t_arg_item *arg, int flag)
 {
 	ft_close(mini->fdout);
 	if (flag == REDIR)
-	{
 		mini->fdout = open(arg->name, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
-	}
 	else
-	{
 		mini->fdout = open(arg->name, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
-	}
 	if (mini->fdout == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -39,10 +35,10 @@ void	input(t_minishell *mini, t_arg_item *arg)
 	dup2(mini->fdin, 0);
 }
 
-int		shellpipe(t_minishell *mini)
+int	shellpipe(t_minishell *mini)
 {
-	pid_t pid;
-	int pipfd[2];
+	pid_t	pid;
+	int		pipfd[2];
 
 	mini->pipe->insidepipe = 1;
 	pipe(pipfd);
@@ -55,7 +51,7 @@ int		shellpipe(t_minishell *mini)
 		mini->pipe->daddy = 0;
 		mini->pid = -1;
 		mini->no_exec = 0;
-		return(2);
+		return (2);
 	}
 	else
 	{
@@ -64,6 +60,6 @@ int		shellpipe(t_minishell *mini)
 		mini->pipe->pipeout = pipfd[1];
 		mini->last = 0;
 		mini->pid = pid;
-		return(1);
+		return (1);
 	}
 }

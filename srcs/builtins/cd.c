@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void		print_cd_error(t_arg_item *args)
+static void	print_cd_error(t_arg_item *args)
 {
 	ft_putstr_fd("cd: ", 2);
 	if (args->next)
@@ -13,9 +13,9 @@ static void		print_cd_error(t_arg_item *args)
 	ft_putendl_fd(args->name, 2);
 }
 
-static int set_oldpwd(t_envp *envp)
+static int	set_oldpwd(t_envp *envp)
 {
-	char cwd[255];
+	char	cwd[255];
 
 	if (!getcwd(cwd, 255))
 		return (ERROR);
@@ -28,10 +28,10 @@ static int set_oldpwd(t_envp *envp)
 	return (SUCCESS);
 }
 
-static int set_path(t_minishell *mini, t_envp *envp, int flag)
+static int	set_path(t_minishell *mini, t_envp *envp, int flag)
 {
-	int result;
-	t_envp *envp_node;
+	int		result;
+	t_envp	*envp_node;
 
 	if (flag == 0)
 	{
@@ -58,9 +58,9 @@ static int set_path(t_minishell *mini, t_envp *envp, int flag)
 
 int	ft_cd(t_minishell *mini)
 {
-	int result;
-	t_arg_item *args;
-	t_envp *envp;
+	int			result;
+	t_arg_item	*args;
+	t_envp		*envp;
 
 	envp = mini->envp;
 	args = mini->arg_item->next;

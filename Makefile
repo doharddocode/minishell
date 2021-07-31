@@ -1,5 +1,5 @@
 NAME 			= minishell
-FLAGS			= -g -lreadline -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include#-Wall -Werror -Wextra
+FLAGS			= -g -lreadline -L/usr/local/Cellar/readline/8.1/lib/ -I/usr/local/Cellar/readline/8.1/include#-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 
@@ -24,7 +24,7 @@ UTILS_DIR		= $(MAIN_DIR)utils/
 PIPE_DIR		= $(MAIN_DIR)redirs/
 
 GNL_FILES		= get_next_line.c \
-					get_next_line_utils.c \
+					get_next_line_utils.c gnl_util2.c\
 
 MAIN_FILES 		= minishell.c signal.c error_handle.c
 
@@ -34,9 +34,10 @@ EXECUTE_FILES	= exec.c
 
 BUILINS_FILES	= builtins.c echo.c cd.c pwd.c export.c unset.c env.c exit.c utils.c
 
-UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c arg_item.c free_src.c validate_line.c
+UTILS_FILES		= free.c envp_list.c arg_list.c common.c tools.c history.c arg_item.c \
+					free_src.c validate_line.c arg_utils.c arg_utils2.c
 
-PIPE_FILES		= pipes.c fd.c redir_tool.c heredoc.c
+PIPE_FILES		= pipes.c fd.c heredoc.c
 
 SRCS 			= $(addprefix $(GNL_DIR), $(GNL_FILES)) \
 					$(addprefix $(MAIN_DIR), $(MAIN_FILES)) \

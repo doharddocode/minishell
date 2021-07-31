@@ -1,10 +1,11 @@
 #include "get_next_line.h"
 
-t_gnl		*gnl_ft_lstnew(int fd)
+t_gnl	*gnl_ft_lstnew(int fd)
 {
-	t_gnl *res;
+	t_gnl	*res;
 
-	if ((res = malloc(sizeof(t_gnl))))
+	res = malloc(sizeof(t_gnl));
+	if (res)
 	{
 		res->fd = fd;
 		res->remainer = NULL;
@@ -14,13 +15,15 @@ t_gnl		*gnl_ft_lstnew(int fd)
 	return (NULL);
 }
 
-char		*process_remainer(char **remainer, char **line)
+char	*process_remainer(char **remainer, char **line)
 {
 	char	*e_l_p;
 
 	e_l_p = NULL;
 	if (*remainer)
-		if ((e_l_p = ft_gnl_strchr(*remainer, '\n')))
+	{
+		e_l_p = ft_gnl_strchr(*remainer, '\n');
+		if (e_l_p)
 		{
 			*e_l_p = '\0';
 			*line = ft_strdup(*remainer);
@@ -32,6 +35,7 @@ char		*process_remainer(char **remainer, char **line)
 			free(*remainer);
 			*remainer = NULL;
 		}
+	}
 	else
 	{
 		if (!(*line = ((char *)malloc(sizeof(char) * 1))))
@@ -41,9 +45,9 @@ char		*process_remainer(char **remainer, char **line)
 	return (e_l_p);
 }
 
-t_gnl		*ft_free_lst(t_gnl *lst, t_gnl *root)
+t_gnl	*ft_free_lst(t_gnl *lst, t_gnl *root)
 {
-	t_gnl *temp;
+	t_gnl	*temp;
 
 	temp = root;
 	if (lst == root)
@@ -61,7 +65,7 @@ t_gnl		*ft_free_lst(t_gnl *lst, t_gnl *root)
 	return (root);
 }
 
-int			ft_get_line(int fd, int bytes_r, char **line, char **remain)
+int	ft_get_line(int fd, int bytes_r, char **line, char **remain)
 {
 	char	*e_l_p;
 	char	*old_ptr;
@@ -71,7 +75,8 @@ int			ft_get_line(int fd, int bytes_r, char **line, char **remain)
 	while (*line && !e_l_p && (bytes_r = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[bytes_r] = '\0';
-		if ((e_l_p = ft_gnl_strchr(buffer, '\n')))
+		e_l_p = ft_gnl_strchr(buffer, '\n');
+		if (e_l_p)
 		{
 			*e_l_p = '\0';
 			if (!(*remain = ft_strdup(++e_l_p)))
@@ -90,7 +95,7 @@ int			ft_get_line(int fd, int bytes_r, char **line, char **remain)
 	return (bytes_r || e_l_p);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static t_gnl	*first;
 	t_gnl			*lst;
@@ -101,8 +106,11 @@ int			get_next_line(int fd, char **line)
 	if (fd < 0 || !line || !BUFFER_SIZE)
 		return (-1);
 	if (!first)
-		if (!(first = gnl_ft_lstnew(fd)))
+	{
+		first = gnl_ft_lstnew(fd);
+		if (!first)
 			return (-1);
+	}
 	lst = first;
 	while (lst->fd != fd)
 	{
@@ -110,7 +118,8 @@ int			get_next_line(int fd, char **line)
 			lst->next = gnl_ft_lstnew(fd);
 		lst = lst->next;
 	}
-	if ((res = ft_get_line(lst->fd, bytes_r, line, &lst->remainer)) < 1)
+	res = ft_get_line(lst->fd, bytes_r, line, &lst->remainer);
+	if (res < 1)
 		first = ft_free_lst(lst, first);
 	return (res);
 }

@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-int exit_with_error(char *error_text)
+int	exit_with_error(char *error_text)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putendl_fd(error_text, 2);
 	return (ERROR);
 }
 
-int item_not_found(t_minishell *mini, char *command_name, char *err_text)
+int	item_not_found(t_minishell *mini, char *command_name, char *err_text)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(command_name, 2);
@@ -17,11 +17,11 @@ int item_not_found(t_minishell *mini, char *command_name, char *err_text)
 	return (127);
 }
 
-int get_errror_msg(char *exec_path)
+int	get_errror_msg(char *exec_path)
 {
 	int	fd;
 	int	return_val;
-	DIR *catalog;
+	DIR	*catalog;
 
 	catalog = opendir(exec_path);
 	fd = open(exec_path, O_WRONLY);
@@ -43,4 +43,16 @@ int get_errror_msg(char *exec_path)
 		closedir(catalog);
 	ft_close(fd);
 	return (return_val);
+}
+
+void	init_flags(t_minishell *mini, t_pipe *pipe)
+{
+	mini->pipe = pipe;
+	mini->ret = 0;
+	mini->work_history = NULL;
+	mini->exit = 0;
+	mini->is_quote_parse = 0;
+	mini->no_exec = 0;
+	mini->in = dup(0);
+	mini->out = dup(1);
 }

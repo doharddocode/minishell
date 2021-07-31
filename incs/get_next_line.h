@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ivangluskov <ivangluskov@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mrosette <mrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 01:59:30 by ivangluskov       #+#    #+#             */
-/*   Updated: 2020/12/13 01:59:30 by ivangluskov      ###   ########.fr       */
+/*   Updated: 2021/07/31 22:34:14 by mrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #  define BUFFER_SIZE 32
 # endif
 
-typedef struct		s_gnl
+typedef struct s_gnl
 {
 	int				fd;
 	char			*remainer;

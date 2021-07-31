@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ivangluskov <ivangluskov@student.42.fr>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/13 01:59:30 by ivangluskov       #+#    #+#             */
-/*   Updated: 2020/12/13 01:59:30 by ivangluskov      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -32,7 +20,6 @@ t_gnl				*ft_free_lst(t_gnl *lst, t_gnl *root);
 
 int					get_next_line(int fd, char **line);
 int					ft_get_line(int fd, int b_r, char **line, char **remain);
-
 char				*ft_strdup(const char *s1);
 char				*ft_gnl_strchr(const char *str, int c);
 char				*ft_gnl_strncpy(char *dst, const char *src);

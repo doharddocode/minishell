@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void add_cmd_to_history(t_minishell *mini, char *cmd)
+void	add_cmd_to_history(t_minishell *mini, char *cmd)
 {
-	char *result;
+	char	*result;
 
 	result = NULL;
 	if (cmd)
@@ -13,35 +13,45 @@ void add_cmd_to_history(t_minishell *mini, char *cmd)
 	}
 }
 
-static void print_history_line(t_list **line, char *content, char *sep, int counter)
+static t_list	**line_add(t_list **line, char *cont, char *sep, char *cnt)
 {
-	int i;
-	char *cnt;
-	t_list *tmp;
+	ft_lstadd_back(line, ft_lstnew(sep));
+	ft_lstadd_back(line, ft_lstnew(cnt));
+	ft_lstadd_back(line, ft_lstnew(cont));
+	ft_free_str(cnt);
+	return (line);
+}
+
+static void	writes(t_list *tmp)
+{
+	int	i;
+
+	i = 0;
+	while (((char *)(tmp->content))[i])
+		write(1, &(tmp->content)[i++], 1);
+	if (tmp->next)
+		write(1, " ", 1);
+	else
+		write(1, "\n", 1);
+}
+
+static void	print_history_line(t_list **line, char *content,
+			char *sep, int counter)
+{
+	char	*cnt;
+	t_list	*tmp;
+	t_list	*tmp2;
 
 	cnt = ft_itoa(counter);
 	if (!cnt)
 		return ;
-	ft_lstadd_back(line, ft_lstnew(sep));
-	ft_lstadd_back(line, ft_lstnew(cnt));
-	ft_lstadd_back(line, ft_lstnew(content));
-	ft_free_str(cnt);
-	tmp = *line;
+	tmp = *line_add(line, content, sep, cnt);
 	while (tmp)
 	{
 		if (tmp->content)
-		{
-			i = 0;
-			while (((char *)(tmp->content))[i])
-				write(1, &(tmp->content)[i++], 1);
-			if (tmp->next)
-				write(1, " ", 1);
-			else
-				write(1, "\n", 1);
-		}
+			writes(tmp);
 		tmp = tmp->next;
 	}
-	t_list *tmp2;
 	while (*line)
 	{
 		tmp2 = *line;
@@ -50,11 +60,11 @@ static void print_history_line(t_list **line, char *content, char *sep, int coun
 	}
 }
 
-int show_working_history(t_minishell *mini)
+int	show_working_history(t_minishell *mini)
 {
-	int counter;
-	t_list *line;
-	t_list *history;
+	int		counter;
+	t_list	*line;
+	t_list	*history;
 
 	counter = 1;
 	history = mini->work_history;

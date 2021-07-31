@@ -1,19 +1,20 @@
 #include "minishell.h"
 
-char	*to_lower_case(char* str) {
+char	*to_lower_case(char *str)
+{
 	char	*s;
 
 	s = str;
-	while (*str != '\0') {
-		if (*str >= 'A' && *str <= 'Z') {
+	while (*str != '\0')
+	{
+		if (*str >= 'A' && *str <= 'Z')
 			*str = *str + 32;
-		}
 		++str;
 	}
 	return (s);
 }
 
-int is_equal_strs(char *str1, char *str2)
+int	is_equal_strs(char *str1, char *str2)
 {
 	if (!ft_strncmp(str1, str2, ft_strlen(str2))
 		&& ft_strlen(str1) == ft_strlen(str2))
@@ -23,11 +24,11 @@ int is_equal_strs(char *str1, char *str2)
 
 void	ft_stricpy(char **dest, char *src, int *pos)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!src)
-		return;
+		return ;
 	while (src[i] != '\0')
 	{
 		(*dest)[*pos] = src[i];
@@ -36,11 +37,11 @@ void	ft_stricpy(char **dest, char *src, int *pos)
 	}
 }
 
-char *t_list_to_string(t_list *list)
+char	*t_list_to_string(t_list *list)
 {
-	char *result;
-	char *temp_str;
-	t_list *temp_node;
+	char	*result;
+	char	*temp_str;
+	t_list	*temp_node;
 
 	temp_node = list;
 	result = ft_strnew(1);
@@ -62,4 +63,13 @@ char *t_list_to_string(t_list *list)
 		temp_node = temp_node->next;
 	}
 	return (result);
+}
+
+int	ret_val(int return_val)
+{
+	if (return_val == 32256 || return_val == 32512)
+		return_val /= 256;
+	else
+		return_val = return_val != 0;
+	return (return_val);
 }
