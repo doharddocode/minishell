@@ -72,6 +72,14 @@ static char *parse_env_vars_inner(t_minishell *mini, char *arg, int *i)
 	(*i)++;
 	ft_lstadd_back(&res_lst, ft_lstnew(start_parse_var(mini, arg, i)));
 	result = t_list_to_string(res_lst);
+	t_list *tmp2;
+	while (res_lst)
+	{
+		tmp2 = res_lst;
+		res_lst = res_lst->next;
+		ft_free_str(tmp2->content);
+		free(tmp2);
+	}
 	ft_lstclear(&res_lst, free);
 	return (result);
 }
@@ -94,8 +102,8 @@ void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 				t_arg_addnode_back(arg_list, t_arg_new_node(env_var[j]));
 				j++;
 			}
-			parse_env_vars(mini, arg_list, arg, i);
 			ft_free_str(env_var);
+			parse_env_vars(mini, arg_list, arg, i);
 		}
 	}
 }

@@ -57,7 +57,6 @@ static void swap(t_envp *current, t_envp *next)
 void sort_envp_list(t_envp *envp)
 {
 	int swapped;
-	int i;
 	t_envp *ptr_1;
 	t_envp *ptr_2;
 
@@ -80,30 +79,6 @@ void sort_envp_list(t_envp *envp)
 		}
 		ptr_2 = ptr_1;
 	}
-//	t_envp *head;
-//	t_envp *temp;
-//	char *temp_key;
-//	char *temp_value;
-//
-//	head = *envp;
-//	while (head != NULL)
-//	{
-//		temp = head;
-//		while (temp->next != NULL)
-//		{
-//			if (ft_strcmp(temp->key, temp->next->key) > 0)
-//			{
-//				temp_key = temp->key;
-//				temp_value = temp->value;
-//				temp->key = temp->next->key;
-//				temp->value = temp->next->value;
-//				temp->next->key = temp_key;
-//				temp->next->value = temp_value;
-//			}
-//			temp = temp->next;
-//		}
-//		head = head->next;
-//	}
 }
 
 size_t ft_envp_size(t_envp *root)
@@ -137,12 +112,10 @@ void ft_delete_envp_node(t_envp **root, t_envp *node)
 		if (temp == NULL)
 			return ;
 		prev->next = temp->next;
-		ft_free_str(temp->key);
-		ft_free_str(temp->value);
-		free(temp);
 	}
-//	while (temp != node)
-//		temp = temp->next;
+	ft_free_str(temp->key);
+	ft_free_str(temp->value);
+	free(temp);
 //	temp->next = node->next;
 //	ft_free_str(node->key);
 //	ft_free_str(node->value);
