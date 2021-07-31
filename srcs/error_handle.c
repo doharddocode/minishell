@@ -13,8 +13,8 @@ int item_not_found(t_minishell *mini, char *command_name, char *err_text)
 	ft_putstr_fd(command_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(err_text, 2);
-	mini->ret = ERROR;
-	return (ERROR);
+	mini->ret = 127;
+	return (127);
 }
 
 int get_errror_msg(char *exec_path)

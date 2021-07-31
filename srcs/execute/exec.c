@@ -85,7 +85,7 @@ int execute(t_minishell *mini, t_arg_item *arg_item)
 	exec_path = NULL;
 	path_env = ft_get_envp_node(mini->envp, "PATH");
 	if (!path_env)
-		return (mini->ret = ERROR);
+		return (item_not_found(mini, arg_item->name, "No such file or director\n"));
 	bin = ft_split(path_env->value, ':');
 	if (!bin)
 		return (ERROR);

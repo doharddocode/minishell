@@ -49,11 +49,15 @@ char *get_var_value(t_minishell *mini, char *var_name)
 	t_envp *envp;
 
 	envp = mini->envp;
+	if (!var_name || !envp->key || !envp->value)
+		return (NULL);
 	while (envp)
 	{
-		if (!ft_strncmp(envp->key, var_name, ft_strlen(var_name))
+		if (envp->key && envp->value && ft_strncmp(envp->key, var_name, 1 ) == 0
 				&& ft_strlen(var_name) == ft_strlen(envp->key))
-			return (ft_strinit(ft_strlen(envp->value), envp->value));
+			{
+				return (ft_strinit(ft_strlen(envp->value), envp->value));
+			}
 		envp = envp->next;
 	}
 	return (NULL);
@@ -77,7 +81,7 @@ void parse_env_vars(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 	int j;
 	char *env_var;
 
-	if (arg[*i] == '$' && (arg[(*i) + 1] != ' ') && ft_strlen(&arg[*i]) > 1)
+	if (arg && arg[*i] == '$' && (arg[(*i) + 1] != ' ') && ft_strlen(&arg[*i]) > 1)
 	{
 		if (arg[(*i) + 1] == '?')
 			print_exit_status(mini, arg_list, arg, i);

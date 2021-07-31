@@ -13,7 +13,7 @@ static int error_handle(t_arg_item *args, int valid_value)
 	return (ERROR);
 }
 
-static int check_env(char *env_name)
+static int check_env(t_arg_item *args, char *env_name)
 {
 	int	i;
 
@@ -30,6 +30,8 @@ static int check_env(char *env_name)
 			return (0);
 		i++;
 	}
+	if (args->next && ft_strncmp(args->next->name, "=", 1))
+		return (0);
 	return (1);
 }
 
@@ -60,8 +62,6 @@ static void add_env(t_minishell *mini, char *arg)
 	ft_free_str(env_val);
 }
 
-//сделать нормальную сортировку
-
 int ft_export(t_minishell *mini)
 {
 	int is_valid_env;
@@ -70,12 +70,12 @@ int ft_export(t_minishell *mini)
 	args = mini->arg_item->next;
 	if (!args)
 	{
-		sort_envp_list(&mini->envp);
+		sort_envp_list(mini->envp);
 		print_envp_list(mini->envp, "declare -x");
 	}
 	else
 	{
-		is_valid_env = check_env(args->name);
+		is_valid_env = check_env(args, args->name);
 		if (is_valid_env == 1)
 			add_env(mini, args->name);
 		else

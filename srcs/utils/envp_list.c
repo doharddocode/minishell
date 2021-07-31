@@ -41,32 +41,69 @@ void	print_envp_list(t_envp *envp, char *prefix)
 
 }
 
-void sort_envp_list(t_envp **envp)
+static void swap(t_envp *current, t_envp *next)
 {
-	t_envp *head;
-	t_envp *temp;
-	char *temp_key;
-	char *temp_value;
+	char *key;
+	char *value;
 
-	head = *envp;
-	while (head != NULL)
+	key = current->key;
+	value = current->value;
+	current->key = next->key;
+	current->value = next->value;
+	next->key = key;
+	next->value = value;
+}
+
+void sort_envp_list(t_envp *envp)
+{
+	int swapped;
+	int i;
+	t_envp *ptr_1;
+	t_envp *ptr_2;
+
+	if (!envp)
+		return ;
+	swapped = 1;
+	ptr_2 = NULL;
+	while (swapped)
 	{
-		temp = head;
-		while (temp->next != NULL)
+		swapped = 0;
+		ptr_1 = envp;
+		while (ptr_1->next != ptr_2)
 		{
-			if (ft_strcmp(temp->key, temp->next->key) > 0)
+			if (ft_strcmp(ptr_1->key, ptr_1->next->key) > 0)
 			{
-				temp_key = temp->key;
-				temp_value = temp->value;
-				temp->key = temp->next->key;
-				temp->value = temp->next->value;
-				temp->next->key = temp_key;
-				temp->next->value = temp_value;
+				swap(ptr_1, ptr_1->next);
+				swapped = 1;
 			}
-			temp = temp->next;
+			ptr_1 = ptr_1->next;
 		}
-		head = head->next;
+		ptr_2 = ptr_1;
 	}
+//	t_envp *head;
+//	t_envp *temp;
+//	char *temp_key;
+//	char *temp_value;
+//
+//	head = *envp;
+//	while (head != NULL)
+//	{
+//		temp = head;
+//		while (temp->next != NULL)
+//		{
+//			if (ft_strcmp(temp->key, temp->next->key) > 0)
+//			{
+//				temp_key = temp->key;
+//				temp_value = temp->value;
+//				temp->key = temp->next->key;
+//				temp->value = temp->next->value;
+//				temp->next->key = temp_key;
+//				temp->next->value = temp_value;
+//			}
+//			temp = temp->next;
+//		}
+//		head = head->next;
+//	}
 }
 
 size_t ft_envp_size(t_envp *root)
@@ -82,18 +119,35 @@ size_t ft_envp_size(t_envp *root)
 	return (size);
 }
 
-t_envp *ft_delete_envp_node(t_envp *root, t_envp *node)
+void ft_delete_envp_node(t_envp **root, t_envp *node)
 {
+	t_envp *prev;
 	t_envp *temp;
 
-	temp = root;
-	while (temp->next != node)
-		temp = temp->next;
-	temp->next = node->next;
-	ft_free_str(node->key);
-	ft_free_str(node->value);
-	free(node);
-	return (temp);
+	temp = *root;
+	if (temp && ft_strncmp(temp->key, node->key, ft_strlen(node->key)) == 0)
+		*root = temp->next;
+	else
+	{
+		while (temp && ft_strncmp(temp->key, node->key, ft_strlen(node->key)))
+		{
+			prev = temp;
+			temp = temp->next;
+		}
+		if (temp == NULL)
+			return ;
+		prev->next = temp->next;
+		ft_free_str(temp->key);
+		ft_free_str(temp->value);
+		free(temp);
+	}
+//	while (temp != node)
+//		temp = temp->next;
+//	temp->next = node->next;
+//	ft_free_str(node->key);
+//	ft_free_str(node->value);
+//	free(node);
+//	return (temp);
 }
 
 t_envp *ft_copy_envp_node(t_envp *node)
@@ -212,10 +266,13 @@ int is_env_exist(t_envp *envp, char *var_name)
 		return (ERROR);
 	while (envp)
 	{
-		if (!ft_strncmp(envp->key, var_name, ft_strlen(envp->key))
-			&& ft_strlen(envp->key) == ft_strlen(var_name))
+		if (envp->key)
 		{
-			return (1);
+			if (!ft_strncmp(envp->key, var_name, ft_strlen(envp->key))
+				&& ft_strlen(envp->key) == ft_strlen(var_name))
+			{
+				return (1);
+			}
 		}
 		envp = envp->next;
 	}
