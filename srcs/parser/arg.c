@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	get_arglen_s_quote(char *str, int i, int *result, char quote)
+static void	get_arglen_s_quote(char *str, int i, int *result)
 {
 	i++;
 	(*result)++;
@@ -42,7 +42,7 @@ static int	get_arglen_quote(char *str, int i, int *result)
 	if (str[i] == '"')
 		get_arglen_d_quote(str, i, result, str[i]);
 	else if (str[i] == '\'')
-		get_arglen_s_quote(str, i, result, str[i]);
+		get_arglen_s_quote(str, i, result);
 	return (*result);
 }
 

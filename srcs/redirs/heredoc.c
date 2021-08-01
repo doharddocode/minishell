@@ -6,7 +6,7 @@ void	check_write(t_minishell *mini, char *buf, int str_len)
 	size_t	wrote;
 
 	wrote = 0;
-	while (wrote < str_len)
+	while ((int)wrote < str_len)
 	{
 		byte = write(mini->fd_temp, buf + wrote, str_len - wrote);
 		if (byte >= 0)

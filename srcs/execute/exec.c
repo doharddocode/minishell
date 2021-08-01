@@ -70,7 +70,7 @@ int	exec_ret(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 
 	if (exec_path)
 		return_val = launch_exec(mini, exec_path, arg_item);
-	else if (arg_item)
+	else
 		return_val = launch_exec(mini, arg_item->name, arg_item);
 	return (return_val);
 }

@@ -76,8 +76,6 @@ void	print_envp_list(t_envp *envp, char *prefix)
 
 t_envp	*ft_get_envp_node(t_envp *envp, char *key)
 {
-	t_envp	*res;
-
 	if (!key)
 		return (NULL);
 	while (envp)

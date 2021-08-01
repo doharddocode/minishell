@@ -9,7 +9,7 @@ static char	*quote_substr(int *q_cnt, char *str, char symb)
 	(*q_cnt) = 1;
 	while (str[i])
 	{
-		if (str[i] == symb && i == ft_strlen(str) - 1 && str[i - 1] != '\\')
+		if (str[i] == symb && i == (int)ft_strlen(str) - 1 && str[i - 1] != '\\')
 			(*q_cnt)++;
 		i++;
 	}
@@ -44,7 +44,7 @@ static int	parse_double_quotes(t_minishell *mini, t_arg **arg_list,
 	return (SUCCESS);
 }
 
-static int	parse_single_quotes(t_minishell *mini, t_arg **arg_list,
+static int	parse_single_quotes(t_arg **arg_list,
 		char *arg, int *i)
 {
 	int		j;
@@ -75,7 +75,7 @@ static int	parse_single_quotes(t_minishell *mini, t_arg **arg_list,
 int	parse_quotes(t_minishell *mini, t_arg **arg_list, char *arg, int *i)
 {
 	mini->is_quote_parse = 1;
-	parse_single_quotes(mini, arg_list, arg, i);
+	parse_single_quotes(arg_list, arg, i);
 	parse_double_quotes(mini, arg_list, arg, i);
 	mini->is_quote_parse = 0;
 	return (SUCCESS);

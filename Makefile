@@ -1,7 +1,10 @@
 NAME 			= minishell
+
 #FLAGS			= -g -lreadline -L/usr/local/Cellar/readline/8.1/lib/ -I/usr/local/Cellar/readline/8.1/include #-Wall -Werror -Wextra
 
-FLAGS			= -g -lreadline -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include #-Wall -Werror -Wextra
+CFLAGS			= -Wall -Werror -Wextra
+
+FLAGS			= -lreadline -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include
 
 LIBFT_DIR 		= libft/
 
@@ -55,7 +58,7 @@ all: $(NAME)
 
 .c.o: $(HEADERS)
 	@printf "\033[mMinishell: %-33.33s\r" $@
-	@gcc -I$(INCS) -c $< -o $(<:.c=.o)
+	@gcc $(CFLAGS) -I$(INCS) -c $< -o $(<:.c=.o)
 
 $(NAME): $(OBJS) $(HEADERS)
 	@echo ""

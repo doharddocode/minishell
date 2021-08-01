@@ -46,7 +46,7 @@ static void	add_env(t_minishell *mini, char *arg)
 	env_name = ft_substr(arg, 0, i);
 	if (!env_name)
 		return ;
-	if (i == ft_strlen(arg))
+	if (i == (int)ft_strlen(arg))
 		env_val = ft_strnew(1);
 	else
 		env_val = ft_substr(arg, i + 1, ft_strlen(arg));
