@@ -24,9 +24,9 @@ char	*t_arg_to_string(t_arg *arg)
 
 	temp_node = arg;
 	result = ft_strnew(1);
-	if (!result || !arg)
-		return (NULL);
-	while (temp_node)
+	if (!result)
+		ft_free_str(result);
+	while (arg && temp_node)
 	{
 		temp_str = result;
 		if (!temp_node->symb)

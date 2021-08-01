@@ -88,7 +88,5 @@ int	add_arg_to_args(t_minishell *mini, char *arg)
 	t_arg_clear(&arg_list, free);
 	if (res)
 		add_item_back(&(mini->arg_item), new_item(res));
-	else
-		add_item_back(&(mini->arg_item), new_item(ft_strnew(0)));
 	return (SUCCESS);
 }
