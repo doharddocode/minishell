@@ -4,11 +4,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
+# ifndef BUFF_SIZE
+#  define BUFF_SIZE 32
 # endif
 
-typedef struct		s_gnl
+typedef struct s_gnl
 {
 	int				fd;
 	char			*remainer;
@@ -20,12 +20,16 @@ t_gnl				*ft_free_lst(t_gnl *lst, t_gnl *root);
 
 int					get_next_line(int fd, char **line);
 int					ft_get_line(int fd, int b_r, char **line, char **remain);
-char				*ft_strdup(const char *s1);
+int					ft_gnl_free_str(char *str, int return_val);
+char				*ft_gnl_strdup(const char *s1);
 char				*ft_gnl_strchr(const char *str, int c);
 char				*ft_gnl_strncpy(char *dst, const char *src);
-char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_gnl_strjoin(char const *s1, char const *s2);
 char				*process_remainer(char **remainer, char **line);
 
-size_t				g_strlen(const char *str, int flag);
+size_t				ft_gnl_strlen(const char *str, int flag);
+size_t				check_len(const char *str);
+
+void				fill_line(char *e_l_p, char **remainer, char **line);
 
 #endif

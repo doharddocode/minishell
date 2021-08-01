@@ -1,17 +1,6 @@
 #include "get_next_line.h"
 
-size_t	check_len(const char *str)
-{
-	size_t	len;
-
-	if (str)
-		len = g_strlen(str, 1);
-	else
-		len = 0;
-	return (len);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_gnl_strjoin(char const *s1, char const *s2)
 {
 	char	*start;
 	char	*result;
@@ -34,13 +23,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (start);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_gnl_strdup(const char *s1)
 {
 	char	*str;
 	size_t	len;
 
-	len = g_strlen(s1, 0);
-	str = (char *)malloc(BUFFER_SIZE + 1);
+	len = ft_gnl_strlen(s1, 0);
+	str = (char *)malloc(BUFF_SIZE + 1);
 	if (!str)
 		return (NULL);
 	str[len] = '\0';

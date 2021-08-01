@@ -21,24 +21,11 @@ char	*process_remainer(char **remainer, char **line)
 
 	e_l_p = NULL;
 	if (*remainer)
-	{
-		e_l_p = ft_gnl_strchr(*remainer, '\n');
-		if (e_l_p)
-		{
-			*e_l_p = '\0';
-			*line = ft_strdup(*remainer);
-			ft_gnl_strncpy(*remainer, ++e_l_p);
-		}
-		else
-		{
-			*line = ft_strdup(*remainer);
-			free(*remainer);
-			*remainer = NULL;
-		}
-	}
+		fill_line(e_l_p, remainer, line);
 	else
 	{
-		if (!(*line = ((char *)malloc(sizeof(char) * 1))))
+		*line = (char *)malloc(sizeof(char) * 1);
+		if (!(*line))
 			return (NULL);
 		*line[0] = '\0';
 	}
@@ -69,29 +56,28 @@ int	ft_get_line(int fd, int bytes_r, char **line, char **remain)
 {
 	char	*e_l_p;
 	char	*old_ptr;
-	char	buffer[BUFFER_SIZE + 1];
+	char	buffer[BUFF_SIZE + 1];
 
 	e_l_p = process_remainer(remain, line);
-	while (*line && !e_l_p && (bytes_r = read(fd, buffer, BUFFER_SIZE)) > 0)
+	bytes_r = 1;
+	while (*line && !e_l_p && bytes_r > 0)
 	{
+		bytes_r = (int)read(fd, buffer, BUFF_SIZE);
 		buffer[bytes_r] = '\0';
 		e_l_p = ft_gnl_strchr(buffer, '\n');
 		if (e_l_p)
 		{
 			*e_l_p = '\0';
-			if (!(*remain = ft_strdup(++e_l_p)))
+			*remain = ft_gnl_strdup(++e_l_p);
+			if (!(*remain))
 				return (-1);
 		}
 		old_ptr = *line;
-		*line = ft_strjoin(*line, buffer);
-		free(old_ptr);
+		*line = ft_gnl_strjoin(*line, buffer);
+		ft_gnl_free_str(old_ptr, 1);
 	}
 	if (bytes_r == -1 || !*line)
-	{
-		free(*line);
-		*line = NULL;
-		return (-1);
-	}
+		return (ft_gnl_free_str(*line, -1));
 	return (bytes_r || e_l_p);
 }
 
@@ -103,7 +89,7 @@ int	get_next_line(int fd, char **line)
 	int				bytes_r;
 
 	bytes_r = 0;
-	if (fd < 0 || !line || !BUFFER_SIZE)
+	if ((fd < 0 || !line) != 0)
 		return (-1);
 	if (!first)
 	{
