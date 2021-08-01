@@ -1,5 +1,7 @@
 NAME 			= minishell
-FLAGS			= -g -lreadline -L/usr/local/Cellar/readline/8.1/lib/ -I/usr/local/Cellar/readline/8.1/include#-Wall -Werror -Wextra
+#FLAGS			= -g -lreadline -L/usr/local/Cellar/readline/8.1/lib/ -I/usr/local/Cellar/readline/8.1/include #-Wall -Werror -Wextra
+
+FLAGS			= -g -lreadline -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include #-Wall -Werror -Wextra
 
 LIBFT_DIR 		= libft/
 
@@ -24,7 +26,7 @@ UTILS_DIR		= $(MAIN_DIR)utils/
 PIPE_DIR		= $(MAIN_DIR)redirs/
 
 GNL_FILES		= get_next_line.c \
-					get_next_line_utils.c gnl_util2.c\
+					get_next_line_utils.c get_next_line_common.c\
 
 MAIN_FILES 		= minishell.c signal.c error_handle.c
 

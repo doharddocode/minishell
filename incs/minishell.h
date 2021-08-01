@@ -74,10 +74,10 @@ typedef struct s_signal
 
 typedef struct s_minishell
 {
-	t_envp		*envp; //free
+	t_envp		*envp;
 	t_pipe		*pipe;
 	t_arg_item	*arg_item;
-	t_list		*work_history; //free
+	t_list		*work_history;
 	int			arg_len;
 	int			pipocunt;
 	int			*pipelocs;
@@ -179,7 +179,7 @@ void		heredoc(t_minishell *mini, t_arg_item *arg);
 
 void		init_signal(void);
 
-extern t_signal	sig;
+extern t_signal	g_sig;
 void		handle_signal(int signal_code);
 void		rl_replace_line(const char *text, int clear_undo);
 

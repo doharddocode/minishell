@@ -42,8 +42,8 @@ int	launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 	char	**envp_arr;
 	char	**args_arr;
 
-	sig.pid = fork();
-	if (sig.pid == 0)
+	g_sig.pid = fork();
+	if (g_sig.pid == 0)
 	{
 		envp_arr = t_enpv_to_array(mini->envp);
 		args_arr = arg_to_array(arg_item);
@@ -57,9 +57,9 @@ int	launch_exec(t_minishell *mini, char *exec_path, t_arg_item *arg_item)
 		exit(return_val);
 	}
 	else
-		waitpid(sig.pid, &return_val, 0);
-	if (sig.sigint == 1 || sig.sigquit == 1)
-		return (sig.exit_status);
+		waitpid(g_sig.pid, &return_val, 0);
+	if (g_sig.sigint == 1 || g_sig.sigquit == 1)
+		return (g_sig.exit_status);
 	return_val = ret_val(return_val);
 	return (return_val);
 }

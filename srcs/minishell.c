@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_signal	sig;
+t_signal	g_sig;
 
 void	set_arg_type(t_arg_item *item)
 {
