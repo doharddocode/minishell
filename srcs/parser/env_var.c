@@ -51,7 +51,8 @@ char	*get_var_value(t_minishell *mini, char *var_name)
 		return (NULL);
 	while (envp)
 	{
-		if (envp->key && envp->value && ft_strncmp(envp->key, var_name, 1 ) == 0
+		if (envp->key && envp->value
+			&& ft_strncmp(envp->key, var_name, ft_strlen(envp->key)) == 0
 			&& ft_strlen(var_name) == ft_strlen(envp->key))
 		{
 			return (ft_strinit(ft_strlen(envp->value), envp->value));
