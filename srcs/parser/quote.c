@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quote.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrosette <mrosette@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/03 20:28:15 by mrosette          #+#    #+#             */
+/*   Updated: 2021/08/03 20:31:53 by mrosette         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*quote_substr(int *q_cnt, char *str, char symb)
@@ -9,7 +21,8 @@ static char	*quote_substr(int *q_cnt, char *str, char symb)
 	(*q_cnt) = 1;
 	while (str[i])
 	{
-		if (str[i] == symb && i == (int)ft_strlen(str) - 1 && str[i - 1] != '\\')
+		if (str[i] == symb && i == (int)ft_strlen(str) - 1
+			&& str[i - 1] != '\\')
 			(*q_cnt)++;
 		i++;
 	}
