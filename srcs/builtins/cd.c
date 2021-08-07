@@ -37,7 +37,7 @@ static int	set_path(t_minishell *mini, t_envp *envp, int flag)
 	{
 		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "OLDPWD"));
 		if (!envp_node)
-			return (item_not_found(mini, "cd", "OLDPWD not set"));
+			return (item_not_found(mini, "cd", "OLDPWD not set\n"));
 		set_oldpwd(envp);
 		ft_putendl_fd(envp_node->value, 1);
 	}
@@ -46,7 +46,7 @@ static int	set_path(t_minishell *mini, t_envp *envp, int flag)
 		set_oldpwd(envp);
 		envp_node = ft_copy_envp_node(ft_get_envp_node(envp, "HOME"));
 		if (!envp_node)
-			return (item_not_found(mini, "cd", "HOME not set"));
+			return (item_not_found(mini, "cd", "HOME not set\n"));
 	}
 	result = chdir(envp_node->value);
 	ft_free_str(envp_node->value);

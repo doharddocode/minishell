@@ -41,7 +41,7 @@ static void	add_env(t_minishell *mini, char *arg)
 	char	*env_val;
 
 	i = 0;
-	while (arg[i] != '=')
+	while (arg[i] && arg[i] != '=')
 		i++;
 	env_name = ft_substr(arg, 0, i);
 	if (!env_name)

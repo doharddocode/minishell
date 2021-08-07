@@ -1,7 +1,5 @@
 NAME 			= minishell
 
-#FLAGS			= -g -lreadline -L/usr/local/Cellar/readline/8.1/lib/ -I/usr/local/Cellar/readline/8.1/include #-Wall -Werror -Wextra
-
 CFLAGS			= -Wall -Werror -Wextra
 
 FLAGS			= -lreadline -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include

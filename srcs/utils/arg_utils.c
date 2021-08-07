@@ -7,7 +7,7 @@ t_arg_item	*new_item(char *name)
 	result = malloc(sizeof(t_arg_item));
 	if (result)
 	{
-		result->name = name;
+		result->name = ft_strinit(ft_strlen(name), name);
 		result->next = NULL;
 		result->prev = NULL;
 		return (result);
