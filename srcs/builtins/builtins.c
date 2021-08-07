@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mrosette <mrosette@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 20:28:52 by mrosette          #+#    #+#             */
-/*   Updated: 2021/08/03 20:32:10 by mrosette         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 static void	init_builtins(int (*builtins_func[7])(t_minishell *mini))
@@ -25,7 +13,7 @@ static void	init_builtins(int (*builtins_func[7])(t_minishell *mini))
 
 int	builtins(t_minishell *mini)
 {
-	int (*builtins_func[7])(t_minishell	*mini);
+	int	(*builtins_func[7])(t_minishell *mini);
 
 	init_builtins(builtins_func);
 	if (is_builtin(mini->arg_item->name, "echo"))
